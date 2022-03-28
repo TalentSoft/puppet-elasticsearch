@@ -70,6 +70,12 @@ define elasticsearch::service::init (
         $service_ensure = undef
         $service_enable = false
       }
+      # start service on boot, do not care whether currently running
+      # or not
+      'managed': {
+        $service_ensure = undef
+        $service_enable = true
+      }
       default: { }
     }
   } else {
