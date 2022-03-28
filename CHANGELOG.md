@@ -4,6 +4,8 @@
 
 #### Fixes
 
+## 6.4.0-001 ()
+* Adding managed status type to keep service enabled but don't start it from puppet agent
 ## 6.4.0 (August 28, 2019)
 
 #### Features
