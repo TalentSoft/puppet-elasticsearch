@@ -1,5 +1,12 @@
-## 6.4.0-001 ()
+## 6.4.0-003 (Jun 5, 2024)
+* Remove `has_key` in `systemd.pp` in order to work with "recent" `stdlib` versions.
+
+## 6.4.0-002 (September 20, 2023)
+* also add managed status for systemd 
+
+## 6.4.0-001 (March 28, 2022)
 * Adding managed status type to keep service enabled but don't start it from puppet agent
+
 ## 6.4.0 (August 28, 2019)
 
 #### Features
