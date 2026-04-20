@@ -24,9 +24,9 @@ describe 'elasticsearch::license', type: 'class' do
                 'issued_to' => 'test',
                 'issuer' => 'elasticsearch',
                 'signature' => 'secretvalue',
-                'start_date_in_millis' => 1_513_814_400_000
-              }
-            }
+                'start_date_in_millis' => 1_513_814_400_000,
+              },
+            },
           }
         end
 
@@ -52,12 +52,12 @@ describe 'elasticsearch::license', type: 'class' do
 
         it do
           expect(subject).to contain_es_instance_conn_validator(
-            'license-conn-validator'
-          ).that_comes_before('elasticsearch_license[xpack]')
+            'license-conn-validator',
+          ).that_comes_before('elasticsearch_license[license]')
         end
 
         it do
-          expect(subject).to contain_elasticsearch_license('xpack').with(
+          expect(subject).to contain_elasticsearch_license('license').with(
             ensure: 'present',
             content: {
               'license' => {
@@ -69,8 +69,8 @@ describe 'elasticsearch::license', type: 'class' do
                 'issued_to' => 'test',
                 'issuer' => 'elasticsearch',
                 'signature' => 'secretvalue',
-                'start_date_in_millis' => 1_513_814_400_000
-              }
+                'start_date_in_millis' => 1_513_814_400_000,
+              },
             },
             protocol: 'https',
             host: '127.0.0.1',
@@ -80,7 +80,7 @@ describe 'elasticsearch::license', type: 'class' do
             password: 'password',
             ca_file: '/foo/bar.pem',
             ca_path: '/foo/',
-            validate_tls: false
+            validate_tls: false,
           )
         end
       end

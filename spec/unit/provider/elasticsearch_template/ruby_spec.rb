@@ -13,8 +13,8 @@ describe Puppet::Type.type(:elasticsearch_template).provider(:ruby) do # rubocop
         'mappings' => {},
         'settings' => {},
         'template' => 'foobar1-*',
-        'order' => 1
-      }
+        'order' => 1,
+      },
     }
   end
 
@@ -25,8 +25,8 @@ describe Puppet::Type.type(:elasticsearch_template).provider(:ruby) do # rubocop
         'mappings' => {},
         'order' => 1,
         'settings' => {},
-        'template' => 'foobar1-*'
-      }
+        'template' => 'foobar1-*',
+      },
     }
   end
 
@@ -40,8 +40,8 @@ describe Puppet::Type.type(:elasticsearch_template).provider(:ruby) do # rubocop
         'mappings' => {},
         'settings' => {},
         'template' => 'foobar2-*',
-        'order' => 2
-      }
+        'order' => 2,
+      },
     }
   end
 
@@ -52,8 +52,8 @@ describe Puppet::Type.type(:elasticsearch_template).provider(:ruby) do # rubocop
         'mappings' => {},
         'order' => 2,
         'settings' => {},
-        'template' => 'foobar2-*'
-      }
+        'template' => 'foobar2-*',
+      },
     }
   end
 
@@ -62,7 +62,7 @@ describe Puppet::Type.type(:elasticsearch_template).provider(:ruby) do # rubocop
       'order' => 0,
       'aliases' => {},
       'mappings' => {},
-      'template' => 'fooindex-*'
+      'template' => 'fooindex-*',
     )
   end
 
@@ -72,8 +72,8 @@ describe Puppet::Type.type(:elasticsearch_template).provider(:ruby) do # rubocop
     {
       name: 'foo',
       content: {
-        'template' => 'fooindex-*'
-      }
+        'template' => 'fooindex-*',
+      },
     }
   end
 

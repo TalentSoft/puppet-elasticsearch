@@ -21,7 +21,7 @@ class Puppet::Provider::ElasticYaml < Puppet::Provider::ElasticParsedFile
         {
           :name => key,
           :ensure => :present,
-          @metadata => metadata
+          @metadata => metadata,
         }
       end
     else

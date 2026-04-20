@@ -6,22 +6,22 @@ describe 'plugin_dir' do
   describe 'exception handling' do
     describe 'with no arguments' do
       it {
-        expect(subject).to run.with_params.
-          and_raise_error(Puppet::ParseError)
+        expect(subject).to run.with_params
+                              .and_raise_error(Puppet::ParseError)
       }
     end
 
     describe 'more than two arguments' do
       it {
-        expect(subject).to run.with_params('a', 'b', 'c').
-          and_raise_error(Puppet::ParseError)
+        expect(subject).to run.with_params('a', 'b', 'c')
+                              .and_raise_error(Puppet::ParseError)
       }
     end
 
     describe 'non-string arguments' do
       it {
-        expect(subject).to run.with_params([]).
-          and_raise_error(Puppet::ParseError)
+        expect(subject).to run.with_params([])
+                              .and_raise_error(Puppet::ParseError)
       }
     end
   end
@@ -35,7 +35,7 @@ describe 'plugin_dir' do
     'elasticsearch/elasticsearch-lang-groovy/2.0.0' => 'lang-groovy',
     'royrusso/elasticsearch-hq' => 'hq',
     'polyfractal/elasticsearch-inquisitor' => 'inquisitor',
-    'mycustomplugin' => 'mycustomplugin'
+    'mycustomplugin' => 'mycustomplugin',
   }.each do |plugin, dir|
     describe "parsed dir for #{plugin}" do
       it { is_expected.to run.with_params(plugin).and_return(dir) }

@@ -2,8 +2,8 @@
 
 require 'spec_helper_rspec'
 
-describe Puppet::Type.type(:elasticsearch_user_roles).
-  provider(:ruby) do
+describe Puppet::Type.type(:elasticsearch_user_roles)
+                     .provider(:ruby) do
   describe 'instances' do
     it 'has an instance method' do
       expect(described_class).to respond_to :instances
@@ -22,7 +22,7 @@ describe Puppet::Type.type(:elasticsearch_user_roles).
           power_user:elastic
         ))[0]).to eq(
           name: 'elastic',
-          roles: %w[admin power_user]
+          roles: %w[admin power_user],
         )
       end
     end

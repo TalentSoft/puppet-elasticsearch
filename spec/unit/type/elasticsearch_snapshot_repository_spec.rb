@@ -7,7 +7,7 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository) do
 
   let(:default_params) do
     {
-      location: '/backup'
+      location: '/backup',
     }
   end
 
@@ -55,8 +55,8 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository) do
           described_class.new(
             default_params.merge(
               name: resource_name,
-              ensure: :present
-            )
+              ensure: :present,
+            ),
           )
         end.not_to raise_error
       end
@@ -66,8 +66,8 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository) do
           described_class.new(
             default_params.merge(
               name: resource_name,
-              ensure: :absent
-            )
+              ensure: :absent,
+            ),
           )
         end.not_to raise_error
       end
@@ -77,8 +77,8 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository) do
           described_class.new(
             default_params.merge(
               name: resource_name,
-              ensure: :foo
-            )
+              ensure: :foo,
+            ),
           )
         end.to raise_error(Puppet::Error, %r{Invalid value})
       end
@@ -88,7 +88,7 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository) do
       it 'is required' do
         expect do
           described_class.new(
-            name: resource_name
+            name: resource_name,
           )
         end.to raise_error(Puppet::Error, %r{Location is required.})
       end
@@ -100,8 +100,8 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository) do
           described_class.new(
             default_params.merge(
               name: resource_name,
-              host: '127.0.0.1'
-            )
+              host: '127.0.0.1',
+            ),
           )
         end.not_to raise_error
       end
@@ -114,8 +114,8 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository) do
             described_class.new(
               default_params.merge(
                 name: resource_name,
-                port: value
-              )
+                port: value,
+              ),
             )
           end.to raise_error(Puppet::Error, %r{invalid port}i)
         end
@@ -129,8 +129,8 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository) do
             described_class.new(
               default_params.merge(
                 name: resource_name,
-                validate_tls: value
-              )
+                validate_tls: value,
+              ),
             )
           end.to raise_error(Puppet::Error, %r{invalid value}i)
         end
@@ -142,8 +142,8 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository) do
             described_class.new(
               default_params.merge(
                 name: resource_name,
-                validate_tls: value
-              )
+                validate_tls: value,
+              ),
             )
           end.not_to raise_error
         end
@@ -156,8 +156,8 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository) do
           described_class.new(
             default_params.merge(
               name: resource_name,
-              timeout: 'foo'
-            )
+              timeout: 'foo',
+            ),
           )
         end.to raise_error(Puppet::Error, %r{must be a})
       end
@@ -167,8 +167,8 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository) do
           described_class.new(
             default_params.merge(
               name: resource_name,
-              timeout: -10
-            )
+              timeout: -10,
+            ),
           )
         end.to raise_error(Puppet::Error, %r{must be a})
       end
@@ -178,8 +178,8 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository) do
           described_class.new(
             default_params.merge(
               name: resource_name,
-              timeout: 10
-            )
+              timeout: 10,
+            ),
           )
         end.not_to raise_error
       end
@@ -189,8 +189,8 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository) do
           described_class.new(
             default_params.merge(
               name: resource_name,
-              timeout: '10'
-            )
+              timeout: '10',
+            ),
           )
         end.not_to raise_error
       end

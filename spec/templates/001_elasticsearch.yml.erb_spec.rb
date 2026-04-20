@@ -16,7 +16,7 @@ end
 describe 'elasticsearch.yml.erb' do
   let :harness do
     TemplateHarness.new(
-      'templates/etc/elasticsearch/elasticsearch.yml.erb'
+      'templates/etc/elasticsearch/elasticsearch.yml.erb',
     )
   end
 
@@ -27,7 +27,7 @@ describe 'elasticsearch.yml.erb' do
       'path.data' => '/mnt/test',
       'discovery.zen.ping.unicast.hosts' => %w[
         host1 host2
-      ]
+      ],
     )
 
     expect(YAML.safe_load(harness.run)).to eq(YAML.safe_load(%(
@@ -44,10 +44,10 @@ describe 'elasticsearch.yml.erb' do
       '@data',
       'data' => [
         { 'key' => 'value0',
-          'other_key' => 'othervalue0' },
+          'other_key' => 'othervalue0', },
         { 'key' => 'value1',
-          'other_key' => 'othervalue1' }
-      ]
+          'other_key' => 'othervalue1', },
+      ],
     )
 
     expect(YAML.safe_load(harness.run)).to eq(YAML.safe_load(%(
@@ -62,7 +62,7 @@ describe 'elasticsearch.yml.erb' do
   it 'quotes IPv6 loopback addresses' do
     harness.set(
       '@data',
-      'network.host' => ['::', '[::]']
+      'network.host' => ['::', '[::]'],
     )
 
     expect(YAML.safe_load(harness.run)).to eq(YAML.safe_load(%(
@@ -75,7 +75,7 @@ describe 'elasticsearch.yml.erb' do
   it 'does not quote numeric values' do
     harness.set(
       '@data',
-      'some.setting' => '10'
+      'some.setting' => '10',
     )
 
     expect(YAML.safe_load(harness.run)).to eq(YAML.safe_load(%(

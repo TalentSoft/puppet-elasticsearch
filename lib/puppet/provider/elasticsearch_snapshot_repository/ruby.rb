@@ -7,7 +7,7 @@ require 'puppet/provider/elastic_rest'
 Puppet::Type.type(:elasticsearch_snapshot_repository).provide(
   :ruby,
   parent: Puppet::Provider::ElasticREST,
-  api_uri: '_snapshot'
+  api_uri: '_snapshot',
 ) do
   desc 'A REST API based provider to manage Elasticsearch snapshot repositories.'
 
@@ -26,7 +26,7 @@ Puppet::Type.type(:elasticsearch_snapshot_repository).provide(
         chunk_size: api_object['settings']['chunk_size'],
         max_restore_rate: api_object['settings']['max_restore_rate'],
         max_snapshot_rate: api_object['settings']['max_snapshot_rate'],
-        provider: name
+        provider: name,
       }.compact
     end
   end
@@ -38,8 +38,8 @@ Puppet::Type.type(:elasticsearch_snapshot_repository).provide(
       'type' => resource[:type],
       'settings' => {
         'compress' => resource[:compress],
-        'location' => resource[:location]
-      }
+        'location' => resource[:location],
+      },
     }
 
     # Add optional values

@@ -8,7 +8,7 @@ require 'yaml'
 module EsFacts
   # Add a fact to the catalog of host facts
   def self.add_fact(prefix, key, value)
-    key = "#{prefix}_#{key}".to_sym
+    key = :"#{prefix}_#{key}"
     ::Facter.add(key) do
       setcode { value }
     end
@@ -16,7 +16,7 @@ module EsFacts
 
   def self.ssl?(config)
     tls_keys = [
-      'xpack.security.http.ssl.enabled'
+      'xpack.security.http.ssl.enabled',
     ]
 
     tls_keys.any? { |key| (config.key? key) && (config[key] == true) }
@@ -69,7 +69,7 @@ module EsFacts
         response = http.get('/')
         json_data = JSON.parse(response.body)
 
-        if json_data['status'] && json_data['status'] == 200
+        if response.code == '200' && json_data['version'] && json_data['name']
           add_fact(key_prefix, 'name', json_data['name'])
           add_fact(key_prefix, 'version', json_data['version']['number'])
 
@@ -117,8 +117,8 @@ module EsFacts
             json_data['name'] => {
               'settings' => nodes_data['settings'],
               'http' => nodes_data['http'],
-              'transport' => nodes_data['transport']
-            }
+              'transport' => nodes_data['transport'],
+            },
           }
           nodes.merge! node
         end
@@ -128,9 +128,8 @@ module EsFacts
     end
     Facter.add(:elasticsearch) do
       setcode do
-        nodes
+        nodes unless nodes.empty?
       end
-      nodes unless nodes.empty?
     end
   end
 end

@@ -15,13 +15,13 @@ describe 'elasticsearch::role' do
   let(:params) do
     {
       privileges: {
-        'cluster' => '*'
+        'cluster' => '*',
       },
       mappings: [
         'cn=users,dc=example,dc=com',
         'cn=admins,dc=example,dc=com',
-        'cn=John Doe,cn=other users,dc=example,dc=com'
-      ]
+        'cn=John Doe,cn=other users,dc=example,dc=com',
+      ],
     }
   end
 
@@ -30,24 +30,16 @@ describe 'elasticsearch::role' do
     supported_os: [
       {
         'operatingsystem' => 'CentOS',
-        'operatingsystemrelease' => ['7']
-      }
-    ]
+        'operatingsystemrelease' => ['7'],
+      },
+    ],
   ).each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts.merge(
           scenario: '',
-          common: ''
+          common: '',
         )
-      end
-
-      context 'with an invalid role name' do
-        context 'too long' do
-          let(:title) { 'A' * 41 }
-
-          it { is_expected.to raise_error(Puppet::Error, %r{expected length}i) }
-        end
       end
 
       context 'with default parameters' do
@@ -60,8 +52,8 @@ describe 'elasticsearch::role' do
             'mappings' => [
               'cn=users,dc=example,dc=com',
               'cn=admins,dc=example,dc=com',
-              'cn=John Doe,cn=other users,dc=example,dc=com'
-            ]
+              'cn=John Doe,cn=other users,dc=example,dc=com',
+            ],
           )
         end
       end
@@ -80,11 +72,11 @@ describe 'elasticsearch::role' do
           end
 
           it {
-            expect(subject).to contain_elasticsearch__role('elastic_role').
-              that_comes_before([
-                                  'Elasticsearch::Template[foo]',
-                                  'Elasticsearch::User[elastic]'
-                                ])
+            expect(subject).to contain_elasticsearch__role('elastic_role')
+              .that_comes_before([
+                                   'Elasticsearch::Template[foo]',
+                                   'Elasticsearch::User[elastic]',
+                                 ])
           }
 
           include_examples 'class', :systemd

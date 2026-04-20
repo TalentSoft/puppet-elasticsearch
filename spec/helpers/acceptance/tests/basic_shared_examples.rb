@@ -6,10 +6,10 @@ require 'helpers/acceptance/tests/manifest_shared_examples'
 shared_examples 'basic acceptance tests' do |es_config|
   include_examples('manifest application')
 
-  describe package("elasticsearch#{v[:oss] ? '-oss' : ''}") do
+  describe package("elasticsearch#{'-oss' if v[:oss]}") do
     it {
-      expect(subject).to be_installed.
-        with_version(v[:elasticsearch_full_version])
+      expect(subject).to be_installed
+        .with_version(v[:elasticsearch_full_version])
     }
   end
 
@@ -60,9 +60,9 @@ shared_examples 'basic acceptance tests' do |es_config|
           json = JSON.parse(subject.stdout)['nodes'].values.first
           data_dir = ['/var/lib/elasticsearch']
           expect(
-            json['settings']['path']
+            json['settings']['path'],
           ).to include(
-            'data' => data_dir
+            'data' => data_dir,
           )
         end
       end

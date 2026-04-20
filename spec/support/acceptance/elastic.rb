@@ -19,8 +19,6 @@ require_relative '../../../lib/puppet_x/elastic/deep_to_s'
 ENV['ELASTICSEARCH_VERSION'] = '7.10.1'
 ENV.delete('BEAKER_debug')
 
-run_puppet_install_helper('agent') unless ENV['BEAKER_provision'] == 'no'
-
 RSpec.configure do |c|
   # General-purpose spec-global variables
   c.add_setting :v, default: {}
@@ -45,12 +43,16 @@ RSpec.configure do |c|
                      JSON.parse(File.read('spec/fixtures/templates/7.x.json'))
                    end
     v[:template] = Puppet_X::Elastic.deep_to_i(Puppet_X::Elastic.deep_to_s(v[:template]))
+    v[:component_template] = Puppet_X::Elastic.deep_to_i(Puppet_X::Elastic.deep_to_s(JSON.parse(File.read('spec/fixtures/templates/component.json'))))
+    v[:index_template] = Puppet_X::Elastic.deep_to_i(Puppet_X::Elastic.deep_to_s(JSON.parse(File.read('spec/fixtures/templates/index.json'))))
     v[:pipeline] = JSON.parse(File.read('spec/fixtures/pipelines/example.json'))
+    v[:ilm_policy] = Puppet_X::Elastic.deep_to_i(Puppet_X::Elastic.deep_to_s(JSON.parse(File.read('spec/fixtures/ilm_policies/example.json'))))
+    v[:slm_policy] = Puppet_X::Elastic.deep_to_i(Puppet_X::Elastic.deep_to_s(JSON.parse(File.read('spec/fixtures/slm_policies/example.json'))))
   end
 
   v[:elasticsearch_plugins] = Dir[
-    artifact("*#{v[:elasticsearch_full_version]}.zip", ['plugins'])
-  ].map do |plugin|
+    artifact("*#{v[:elasticsearch_full_version]}.zip", ['plugins']),
+  ].to_h do |plugin|
     plugin_filename = File.basename(plugin)
     plugin_name = plugin_filename.match(%r{^(?<name>.+)-#{v[:elasticsearch_full_version]}.zip})[:name]
     [
@@ -60,7 +62,7 @@ RSpec.configure do |c|
         url: derive_plugin_urls_for(v[:elasticsearch_full_version], [plugin_name]).keys.first,
       },
     ]
-  end.to_h
+  end
 
   v[:oss] = !ENV['OSS_PACKAGE'].nil? and ENV['OSS_PACKAGE'] == 'true'
   v[:cluster_name] = SecureRandom.hex(10)
@@ -106,14 +108,14 @@ RSpec.configure do |c|
   end
 
   c.before :context, :with_license do
-    Vault.address = ENV['VAULT_ADDR']
+    Vault.address = ENV.fetch('VAULT_ADDR', nil)
     if ENV['CI']
-      Vault.auth.approle(ENV['VAULT_APPROLE_ROLE_ID'], ENV['VAULT_APPROLE_SECRET_ID'])
+      Vault.auth.approle(ENV.fetch('VAULT_APPROLE_ROLE_ID', nil), ENV.fetch('VAULT_APPROLE_SECRET_ID', nil))
     else
-      Vault.auth.token(ENV['VAULT_TOKEN'])
+      Vault.auth.token(ENV.fetch('VAULT_TOKEN', nil))
     end
     licenses = Vault.with_retries(Vault::HTTPConnectionError) do
-      Vault.logical.read(ENV['VAULT_PATH'])
+      Vault.logical.read(ENV.fetch('VAULT_PATH', nil))
     end.data
 
     raise 'No license found!' unless licenses
@@ -176,7 +178,7 @@ hosts.each do |host|
       v[:elasticsearch_full_version], [v[:ext]]
     ).flat_map do |url, filename|
       [[:url, url], [:filename, filename], [:path, artifact(filename)]]
-    end.to_h
+    end.to_h,
   )
 end
 
@@ -191,7 +193,7 @@ RSpec.configure do |c|
   end
 
   c.before :suite do
-    fetch_archives(derive_artifact_urls_for(ENV['ELASTICSEARCH_VERSION']))
+    fetch_archives(derive_artifact_urls_for(ENV.fetch('ELASTICSEARCH_VERSION', nil)))
 
     # Use the Java class once before the suite of tests
     unless shell('command -v java', accept_all_exit_codes: true).exit_code.zero?

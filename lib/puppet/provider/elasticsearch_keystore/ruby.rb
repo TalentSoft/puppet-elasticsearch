@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
+require 'facter'
+
 Puppet::Type.type(:elasticsearch_keystore).provide(
-  :elasticsearch_keystore
+  :elasticsearch_keystore,
 ) do
   desc 'Provider for `elasticsearch-keystore` based secret management.'
 
   def self.defaults_dir
-    @defaults_dir ||= case Facter.value('osfamily')
+    @defaults_dir ||= case Facter.value('os.family')
                       when 'RedHat'
                         '/etc/sysconfig'
                       else
@@ -15,7 +17,7 @@ Puppet::Type.type(:elasticsearch_keystore).provide(
   end
 
   def self.home_dir
-    @home_dir ||= case Facter.value('osfamily')
+    @home_dir ||= case Facter.value('os.family')
                   when 'OpenBSD'
                     '/usr/local/elasticsearch'
                   else
@@ -31,11 +33,11 @@ Puppet::Type.type(:elasticsearch_keystore).provide(
     options = {
       custom_environment: {
         'ES_INCLUDE' => File.join(defaults_dir, "elasticsearch-#{instance}"),
-        'ES_PATH_CONF' => "#{configdir}/#{instance}"
+        'ES_PATH_CONF' => "#{configdir}/#{instance}",
       },
       uid: 'elasticsearch',
       gid: 'elasticsearch',
-      failonfail: true
+      failonfail: true,
     }
 
     unless stdin.nil?
@@ -68,7 +70,7 @@ Puppet::Type.type(:elasticsearch_keystore).provide(
         name: File.basename(instance),
         ensure: :present,
         provider: name,
-        settings: settings
+        settings: settings,
       }
     end
   end
@@ -88,7 +90,7 @@ Puppet::Type.type(:elasticsearch_keystore).provide(
   end
 
   def initialize(value = {})
-    super(value)
+    super
     @property_flush = {}
   end
 
@@ -99,7 +101,7 @@ Puppet::Type.type(:elasticsearch_keystore).provide(
       @property_flush[:settings] = resource[:settings]
     when :absent
       File.delete(File.join([
-                              '/', 'etc', 'elasticsearch', resource[:instance], 'elasticsearch.keystore'
+                              '/', 'etc', 'elasticsearch', resource[:instance], 'elasticsearch.keystore',
                             ]))
     end
 

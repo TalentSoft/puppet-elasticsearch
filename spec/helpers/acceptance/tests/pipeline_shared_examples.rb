@@ -50,8 +50,8 @@ shared_examples 'pipeline content' do |es_config, pipeline|
     subject { shell("curl http://localhost:#{elasticsearch_port}/_ingest/pipeline") }
 
     it 'returns the configured pipelines', :with_retries do
-      expect(JSON.parse(subject.stdout).values).
-        to include(include(pipeline))
+      expect(JSON.parse(subject.stdout).values)
+        .to include(include(pipeline))
     end
   end
 end

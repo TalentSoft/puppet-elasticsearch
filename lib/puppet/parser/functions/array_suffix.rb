@@ -5,7 +5,7 @@ module Puppet::Parser::Functions
   newfunction(
     :array_suffix,
     type: :rvalue,
-    doc: <<~EOS
+    doc: <<~EOS,
       This function applies a suffix to all elements in an array.
 
       *Examples:*

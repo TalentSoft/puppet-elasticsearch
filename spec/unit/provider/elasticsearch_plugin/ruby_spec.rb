@@ -10,7 +10,7 @@ describe provider_class do
     Puppet::Type.type(:elasticsearch_plugin).new(
       name: resource_name,
       ensure: :present,
-      provider: 'elasticsearch_plugin'
+      provider: 'elasticsearch_plugin',
     )
   end
   let(:provider) do

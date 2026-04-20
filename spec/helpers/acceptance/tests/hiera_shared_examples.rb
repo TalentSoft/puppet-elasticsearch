@@ -8,7 +8,7 @@ agents = only_host_with_role(hosts, 'agent')
 
 shared_examples 'hiera tests with' do |es_config, additional_yaml = {}|
   hieradata = {
-    'elasticsearch::config' => es_config
+    'elasticsearch::config' => es_config,
   }.merge(additional_yaml).to_yaml
 
   before :all do # rubocop:disable RSpec/BeforeAfterAll
@@ -62,7 +62,7 @@ shared_examples 'hiera acceptance tests' do |es_config, plugins|
       nodename = SecureRandom.hex(10).sub(%r{^0+}, '')
       include_examples(
         'hiera tests with',
-        es_config.merge('node.name' => nodename)
+        es_config.merge('node.name' => nodename),
       )
     end
 
@@ -74,16 +74,16 @@ shared_examples 'hiera acceptance tests' do |es_config, plugins|
           es_config.merge('node.name' => nodename),
           'elasticsearch::plugins' => {
             plugin => {
-              'ensure' => 'present'
-            }
-          }
+              'ensure' => 'present',
+            },
+          },
         )
 
         include_examples(
           'plugin API response',
           es_config.merge('node.name' => nodename),
           'reports the plugin as installed',
-          'name' => plugin
+          'name' => plugin,
         )
       end
     end

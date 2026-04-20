@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'elasticsearch', type: 'class' do
   default_params = {
-    config: { 'node.name' => 'foo' }
+    config: { 'node.name' => 'foo' },
   }
 
   # rubocop:disable RSpec/MultipleMemoizedHelpers
@@ -18,9 +18,9 @@ describe 'elasticsearch', type: 'class' do
         let(:pkg_prov) { 'dpkg' }
         let(:version_add) { '' }
 
-        if (facts[:os]['name'] == 'Debian' && \
-           facts[:os]['release']['major'].to_i >= 8) || \
-           (facts[:os]['name'] == 'Ubuntu' && \
+        if (facts[:os]['name'] == 'Debian' &&
+           facts[:os]['release']['major'].to_i >= 8) ||
+           (facts[:os]['name'] == 'Ubuntu' &&
            facts[:os]['release']['major'].to_i >= 15)
           let(:systemd_service_path) { '/lib/systemd/system' }
 
@@ -74,10 +74,12 @@ describe 'elasticsearch', type: 'class' do
         it {
           expect(subject).to contain_service('elasticsearch').with(
             ensure: 'running',
-            enable: true
+            enable: true,
           )
         }
       end
+
+      it { expect(subject).not_to contain_file('/etc/elasticsearch/log4j2.properties') }
 
       context 'java installation' do
         let(:pre_condition) do
@@ -87,8 +89,8 @@ describe 'elasticsearch', type: 'class' do
         end
 
         it {
-          expect(subject).to contain_class('elasticsearch::config').
-            that_requires('Class[java]')
+          expect(subject).to contain_class('elasticsearch::config')
+            .that_requires('Class[java]')
         }
       end
 
@@ -97,13 +99,13 @@ describe 'elasticsearch', type: 'class' do
           context 'with specified version' do
             let(:params) do
               default_params.merge(
-                version: '1.0'
+                version: '1.0',
               )
             end
 
             it {
-              expect(subject).to contain_package('elasticsearch').
-                with(ensure: "1.0#{version_add}")
+              expect(subject).to contain_package('elasticsearch')
+                .with(ensure: "1.0#{version_add}")
             }
           end
 
@@ -111,13 +113,13 @@ describe 'elasticsearch', type: 'class' do
             context 'Handle special CentOS/RHEL package versioning' do
               let(:params) do
                 default_params.merge(
-                  version: '1.1-2'
+                  version: '1.1-2',
                 )
               end
 
               it {
-                expect(subject).to contain_package('elasticsearch').
-                  with(ensure: '1.1-2')
+                expect(subject).to contain_package('elasticsearch')
+                  .with(ensure: '1.1-2')
               }
             end
           end
@@ -127,7 +129,7 @@ describe 'elasticsearch', type: 'class' do
           let(:params) do
             default_params.merge(
               version: '0.90.10',
-              package_url: "puppet:///path/to/some/es-0.90.10.#{pkg_ext}"
+              package_url: "puppet:///path/to/some/es-0.90.10.#{pkg_ext}",
             )
           end
 
@@ -139,22 +141,22 @@ describe 'elasticsearch', type: 'class' do
             context "using #{schema} schema" do
               let(:params) do
                 default_params.merge(
-                  package_url: "#{schema}domain-or-path/pkg.#{pkg_ext}"
+                  package_url: "#{schema}domain-or-path/pkg.#{pkg_ext}",
                 )
               end
 
               unless schema.start_with? 'puppet'
                 it {
-                  expect(subject).to contain_exec('create_package_dir_elasticsearch').
-                    with(command: 'mkdir -p /opt/elasticsearch/swdl')
+                  expect(subject).to contain_exec('create_package_dir_elasticsearch')
+                    .with(command: 'mkdir -p /opt/elasticsearch/swdl')
                 }
 
                 it {
-                  expect(subject).to contain_file('/opt/elasticsearch/swdl').
-                    with(
+                  expect(subject).to contain_file('/opt/elasticsearch/swdl')
+                    .with(
                       purge: false,
                       force: false,
-                      require: 'Exec[create_package_dir_elasticsearch]'
+                      require: 'Exec[create_package_dir_elasticsearch]',
                     )
                 }
               end
@@ -163,19 +165,19 @@ describe 'elasticsearch', type: 'class' do
               when 'file:/'
                 it {
                   expect(subject).to contain_file(
-                    "/opt/elasticsearch/swdl/pkg.#{pkg_ext}"
+                    "/opt/elasticsearch/swdl/pkg.#{pkg_ext}",
                   ).with(
                     source: "/domain-or-path/pkg.#{pkg_ext}",
-                    backup: false
+                    backup: false,
                   )
                 }
               when 'puppet:///'
                 it {
                   expect(subject).to contain_file(
-                    "/opt/elasticsearch/swdl/pkg.#{pkg_ext}"
+                    "/opt/elasticsearch/swdl/pkg.#{pkg_ext}",
                   ).with(
                     source: "#{schema}domain-or-path/pkg.#{pkg_ext}",
-                    backup: false
+                    backup: false,
                   )
                 }
               else
@@ -184,17 +186,17 @@ describe 'elasticsearch', type: 'class' do
                     let(:params) do
                       default_params.merge(
                         package_url: "#{schema}domain-or-path/pkg.#{pkg_ext}",
-                        download_tool_verify_certificates: verify_certificates
+                        download_tool_verify_certificates: verify_certificates,
                       )
                     end
 
                     flag = verify_certificates ? '' : ' --no-check-certificate'
 
                     it {
-                      expect(subject).to contain_exec('download_package_elasticsearch').
-                        with(
+                      expect(subject).to contain_exec('download_package_elasticsearch')
+                        .with(
                           command: "wget#{flag} -O /opt/elasticsearch/swdl/pkg.#{pkg_ext} #{schema}domain-or-path/pkg.#{pkg_ext} 2> /dev/null",
-                          require: 'File[/opt/elasticsearch/swdl]'
+                          require: 'File[/opt/elasticsearch/swdl]',
                         )
                     }
                   end
@@ -202,11 +204,11 @@ describe 'elasticsearch', type: 'class' do
               end
 
               it {
-                expect(subject).to contain_package('elasticsearch').
-                  with(
+                expect(subject).to contain_package('elasticsearch')
+                  .with(
                     ensure: 'present',
                     source: "/opt/elasticsearch/swdl/pkg.#{pkg_ext}",
-                    provider: pkg_prov
+                    provider: pkg_prov,
                   )
               }
             end
@@ -216,18 +218,18 @@ describe 'elasticsearch', type: 'class' do
             let(:params) do
               default_params.merge(
                 package_url: "http://www.domain.com/package.#{pkg_ext}",
-                proxy_url: 'http://proxy.example.com:12345/'
+                proxy_url: 'http://proxy.example.com:12345/',
               )
             end
 
             it {
-              expect(subject).to contain_exec('download_package_elasticsearch').
-                with(
+              expect(subject).to contain_exec('download_package_elasticsearch')
+                .with(
                   environment: [
                     'use_proxy=yes',
                     'http_proxy=http://proxy.example.com:12345/',
-                    'https_proxy=http://proxy.example.com:12345/'
-                  ]
+                    'https_proxy=http://proxy.example.com:12345/',
+                  ],
                 )
             }
           end
@@ -237,46 +239,46 @@ describe 'elasticsearch', type: 'class' do
       context 'when setting the module to absent' do
         let(:params) do
           default_params.merge(
-            ensure: 'absent'
+            ensure: 'absent',
           )
         end
 
         case facts[:os]['family']
         when 'Suse'
           it {
-            expect(subject).to contain_package('elasticsearch').
-              with(ensure: 'absent')
+            expect(subject).to contain_package('elasticsearch')
+              .with(ensure: 'absent')
           }
         else
           it {
-            expect(subject).to contain_package('elasticsearch').
-              with(ensure: 'purged')
+            expect(subject).to contain_package('elasticsearch')
+              .with(ensure: 'purged')
           }
         end
 
         it {
-          expect(subject).to contain_service('elasticsearch').
-            with(
+          expect(subject).to contain_service('elasticsearch')
+            .with(
               ensure: 'stopped',
-              enable: 'false'
+              enable: 'false',
             )
         }
 
         it {
-          expect(subject).to contain_file('/usr/share/elasticsearch/plugins').
-            with(ensure: 'absent')
+          expect(subject).to contain_file('/usr/share/elasticsearch/plugins')
+            .with(ensure: 'absent')
         }
 
         it {
-          expect(subject).to contain_file("#{defaults_path}/elasticsearch").
-            with(ensure: 'absent')
+          expect(subject).to contain_file("#{defaults_path}/elasticsearch")
+            .with(ensure: 'absent')
         }
       end
 
       context 'When managing the repository' do
         let(:params) do
           default_params.merge(
-            manage_repo: true
+            manage_repo: true,
           )
         end
 
@@ -286,11 +288,94 @@ describe 'elasticsearch', type: 'class' do
       context 'When not managing the repository' do
         let(:params) do
           default_params.merge(
-            manage_repo: false
+            manage_repo: false,
           )
         end
 
         it { is_expected.to compile.with_all_deps }
+      end
+
+      context 'When managing the datadir' do
+        let(:params) do
+          default_params.merge(
+            datadir: '/var/lib/elasticsearch-data',
+            manage_datadir: true,
+          )
+        end
+
+        it {
+          expect(subject).to contain_file('/var/lib/elasticsearch-data')
+            .with(ensure: 'directory')
+        }
+      end
+
+      context 'When not managing the datadir' do
+        let(:params) do
+          default_params.merge(
+            datadir: '/var/lib/elasticsearch-data',
+            manage_datadir: false,
+          )
+        end
+
+        it {
+          expect(subject).not_to contain_file('/var/lib/elasticsearch-data')
+        }
+      end
+
+      context 'When managing the logdir' do
+        let(:params) do
+          default_params.merge(
+            logdir: '/var/log/elasticsearch-log',
+            manage_logdir: true,
+          )
+        end
+
+        it {
+          expect(subject).to contain_file('/var/log/elasticsearch-log')
+            .with(ensure: 'directory')
+        }
+      end
+
+      context 'When not managing the logdir' do
+        let(:params) do
+          default_params.merge(
+            logdir: '/var/log/elasticsearch-log',
+            manage_logdir: false,
+          )
+        end
+
+        it {
+          expect(subject).not_to contain_file('/var/log/elasticsearch-log')
+        }
+      end
+
+      context 'When using custom logging_content String' do
+        let(:params) do
+          default_params.merge(
+            logging_content: '# Content',
+          )
+        end
+
+        it {
+          expect(subject).to contain_file('/etc/elasticsearch/log4j2.properties')
+            .with(ensure: 'file', content: '# Content')
+        }
+      end
+
+      context 'When using custom logging_content Array' do
+        let(:params) do
+          default_params.merge(
+            logging_content: [
+              '# Content Line 1',
+              '# Content Line 2',
+            ],
+          )
+        end
+
+        it {
+          expect(subject).to contain_file('/etc/elasticsearch/log4j2.properties')
+            .with(ensure: 'file', content: "# Content Line 1\n# Content Line 2")
+        }
       end
     end
   end
@@ -301,15 +386,15 @@ describe 'elasticsearch', type: 'class' do
     supported_os: [
       {
         'operatingsystem' => 'CentOS',
-        'operatingsystemrelease' => ['7']
-      }
-    ]
+        'operatingsystemrelease' => ['7'],
+      },
+    ],
   ).each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts.merge(
           scenario: '',
-          common: ''
+          common: '',
         )
       end
 
@@ -320,13 +405,13 @@ describe 'elasticsearch', type: 'class' do
         it { is_expected.to contain_class('elasticsearch::package') }
 
         it {
-          expect(subject).to contain_class('elasticsearch::config').
-            that_requires('Class[elasticsearch::package]')
+          expect(subject).to contain_class('elasticsearch::config')
+            .that_requires('Class[elasticsearch::package]')
         }
 
         it {
-          expect(subject).to contain_class('elasticsearch::service').
-            that_requires('Class[elasticsearch::config]')
+          expect(subject).to contain_class('elasticsearch::service')
+            .that_requires('Class[elasticsearch::config]')
         }
 
         # Base directories
@@ -341,125 +426,178 @@ describe 'elasticsearch', type: 'class' do
       context 'package installation' do
         describe 'with default package' do
           it {
-            expect(subject).to contain_package('elasticsearch').
-              with(ensure: 'present')
+            expect(subject).to contain_package('elasticsearch')
+              .with(ensure: 'present')
           }
 
           it {
-            expect(subject).not_to contain_package('my-elasticsearch').
-              with(ensure: 'present')
+            expect(subject).not_to contain_package('my-elasticsearch')
+              .with(ensure: 'present')
           }
         end
 
         describe 'with specified package name' do
           let(:params) do
             default_params.merge(
-              package_name: 'my-elasticsearch'
+              package_name: 'my-elasticsearch',
             )
           end
 
           it {
-            expect(subject).to contain_package('elasticsearch').
-              with(ensure: 'present', name: 'my-elasticsearch')
+            expect(subject).to contain_package('elasticsearch')
+              .with(ensure: 'present', name: 'my-elasticsearch')
           }
 
           it {
-            expect(subject).not_to contain_package('elasticsearch').
-              with(ensure: 'present', name: 'elasticsearch')
+            expect(subject).not_to contain_package('elasticsearch')
+              .with(ensure: 'present', name: 'elasticsearch')
           }
         end
 
         describe 'with auto upgrade enabled' do
           let(:params) do
             default_params.merge(
-              autoupgrade: true
+              autoupgrade: true,
             )
           end
 
           it {
-            expect(subject).to contain_package('elasticsearch').
-              with(ensure: 'latest')
+            expect(subject).to contain_package('elasticsearch')
+              .with(ensure: 'latest')
+          }
+        end
+
+        describe 'with hold enabled' do
+          let(:params) do
+            default_params.merge(
+              package_hold: true,
+            )
+          end
+
+          it {
+            expect(subject).to contain_package('elasticsearch')
+              .with(mark: 'hold')
           }
         end
       end
 
-      describe 'running a a different user' do
+      describe 'running a different user' do
         let(:params) do
           default_params.merge(
             elasticsearch_user: 'myesuser',
-            elasticsearch_group: 'myesgroup'
+            elasticsearch_group: 'myesgroup',
           )
         end
 
         it {
-          expect(subject).to contain_file('/etc/elasticsearch').
-            with(owner: 'myesuser', group: 'myesgroup')
+          expect(subject).to contain_file('/etc/elasticsearch')
+            .with(owner: 'myesuser', group: 'myesgroup')
         }
 
         it {
-          expect(subject).to contain_file('/var/log/elasticsearch').
-            with(owner: 'myesuser')
+          expect(subject).to contain_file('/var/log/elasticsearch')
+            .with(owner: 'myesuser')
         }
 
         it {
-          expect(subject).to contain_file('/usr/share/elasticsearch').
-            with(owner: 'myesuser', group: 'myesgroup')
+          expect(subject).to contain_file('/usr/share/elasticsearch')
+            .with(owner: 'myesuser', group: 'myesgroup')
         }
 
         it {
-          expect(subject).to contain_file('/var/lib/elasticsearch').
-            with(owner: 'myesuser', group: 'myesgroup')
+          expect(subject).to contain_file('/var/lib/elasticsearch')
+            .with(owner: 'myesuser', group: 'myesgroup')
+        }
+
+        it {
+          expect(subject).to contain_file('/etc/elasticsearch/jvm.options')
+            .with(owner: 'root', group: 'myesgroup')
         }
       end
 
-      describe 'setting jvm_options' do
+      describe 'setting jvm_options before version 7.7.0' do
         jvm_options = [
           '-Xms16g',
-          '-Xmx16g'
+          '-Xmx16g',
         ]
 
         let(:params) do
           default_params.merge(
-            jvm_options: jvm_options
+            jvm_options: jvm_options,
+            version: '7.0.0',
           )
         end
 
         jvm_options.each do |jvm_option|
           it {
-            expect(subject).to contain_file_line("jvm_option_#{jvm_option}").
-              with(
+            expect(subject).to contain_file_line("jvm_option_#{jvm_option}")
+              .with(
                 ensure: 'present',
                 path: '/etc/elasticsearch/jvm.options',
-                line: jvm_option
+                line: jvm_option,
               )
           }
         end
       end
 
+      describe 'setting jvm_options after version 7.7.0' do
+        jvm_options = [
+          '-Xms16g',
+          '-Xmx16g',
+        ]
+
+        let(:params) do
+          default_params.merge(
+            jvm_options: jvm_options,
+            version: '7.7.0',
+          )
+        end
+
+        it {
+          expect(subject).to contain_file('/etc/elasticsearch/jvm.options.d/jvm.options')
+            .with(ensure: 'file')
+        }
+      end
+
       context 'with restart_on_change => true' do
         let(:params) do
           default_params.merge(
-            restart_on_change: true
+            restart_on_change: true,
           )
         end
 
         describe 'should restart elasticsearch' do
           it {
-            expect(subject).to contain_file('/etc/elasticsearch/elasticsearch.yml').
-              that_notifies('Service[elasticsearch]')
+            expect(subject).to contain_file('/etc/elasticsearch/elasticsearch.yml')
+              .that_notifies('Service[elasticsearch]')
           }
         end
 
-        describe 'setting jvm_options triggers restart' do
+        describe 'setting jvm_options triggers restart before version 7.7.0' do
           let(:params) do
             super().merge(
-              jvm_options: ['-Xmx16g']
+              jvm_options: ['-Xmx16g'],
+              version: '7.0.0',
             )
           end
 
           it {
-            expect(subject).to contain_file_line('jvm_option_-Xmx16g').
-              that_notifies('Service[elasticsearch]')
+            expect(subject).to contain_file_line('jvm_option_-Xmx16g')
+              .that_notifies('Service[elasticsearch]')
+          }
+        end
+
+        describe 'setting jvm_options triggers restart after version 7.7.0' do
+          let(:params) do
+            super().merge(
+              jvm_options: ['-Xmx16g'],
+              version: '7.7.0',
+            )
+          end
+
+          it {
+            expect(subject).to contain_file('/etc/elasticsearch/jvm.options.d/jvm.options')
+              .that_notifies('Service[elasticsearch]')
           }
         end
       end
@@ -473,6 +611,10 @@ describe 'elasticsearch', type: 'class' do
             'index'
           when 'snapshot_repositories'
             'snapshot_repository'
+          when 'ilm_policies'
+            'ilm_policy'
+          when 'slm_policies'
+            'slm_policy'
           else
             string[0..-2]
           end
@@ -485,16 +627,20 @@ describe 'elasticsearch', type: 'class' do
           'plugins' => { 'head' => {} },
           'roles' => { 'elastic_role' => {} },
           'scripts' => {
-            'foo' => { 'source' => 'puppet:///path/to/foo.groovy' }
+            'foo' => { 'source' => 'puppet:///path/to/foo.groovy' },
           },
           'snapshot_repositories' => { 'backup' => { 'location' => '/backups' } },
+          'slm_policies' => { 'foo' => { 'content' => {} } },
           'templates' => { 'foo' => { 'content' => {} } },
-          'users' => { 'elastic' => { 'password' => 'foobar' } }
+          'users' => { 'elastic' => { 'password' => 'foobar' } },
+          'index_templates' => { 'foo' => { 'content' => {} } },
+          'component_templates' => { 'foo' => { 'content' => {} } },
+          'ilm_policies' => { 'foo' => { 'content' => {} } },
         }.each_pair do |deftype, params|
           describe deftype do
             let(:params) do
               default_params.merge(
-                deftype => params
+                deftype => params,
               )
             end
 
@@ -516,7 +662,7 @@ describe 'elasticsearch', type: 'class' do
 
         it do
           expect(subject).to contain_package('elasticsearch').with(
-            name: 'elasticsearch-oss'
+            name: 'elasticsearch-oss',
           )
         end
       end

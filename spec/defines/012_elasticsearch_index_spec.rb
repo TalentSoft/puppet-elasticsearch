@@ -13,15 +13,15 @@ describe 'elasticsearch::index', type: 'define' do
     supported_os: [
       {
         'operatingsystem' => 'CentOS',
-        'operatingsystemrelease' => ['6']
-      }
-    ]
+        'operatingsystemrelease' => ['6'],
+      },
+    ],
   ).each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts.merge(
           scenario: '',
-          common: ''
+          common: '',
         )
       end
 
@@ -30,7 +30,7 @@ describe 'elasticsearch::index', type: 'define' do
           let :params do
             {
               :ensure => 'present',
-              param => 'foo/cert'
+              param => 'foo/cert',
             }
           end
 
@@ -47,7 +47,7 @@ describe 'elasticsearch::index', type: 'define' do
       describe 'class parameter inheritance' do
         let :params do
           {
-            ensure: 'present'
+            ensure: 'present',
           }
         end
         let(:pre_condition) do
@@ -69,7 +69,7 @@ describe 'elasticsearch::index', type: 'define' do
         it do
           expect(subject).to contain_elasticsearch__index(title)
           expect(subject).to contain_es_instance_conn_validator(
-            "#{title}-index-conn-validator"
+            "#{title}-index-conn-validator",
           ).that_comes_before("elasticsearch_index[#{title}]")
           expect(subject).to contain_elasticsearch_index(title).with(
             ensure: 'present',
@@ -82,7 +82,7 @@ describe 'elasticsearch::index', type: 'define' do
             password: 'password',
             ca_file: '/foo/bar.pem',
             ca_path: '/foo/',
-            validate_tls: false
+            validate_tls: false,
           )
         end
       end
@@ -90,7 +90,7 @@ describe 'elasticsearch::index', type: 'define' do
       describe 'index deletion' do
         let :params do
           {
-            ensure: 'absent'
+            ensure: 'absent',
           }
         end
 

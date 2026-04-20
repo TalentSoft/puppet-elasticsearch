@@ -4,7 +4,7 @@ require 'puppet/provider/elastic_parsedfile'
 
 Puppet::Type.type(:elasticsearch_user_file).provide(
   :ruby,
-  parent: Puppet::Provider::ElasticParsedFile
+  parent: Puppet::Provider::ElasticParsedFile,
 ) do
   desc 'Provider for X-Pack elasticsearch users using plain files.'
 

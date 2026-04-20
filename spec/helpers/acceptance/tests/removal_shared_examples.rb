@@ -12,7 +12,7 @@ shared_examples 'module removal' do |es_config|
       apply_manifest(manifest, catch_failures: true, debug: v[:puppet_debug])
     end
 
-    describe package("elasticsearch#{v[:oss] ? '-oss' : ''}") do
+    describe package("elasticsearch#{'-oss' if v[:oss]}") do
       it { is_expected.not_to be_installed }
     end
 

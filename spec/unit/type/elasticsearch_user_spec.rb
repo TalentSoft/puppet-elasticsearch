@@ -35,7 +35,7 @@ require 'spec_helper_rspec'
           expect do
             described_class.new(
               name: resource_name,
-              ensure: :present
+              ensure: :present,
             )
           end.not_to raise_error
         end
@@ -44,7 +44,7 @@ require 'spec_helper_rspec'
           expect do
             described_class.new(
               name: resource_name,
-              ensure: :absent
+              ensure: :absent,
             )
           end.not_to raise_error
         end
@@ -53,7 +53,7 @@ require 'spec_helper_rspec'
           expect do
             described_class.new(
               name: resource_name,
-              ensure: :foo
+              ensure: :foo,
             )
           end.to raise_error(Puppet::Error, %r{Invalid value})
         end
@@ -61,7 +61,7 @@ require 'spec_helper_rspec'
 
       {
         hashed_password: :property,
-        password: :param
+        password: :param,
       }.each_pair do |attribute, type|
         next unless described_class.respond_to? attribute
 
@@ -77,7 +77,7 @@ require 'spec_helper_rspec'
           expect do
             described_class.new(
               name: resource_name,
-              password: 'foo'
+              password: 'foo',
             )
           end.to raise_error(Puppet::Error, %r{must be at least})
         end

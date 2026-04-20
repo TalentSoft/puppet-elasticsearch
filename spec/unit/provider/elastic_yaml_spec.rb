@@ -27,17 +27,17 @@ describe Puppet::Provider::ElasticYaml do
           'gamma' => 4,
           'delta' => 3,
           'beta' => 2,
-          'alpha' => 1
+          'alpha' => 1,
         },
         'phi' => [{
           'zeta' => 3,
           'gamma' => 2,
-          'alpha' => 1
+          'alpha' => 1,
         }],
         'beta' => 'foobaz',
         'gamma' => 1,
-        'alpha' => 'foobar'
-      }
+        'alpha' => 'foobar',
+      },
     }]
   end
 
@@ -61,7 +61,7 @@ describe Puppet::Provider::ElasticYaml do
               delta: 3
               gamma: 4
               zeta: 5
-        ).flattened)
+        ).flattened),
       )
     end
   end

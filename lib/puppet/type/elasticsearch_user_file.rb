@@ -23,7 +23,7 @@ Puppet::Type.newtype(:elasticsearch_user_file) do
 
   newproperty(
     :hashed_password,
-    required_features: :manages_encrypted_passwords
+    required_features: :manages_encrypted_passwords,
   ) do
     desc 'Hashed password for user.'
 

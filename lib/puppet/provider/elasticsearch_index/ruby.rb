@@ -14,12 +14,12 @@ Puppet::Type.type(:elasticsearch_index).provide(
   metadata_pipeline: [
     ->(data) { data['settings'] },
     ->(data) { Puppet_X::Elastic.deep_to_s data },
-    ->(data) { Puppet_X::Elastic.deep_to_i data }
+    ->(data) { Puppet_X::Elastic.deep_to_i data },
   ],
   api_uri: '_settings',
   api_discovery_uri: '_all',
   api_resource_style: :prefix,
-  discrete_resource_creation: true
+  discrete_resource_creation: true,
 ) do
   desc 'A REST API based provider to manage Elasticsearch index settings.'
 

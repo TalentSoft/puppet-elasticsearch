@@ -25,7 +25,7 @@ describe Puppet::Type.type(:elasticsearch_role_mapping) do
         expect do
           described_class.new(
             name: resource_name,
-            ensure: :present
+            ensure: :present,
           )
         end.not_to raise_error
       end
@@ -34,7 +34,7 @@ describe Puppet::Type.type(:elasticsearch_role_mapping) do
         expect do
           described_class.new(
             name: resource_name,
-            ensure: :absent
+            ensure: :absent,
           )
         end.not_to raise_error
       end
@@ -43,7 +43,7 @@ describe Puppet::Type.type(:elasticsearch_role_mapping) do
         expect do
           described_class.new(
             name: resource_name,
-            ensure: :foo
+            ensure: :foo,
           )
         end.to raise_error(Puppet::Error, %r{Invalid value})
       end
@@ -53,11 +53,11 @@ describe Puppet::Type.type(:elasticsearch_role_mapping) do
       it 'rejects long role names' do
         expect do
           described_class.new(
-            name: 'a' * 41
+            name: 'a' * 41,
           )
         end.to raise_error(
           Puppet::ResourceError,
-          %r{valid values}i
+          %r{valid values}i,
         )
       end
 
@@ -65,11 +65,11 @@ describe Puppet::Type.type(:elasticsearch_role_mapping) do
         ['@foobar', '0foobar'].each do |role|
           expect do
             described_class.new(
-              name: role
+              name: role,
             )
           end.to raise_error(
             Puppet::ResourceError,
-            %r{valid values}i
+            %r{valid values}i,
           )
         end
       end

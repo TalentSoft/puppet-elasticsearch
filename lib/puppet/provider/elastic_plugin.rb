@@ -13,7 +13,7 @@ class Puppet::Provider::ElasticPlugin < Puppet::Provider
   #
   # @return String
   def homedir
-    case Facter.value('osfamily')
+    case Facter.value('os.family')
     when 'OpenBSD'
       '/usr/local/elasticsearch'
     else
@@ -137,7 +137,7 @@ class Puppet::Provider::ElasticPlugin < Puppet::Provider
   def with_environment(&block)
     env_vars = {
       'ES_JAVA_OPTS' => @resource[:java_opts],
-      'ES_PATH_CONF' => @resource[:configdir]
+      'ES_PATH_CONF' => @resource[:configdir],
     }
     saved_vars = {}
 
@@ -151,7 +151,7 @@ class Puppet::Provider::ElasticPlugin < Puppet::Provider
     env_vars['ES_JAVA_OPTS'] = env_vars['ES_JAVA_OPTS'].join(' ')
 
     env_vars.each do |env_var, value|
-      saved_vars[env_var] = ENV[env_var]
+      saved_vars[env_var] = ENV.fetch(env_var, nil)
       ENV[env_var] = value
     end
 

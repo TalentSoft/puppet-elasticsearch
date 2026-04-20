@@ -12,20 +12,12 @@ describe 'elasticsearch::user' do
     EOS
   end
 
-  on_supported_os(
-    hardwaremodels: ['x86_64'],
-    supported_os: [
-      {
-        'operatingsystem' => 'CentOS',
-        'operatingsystemrelease' => ['7']
-      }
-    ]
-  ).each do |os, facts|
+  on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts.merge(
           scenario: '',
-          common: ''
+          common: '',
         )
       end
 
@@ -33,7 +25,7 @@ describe 'elasticsearch::user' do
         let(:params) do
           {
             password: 'foobar',
-            roles: %w[monitor user]
+            roles: %w[monitor user],
           }
         end
 
@@ -43,9 +35,30 @@ describe 'elasticsearch::user' do
         it do
           expect(subject).to contain_elasticsearch_user_roles('elastic').with(
             'ensure' => 'present',
-            'roles' => %w[monitor user]
+            'roles' => %w[monitor user],
           )
         end
+      end
+
+      context 'ensure absent without password' do
+        let(:params) do
+          {
+            ensure: 'absent',
+          }
+        end
+
+        it { is_expected.to compile }
+        it { is_expected.to contain_elasticsearch_user('elastic').with_ensure('absent') }
+      end
+
+      context 'ensure present without password' do
+        let(:params) do
+          {
+            ensure: 'present',
+          }
+        end
+
+        it { is_expected.to compile.and_raise_error(%r{Password must be specified}) }
       end
 
       describe 'collector ordering' do
@@ -67,7 +80,7 @@ describe 'elasticsearch::user' do
         let(:params) do
           {
             password: 'foobar',
-            roles: %w[monitor user]
+            roles: %w[monitor user],
           }
         end
 
@@ -76,12 +89,12 @@ describe 'elasticsearch::user' do
         it { is_expected.to contain_elasticsearch_role_mapping('test_role') }
 
         it {
-          expect(subject).to contain_elasticsearch__user('elastic').
-            that_comes_before([
-                                'Elasticsearch::Template[foo]'
-                              ]).that_requires([
-                                                 'Elasticsearch::Role[test_role]'
-                                               ])
+          expect(subject).to contain_elasticsearch__user('elastic')
+            .that_comes_before([
+                                 'Elasticsearch::Template[foo]',
+                               ]).that_requires([
+                                                  'Elasticsearch::Role[test_role]',
+                                                ])
         }
 
         include_examples 'class', :systemd

@@ -13,10 +13,10 @@ describe Puppet::Type.type(:elasticsearch_pipeline).provider(:ruby) do # rubocop
         'processors' => [{
           'set' => {
             'field' => 'foo',
-            'value' => 'bar'
-          }
-        }]
-      }
+            'value' => 'bar',
+          },
+        }],
+      },
     }
   end
 
@@ -27,10 +27,10 @@ describe Puppet::Type.type(:elasticsearch_pipeline).provider(:ruby) do # rubocop
         'processors' => [{
           'set' => {
             'field' => 'foo',
-            'value' => 'bar'
-          }
-        }]
-      }
+            'value' => 'bar',
+          },
+        }],
+      },
     }
   end
 
@@ -44,15 +44,15 @@ describe Puppet::Type.type(:elasticsearch_pipeline).provider(:ruby) do # rubocop
         'processors' => [{
           'set' => {
             'field' => 'firstname',
-            'value' => 'rick'
-          }
+            'value' => 'rick',
+          },
         }, {
           'set' => {
             'field' => 'lastname',
-            'value' => 'astley'
-          }
-        }]
-      }
+            'value' => 'astley',
+          },
+        },],
+      },
     }
   end
 
@@ -63,22 +63,22 @@ describe Puppet::Type.type(:elasticsearch_pipeline).provider(:ruby) do # rubocop
         'processors' => [{
           'set' => {
             'field' => 'firstname',
-            'value' => 'rick'
-          }
+            'value' => 'rick',
+          },
         }, {
           'set' => {
             'field' => 'lastname',
-            'value' => 'astley'
-          }
-        }]
-      }
+            'value' => 'astley',
+          },
+        },],
+      },
     }
   end
 
   let(:bare_resource) do
     JSON.dump(
       'description' => 'Empty pipeline',
-      'processors' => []
+      'processors' => [],
     )
   end
 
@@ -89,8 +89,8 @@ describe Puppet::Type.type(:elasticsearch_pipeline).provider(:ruby) do # rubocop
       name: 'foo',
       content: {
         'description' => 'Empty pipeline',
-        'processors' => []
-      }
+        'processors' => [],
+      },
     }
   end
 

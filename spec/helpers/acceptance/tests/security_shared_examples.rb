@@ -8,7 +8,7 @@ shared_examples 'security plugin manifest' do |credentials|
   let(:extra_manifest) do
     users = credentials.map do |username, meta|
       <<-USER
-        #{meta[:changed] ? "notify { 'password change for #{username}' : } ~>" : ''}
+        #{"notify { 'password change for #{username}' : } ~>" if meta[:changed]}
         elasticsearch::user { '#{username}':
           password => '#{meta[:hash] || meta[:plaintext]}',
           roles    => #{meta[:roles].reduce({}) { |acc, elem| acc.merge(elem) }.keys},
@@ -44,7 +44,7 @@ shared_examples 'security plugin manifest' do |credentials|
 
   include_examples(
     'manifest application',
-    credentials.values.map { |p| p[:changed] }.none?
+    credentials.values.map { |p| p[:changed] }.none?,
   )
 end
 
@@ -66,7 +66,7 @@ shared_examples 'secured request' do |test_desc, es_config, path, http_test, exp
 end
 
 shared_examples 'security acceptance tests' do |es_config|
-  describe 'security plugin operations', if: vault_available?, then_purge: true, with_license: true, with_certificates: true do
+  describe 'security plugin operations', :then_purge, :with_certificates, :with_license, if: vault_available? do
     rand_string = -> { [*('a'..'z')].sample(8).join }
 
     admin_user = rand_string.call
@@ -99,7 +99,7 @@ shared_examples 'security acceptance tests' do |es_config|
       describe 'user authentication' do
         username_passwords = {
           user_one => { plaintext: user_one_pw, roles: [{ 'superuser' => [] }] },
-          user_two => { plaintext: user_two_pw, roles: [{ 'superuser' => [] }] }
+          user_two => { plaintext: user_two_pw, roles: [{ 'superuser' => [] }] },
         }.merge(admin)
         username_passwords[user_two][:hash] = bcrypt(username_passwords[user_two][:plaintext])
 
@@ -129,8 +129,8 @@ shared_examples 'security acceptance tests' do |es_config|
           user_one => {
             plaintext: new_password,
             changed: true,
-            roles: [{ 'superuser' => [] }]
-          }
+            roles: [{ 'superuser' => [] }],
+          },
         }
 
         include_examples('security plugin manifest', username_passwords)
@@ -155,11 +155,11 @@ shared_examples 'security acceptance tests' do |es_config|
             roles: [{
               rand_string.call => {
                 'cluster' => [
-                  'cluster:monitor/health'
-                ]
-              }
-            }]
-          }
+                  'cluster:monitor/health',
+                ],
+              },
+            }],
+          },
         }
 
         include_examples('security plugin manifest', user)

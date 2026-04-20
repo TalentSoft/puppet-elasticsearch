@@ -28,25 +28,25 @@ describe 'deep_implode' do
 
       it {
         expect(subject).to run.with_params({
-                                             'key' => value
+                                             'key' => value,
                                            }).and_return({
-                                                           'key' => value
+                                                           'key' => value,
                                                          })
       }
 
       it {
         expect(subject).to run.with_params({
-                                             'key' => { 'subkey' => value }
+                                             'key' => { 'subkey' => value },
                                            }).and_return({
-                                                           'key.subkey' => value
+                                                           'key.subkey' => value,
                                                          })
       }
 
       it {
         expect(subject).to run.with_params({
-                                             'key' => { 'subkey' => { 'subsubkey' => { 'bottom' => value } } }
+                                             'key' => { 'subkey' => { 'subsubkey' => { 'bottom' => value } } },
                                            }).and_return({
-                                                           'key.subkey.subsubkey.bottom' => value
+                                                           'key.subkey.subsubkey.bottom' => value,
                                                          })
       }
     end
@@ -57,11 +57,11 @@ describe 'deep_implode' do
     it {
       expect(subject).to run.with_params({
                                            'key1' => {
-                                             'subkey1' => 'value1'
+                                             'subkey1' => 'value1',
                                            },
-                                           'key1.subkey1' => 'value2'
+                                           'key1.subkey1' => 'value2',
                                          }).and_return({
-                                                         'key1.subkey1' => 'value2'
+                                                         'key1.subkey1' => 'value2',
                                                        })
     }
 
@@ -69,10 +69,10 @@ describe 'deep_implode' do
       expect(subject).to run.with_params({
                                            'key1.subkey1' => 'value2',
                                            'key1' => {
-                                             'subkey1' => 'value1'
-                                           }
+                                             'subkey1' => 'value1',
+                                           },
                                          }).and_return({
-                                                         'key1.subkey1' => 'value2'
+                                                         'key1.subkey1' => 'value2',
                                                        })
     }
   end
@@ -81,34 +81,11 @@ describe 'deep_implode' do
     it {
       expect(subject).to run.with_params({
                                            'key1' => {
-                                             'subkey1' => ['value1']
+                                             'subkey1' => ['value1'],
                                            },
-                                           'key1.subkey1' => ['value2']
+                                           'key1.subkey1' => ['value2'],
                                          }).and_return({
-                                                         'key1.subkey1' => %w[value2 value1]
-                                                       })
-    }
-
-    it {
-      expect(subject).to run.with_params({
-                                           'key1' => {
-                                             'subkey1' => { 'key2' => 'value1' }
-                                           },
-                                           'key1.subkey1' => { 'key3' => 'value2' }
-                                         }).and_return({
-                                                         'key1.subkey1.key2' => 'value1',
-                                                         'key1.subkey1.key3' => 'value2'
-                                                       })
-    }
-
-    it {
-      expect(subject).to run.with_params({
-                                           'key1' => {
-                                             'subkey1' => { 'key2' => ['value1'] }
-                                           },
-                                           'key1.subkey1' => { 'key2' => ['value2'] }
-                                         }).and_return({
-                                                         'key1.subkey1.key2' => %w[value2 value1]
+                                                         'key1.subkey1' => %w[value2 value1],
                                                        })
     }
 
@@ -116,10 +93,33 @@ describe 'deep_implode' do
       expect(subject).to run.with_params({
                                            'key1' => {
                                              'subkey1' => { 'key2' => 'value1' },
-                                             'subkey1.key2' => 'value2'
-                                           }
+                                           },
+                                           'key1.subkey1' => { 'key3' => 'value2' },
                                          }).and_return({
-                                                         'key1.subkey1.key2' => 'value2'
+                                                         'key1.subkey1.key2' => 'value1',
+                                                         'key1.subkey1.key3' => 'value2',
+                                                       })
+    }
+
+    it {
+      expect(subject).to run.with_params({
+                                           'key1' => {
+                                             'subkey1' => { 'key2' => ['value1'] },
+                                           },
+                                           'key1.subkey1' => { 'key2' => ['value2'] },
+                                         }).and_return({
+                                                         'key1.subkey1.key2' => %w[value2 value1],
+                                                       })
+    }
+
+    it {
+      expect(subject).to run.with_params({
+                                           'key1' => {
+                                             'subkey1' => { 'key2' => 'value1' },
+                                             'subkey1.key2' => 'value2',
+                                           },
+                                         }).and_return({
+                                                         'key1.subkey1.key2' => 'value2',
                                                        })
     }
   end

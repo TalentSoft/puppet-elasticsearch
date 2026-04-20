@@ -13,15 +13,15 @@ describe 'elasticsearch::pipeline', type: 'define' do
     supported_os: [
       {
         'operatingsystem' => 'CentOS',
-        'operatingsystemrelease' => ['6']
-      }
-    ]
+        'operatingsystemrelease' => ['6'],
+      },
+    ],
   ).each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts.merge(
           scenario: '',
-          common: ''
+          common: '',
         )
       end
 
@@ -31,7 +31,7 @@ describe 'elasticsearch::pipeline', type: 'define' do
             {
               :ensure => 'present',
               :content => {},
-              param => 'foo/cert'
+              param => 'foo/cert',
             }
           end
 
@@ -49,7 +49,7 @@ describe 'elasticsearch::pipeline', type: 'define' do
         let :params do
           {
             ensure: 'present',
-            content: {}
+            content: {},
           }
         end
         let(:pre_condition) do
@@ -70,8 +70,8 @@ describe 'elasticsearch::pipeline', type: 'define' do
 
         it do
           expect(subject).to contain_elasticsearch__pipeline(title)
-          expect(subject).to contain_es_instance_conn_validator("#{title}-ingest-pipeline").
-            that_comes_before("elasticsearch_pipeline[#{title}]")
+          expect(subject).to contain_es_instance_conn_validator("#{title}-ingest-pipeline")
+            .that_comes_before("elasticsearch_pipeline[#{title}]")
           expect(subject).to contain_elasticsearch_pipeline(title).with(
             ensure: 'present',
             content: {},
@@ -83,7 +83,7 @@ describe 'elasticsearch::pipeline', type: 'define' do
             password: 'password',
             ca_file: '/foo/bar.pem',
             ca_path: '/foo/',
-            validate_tls: false
+            validate_tls: false,
           )
         end
       end
@@ -91,7 +91,7 @@ describe 'elasticsearch::pipeline', type: 'define' do
       describe 'pipeline deletion' do
         let :params do
           {
-            ensure: 'absent'
+            ensure: 'absent',
           }
         end
 

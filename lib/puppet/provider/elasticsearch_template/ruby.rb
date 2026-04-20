@@ -14,8 +14,8 @@ Puppet::Type.type(:elasticsearch_template).provide(
   metadata: :content,
   metadata_pipeline: [
     ->(data) { Puppet_X::Elastic.deep_to_s data },
-    ->(data) { Puppet_X::Elastic.deep_to_i data }
-  ]
+    ->(data) { Puppet_X::Elastic.deep_to_i data },
+  ],
 ) do
   desc 'A REST API based provider to manage Elasticsearch templates.'
 

@@ -47,8 +47,8 @@ shared_examples 'template content' do |es_config, template|
     subject { shell("curl http://localhost:#{elasticsearch_port}/_template") }
 
     it 'returns the installed template', :with_retries do
-      expect(JSON.parse(subject.stdout).values).
-        to include(include(template))
+      expect(JSON.parse(subject.stdout).values)
+        .to include(include(template))
     end
   end
 end
@@ -57,18 +57,18 @@ end
 shared_examples 'template operations' do |es_config, template|
   describe 'template resources' do
     before :all do # rubocop:disable RSpec/BeforeAfterAll
-      shell "mkdir -p #{default['distmoduledir']}/another/files"
+      shell "mkdir -p #{default.puppet['codedir']}/modules/another/files"
 
       create_remote_file(
         default,
-        "#{default['distmoduledir']}/another/files/good.json",
-        JSON.dump(template)
+        "#{default.puppet['codedir']}/modules/another/files/good.json",
+        JSON.dump(template),
       )
 
       create_remote_file(
         default,
-        "#{default['distmoduledir']}/another/files/bad.json",
-        JSON.dump(template)[0..-5]
+        "#{default.puppet['codedir']}/modules/another/files/bad.json",
+        JSON.dump(template)[0..-5],
       )
     end
 
@@ -79,7 +79,7 @@ shared_examples 'template operations' do |es_config, template|
           es_config,
           SecureRandom.hex(8),
           template,
-          "source => 'puppet:///modules/another/good.json'"
+          "source => 'puppet:///modules/another/good.json'",
         )
       end
 
@@ -89,7 +89,7 @@ shared_examples 'template operations' do |es_config, template|
           es_config,
           SecureRandom.hex(8),
           template,
-          "content => '#{JSON.dump(template)}'"
+          "content => '#{JSON.dump(template)}'",
         )
       end
 

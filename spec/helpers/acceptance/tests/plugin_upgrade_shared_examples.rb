@@ -13,9 +13,9 @@ shared_examples 'plugin upgrade acceptance tests' do |plugin|
       'es-01' => {
         'config' => {
           'http.port' => 9200,
-          'node.name' => 'elasticsearch001'
-        }
-      }
+          'node.name' => 'elasticsearch001',
+        },
+      },
     }
 
     describe 'installation' do
@@ -31,7 +31,7 @@ shared_examples 'plugin upgrade acceptance tests' do |plugin|
 
           include_examples(
             'manifest application',
-            instances
+            instances,
           )
 
           include_examples(
@@ -39,7 +39,7 @@ shared_examples 'plugin upgrade acceptance tests' do |plugin|
             instances,
             'contains the initial plugin version',
             'name' => plugin[:name],
-            'version' => plugin[:initial]
+            'version' => plugin[:initial],
           )
         end
 
@@ -54,7 +54,7 @@ shared_examples 'plugin upgrade acceptance tests' do |plugin|
 
           include_examples(
             'manifest application',
-            instances
+            instances,
           )
 
           include_examples(
@@ -62,7 +62,7 @@ shared_examples 'plugin upgrade acceptance tests' do |plugin|
             instances,
             'contains the upgraded plugin version',
             'name' => plugin[:name],
-            'version' => plugin[:upgraded]
+            'version' => plugin[:upgraded],
           )
         end
       end

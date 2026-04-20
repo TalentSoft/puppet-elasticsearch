@@ -23,8 +23,8 @@ describe Puppet::Type.type(:elasticsearch_role_mapping).provider(:ruby) do
           ensure: :present,
           name: 'admin',
           mappings: [
-            'cn=users,dc=example,dc=com'
-          ]
+            'cn=users,dc=example,dc=com',
+          ],
         )
       end
     end

@@ -3,11 +3,15 @@
 require 'spec_helper_acceptance'
 require 'helpers/acceptance/tests/basic_shared_examples'
 require 'helpers/acceptance/tests/template_shared_examples'
+require 'helpers/acceptance/tests/component_template_shared_examples'
+require 'helpers/acceptance/tests/index_template_shared_examples'
 require 'helpers/acceptance/tests/removal_shared_examples'
 require 'helpers/acceptance/tests/pipeline_shared_examples'
+require 'helpers/acceptance/tests/ilm_policy_shared_examples'
 require 'helpers/acceptance/tests/plugin_shared_examples'
 require 'helpers/acceptance/tests/plugin_upgrade_shared_examples'
 require 'helpers/acceptance/tests/snapshot_repository_shared_examples'
+require 'helpers/acceptance/tests/slm_policy_shared_examples'
 require 'helpers/acceptance/tests/datadir_shared_examples'
 require 'helpers/acceptance/tests/package_url_shared_examples'
 require 'helpers/acceptance/tests/hiera_shared_examples'
@@ -19,7 +23,7 @@ describe "elasticsearch v#{v[:elasticsearch_full_version]} class" do
     'cluster.name' => v[:cluster_name],
     'http.bind_host' => '0.0.0.0',
     'http.port' => 9200,
-    'node.name' => 'elasticsearch01'
+    'node.name' => 'elasticsearch01',
   }
 
   let(:elastic_repo) { !v[:is_snapshot] }
@@ -60,13 +64,21 @@ describe "elasticsearch v#{v[:elasticsearch_full_version]} class" do
 
   include_examples('template operations', es_config, v[:template])
 
+  include_examples('component template operations', es_config, v[:component_template])
+
+  include_examples('index template operations', es_config, v[:index_template])
+
   include_examples('pipeline operations', es_config, v[:pipeline])
+
+  include_examples('ILM policy operations', es_config, v[:ilm_policy])
+
+  include_examples('SLM policy operations', es_config, v[:slm_policy])
 
   unless v[:elasticsearch_plugins].empty?
     include_examples(
       'plugin acceptance tests',
       es_config,
-      v[:elasticsearch_plugins]
+      v[:elasticsearch_plugins],
     )
   end
 

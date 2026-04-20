@@ -19,19 +19,19 @@ describe Puppet::Type.type(:elasticsearch_index).provider(:ruby) do # rubocop:di
           'routing' => {
             'allocation' => {
               'include' => {
-                'size' => 'big'
-              }
-            }
+                'size' => 'big',
+              },
+            },
           },
           'store' => {
-            'type' => 'niofs'
+            'type' => 'niofs',
           },
           'uuid' => 'vtJrcgyeRviqllRakSlrSw',
           'version' => {
-            'created' => 5_020_199
-          }
-        }
-      }
+            'created' => 5_020_199,
+          },
+        },
+      },
     }
   end
 
@@ -47,20 +47,20 @@ describe Puppet::Type.type(:elasticsearch_index).provider(:ruby) do # rubocop:di
             'routing' => {
               'allocation' => {
                 'include' => {
-                  'size' => 'big'
-                }
-              }
+                  'size' => 'big',
+                },
+              },
             },
             'store' => {
-              'type' => 'niofs'
+              'type' => 'niofs',
             },
             'uuid' => 'vtJrcgyeRviqllRakSlrSw',
             'version' => {
-              'created' => '5020199'
-            }
-          }
-        }
-      }
+              'created' => '5020199',
+            },
+          },
+        },
+      },
     }
   end
 
@@ -77,10 +77,10 @@ describe Puppet::Type.type(:elasticsearch_index).provider(:ruby) do # rubocop:di
           'provided_name' => 'a',
           'uuid' => 'vtJrcgyeRviqllRakSlrSw',
           'version' => {
-            'created' => 5_020_199
-          }
-        }
-      }
+            'created' => 5_020_199,
+          },
+        },
+      },
     }
   end
 
@@ -95,19 +95,19 @@ describe Puppet::Type.type(:elasticsearch_index).provider(:ruby) do # rubocop:di
             'provided_name' => 'a',
             'uuid' => 'vtJrcgyeRviqllRakSlrSw',
             'version' => {
-              'created' => '5020199'
-            }
-          }
-        }
-      }
+              'created' => '5020199',
+            },
+          },
+        },
+      },
     }
   end
 
   let(:bare_resource) do
     JSON.dump(
       'index' => {
-        'number_of_replicas' => 0
-      }
+        'number_of_replicas' => 0,
+      },
     )
   end
 
@@ -118,9 +118,9 @@ describe Puppet::Type.type(:elasticsearch_index).provider(:ruby) do # rubocop:di
       name: name,
       settings: {
         'index' => {
-          'number_of_replicas' => '0'
-        }
-      }
+          'number_of_replicas' => '0',
+        },
+      },
     }
   end
 

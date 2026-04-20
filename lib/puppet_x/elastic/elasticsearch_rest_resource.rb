@@ -82,7 +82,7 @@ module ElasticsearchRESTResource
     extender.newparam(
       :validate_tls,
       boolean: true,
-      parent: Puppet::Parameter::Boolean
+      parent: Puppet::Parameter::Boolean,
     ) do
       desc 'Whether to verify TLS/SSL certificates.'
       defaultto true

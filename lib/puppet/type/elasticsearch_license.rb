@@ -24,16 +24,16 @@ Puppet::Type.newtype(:elasticsearch_license) do
     def insync?(value)
       Puppet_X::Elastic.asymmetric_compare(
         should.transform_values { |v| v.is_a?(Hash) ? (v.reject { |s, _| s == 'signature' }) : v },
-        value
+        value,
       )
     end
 
     def should_to_s(newvalue)
       newvalue.transform_values do |license_data|
         if license_data.is_a? Hash
-          license_data.map do |field, value|
-            [field, field == 'signature' ? '[redacted]' : value]
-          end.to_h
+          license_data.to_h do |field, value|
+            [field, (field == 'signature') ? '[redacted]' : value]
+          end
         else
           v
         end

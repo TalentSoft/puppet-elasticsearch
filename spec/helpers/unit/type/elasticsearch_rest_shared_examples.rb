@@ -27,7 +27,7 @@ shared_examples 'REST API types' do |resource_type, meta_property|
 
     [
       :ensure,
-      meta_property
+      meta_property,
     ].each do |prop|
       it "has a #{prop} property" do
         expect(described_class.attrtype(prop)).to eq(:property)
@@ -45,32 +45,32 @@ shared_examples 'REST API types' do |resource_type, meta_property|
         expect do
           described_class.new(
             :name => resource_name,
-            meta_property => '{"foo":}'
+            meta_property => '{"foo":}',
           )
         end.to raise_error(Puppet::Error, %r{hash expected}i)
 
         expect do
           described_class.new(
             :name => resource_name,
-            meta_property => 0
+            meta_property => 0,
           )
         end.to raise_error(Puppet::Error, %r{hash expected}i)
 
         expect do
           described_class.new(
             default_params.merge(
-              name: resource_name
-            )
+              name: resource_name,
+            ),
           )
         end.not_to raise_error
       end
 
-      it 'parses PSON-like values for certain types' do
+      it 'parses JSON-like values for certain types' do
         expect(described_class.new(
           :name => resource_name,
-          meta_property => { 'key' => { 'value' => '0', 'other' => true } }
+          meta_property => { 'key' => { 'value' => '0', 'other' => true } },
         )[meta_property]).to include(
-          'key' => { 'value' => 0, 'other' => true }
+          'key' => { 'value' => 0, 'other' => true },
         )
       end
     end
@@ -81,8 +81,8 @@ shared_examples 'REST API types' do |resource_type, meta_property|
           described_class.new(
             default_params.merge(
               name: resource_name,
-              ensure: :present
-            )
+              ensure: :present,
+            ),
           )
         end.not_to raise_error
       end
@@ -92,8 +92,8 @@ shared_examples 'REST API types' do |resource_type, meta_property|
           described_class.new(
             default_params.merge(
               name: resource_name,
-              ensure: :absent
-            )
+              ensure: :absent,
+            ),
           )
         end.not_to raise_error
       end
@@ -103,8 +103,8 @@ shared_examples 'REST API types' do |resource_type, meta_property|
           described_class.new(
             default_params.merge(
               name: resource_name,
-              ensure: :foo
-            )
+              ensure: :foo,
+            ),
           )
         end.to raise_error(Puppet::Error, %r{Invalid value})
       end
@@ -116,8 +116,8 @@ shared_examples 'REST API types' do |resource_type, meta_property|
           described_class.new(
             default_params.merge(
               name: resource_name,
-              host: '127.0.0.1'
-            )
+              host: '127.0.0.1',
+            ),
           )
         end.not_to raise_error
       end
@@ -130,8 +130,8 @@ shared_examples 'REST API types' do |resource_type, meta_property|
             described_class.new(
               default_params.merge(
                 name: resource_name,
-                port: value
-              )
+                port: value,
+              ),
             )
           end.to raise_error(Puppet::Error, %r{invalid port}i)
         end
@@ -145,8 +145,8 @@ shared_examples 'REST API types' do |resource_type, meta_property|
             described_class.new(
               default_params.merge(
                 name: resource_name,
-                validate_tls: value
-              )
+                validate_tls: value,
+              ),
             )
           end.to raise_error(Puppet::Error, %r{invalid value}i)
         end
@@ -158,8 +158,8 @@ shared_examples 'REST API types' do |resource_type, meta_property|
             described_class.new(
               default_params.merge(
                 name: resource_name,
-                validate_tls: value
-              )
+                validate_tls: value,
+              ),
             )
           end.not_to raise_error
         end
@@ -172,8 +172,8 @@ shared_examples 'REST API types' do |resource_type, meta_property|
           described_class.new(
             default_params.merge(
               name: resource_name,
-              timeout: 'foo'
-            )
+              timeout: 'foo',
+            ),
           )
         end.to raise_error(Puppet::Error, %r{must be a})
       end
@@ -183,8 +183,8 @@ shared_examples 'REST API types' do |resource_type, meta_property|
           described_class.new(
             default_params.merge(
               name: resource_name,
-              timeout: -10
-            )
+              timeout: -10,
+            ),
           )
         end.to raise_error(Puppet::Error, %r{must be a})
       end
@@ -194,8 +194,8 @@ shared_examples 'REST API types' do |resource_type, meta_property|
           described_class.new(
             default_params.merge(
               name: resource_name,
-              timeout: 10
-            )
+              timeout: 10,
+            ),
           )
         end.not_to raise_error
       end
@@ -205,8 +205,8 @@ shared_examples 'REST API types' do |resource_type, meta_property|
           described_class.new(
             default_params.merge(
               name: resource_name,
-              timeout: '10'
-            )
+              timeout: '10',
+            ),
           )
         end.not_to raise_error
       end

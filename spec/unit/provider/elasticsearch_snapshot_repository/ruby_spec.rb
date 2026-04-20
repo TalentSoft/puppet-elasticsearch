@@ -10,7 +10,7 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository).provider(:ruby) d
       provider: :ruby,
       location: '/bak1',
       type: 'fs',
-      compress: true
+      compress: true,
     }
   end
 
@@ -20,9 +20,9 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository).provider(:ruby) d
         'type' => 'fs',
         'settings' => {
           'compress' => true,
-          'location' => '/bak1'
-        }
-      }
+          'location' => '/bak1',
+        },
+      },
     }
   end
 
@@ -33,7 +33,7 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository).provider(:ruby) d
       provider: :ruby,
       location: '/bak2',
       type: 'fs',
-      compress: true
+      compress: true,
     }
   end
 
@@ -43,9 +43,9 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository).provider(:ruby) d
         'type' => 'fs',
         'settings' => {
           'compress' => true,
-          'location' => '/bak2'
-        }
-      }
+          'location' => '/bak2',
+        },
+      },
     }
   end
 
@@ -54,8 +54,8 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository).provider(:ruby) d
       'type' => 'fs',
       'settings' => {
         'compress' => true,
-        'location' => '/backups'
-      }
+        'location' => '/backups',
+      },
     )
   end
 
@@ -66,7 +66,7 @@ describe Puppet::Type.type(:elasticsearch_snapshot_repository).provider(:ruby) d
       name: 'backup',
       type: 'fs',
       compress: true,
-      location: '/backups'
+      location: '/backups',
     }
   end
 

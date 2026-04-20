@@ -9,7 +9,7 @@ shared_examples 'snapshot repository acceptance tests' do
     es_config = {
       'http.port' => 9200,
       'node.name' => 'elasticsearchSnapshot01',
-      'path.repo' => '/var/lib/elasticsearch'
+      'path.repo' => '/var/lib/elasticsearch',
     }
 
     # Override the manifest in order to populate 'path.repo'
@@ -29,8 +29,6 @@ shared_examples 'snapshot repository acceptance tests' do
       <<-MANIFEST
         api_timeout => 60,
         config => {
-          'cluster.name' => '#{v[:cluster_name]}',
-          'http.bind_host' => '0.0.0.0',
   #{es_config.map { |k, v| "        '#{k}' => '#{v}'," }.join("\n")}
         },
         jvm_options => [
@@ -69,11 +67,11 @@ shared_examples 'snapshot repository acceptance tests' do
       subject { shell("curl http://localhost:#{es_port}/_snapshot/backup") }
 
       it 'returns the snapshot repository', :with_retries do
-        expect(JSON.parse(subject.stdout)['backup']).
-          to include('settings' => a_hash_including(
+        expect(JSON.parse(subject.stdout)['backup'])
+          .to include('settings' => a_hash_including(
             'location' => '/var/lib/elasticsearch/backup',
             'max_restore_rate' => '20mb',
-            'max_snapshot_rate' => '80mb'
+            'max_snapshot_rate' => '80mb',
           ))
       end
     end

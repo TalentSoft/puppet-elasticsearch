@@ -11,9 +11,9 @@ describe 'elasticsearch::plugin', type: 'define' do
     supported_os: [
       {
         'operatingsystem' => 'CentOS',
-        'operatingsystemrelease' => ['6']
-      }
-    ]
+        'operatingsystemrelease' => ['6'],
+      },
+    ],
   ).each do |_os, facts|
     let(:facts) do
       facts.merge('scenario' => '', 'common' => '')
@@ -36,7 +36,7 @@ describe 'elasticsearch::plugin', type: 'define' do
         let(:params) do
           {
             ensure: 'present',
-            configdir: '/etc/elasticsearch'
+            configdir: '/etc/elasticsearch',
           }
         end
 
@@ -46,7 +46,7 @@ describe 'elasticsearch::plugin', type: 'define' do
       context 'absent' do
         let(:params) do
           {
-            ensure: 'absent'
+            ensure: 'absent',
           }
         end
 
@@ -56,13 +56,13 @@ describe 'elasticsearch::plugin', type: 'define' do
       context 'configdir' do
         it {
           expect(subject).to contain_elasticsearch__plugin(
-            'mobz/elasticsearch-head/1.0.0'
+            'mobz/elasticsearch-head/1.0.0',
           ).with_configdir('/etc/elasticsearch')
         }
 
         it {
           expect(subject).to contain_elasticsearch_plugin(
-            'mobz/elasticsearch-head/1.0.0'
+            'mobz/elasticsearch-head/1.0.0',
           ).with_configdir('/etc/elasticsearch')
         }
       end
@@ -73,27 +73,27 @@ describe 'elasticsearch::plugin', type: 'define' do
         let(:params) do
           {
             ensure: 'present',
-            module_dir: 'head'
+            module_dir: 'head',
           }
         end
 
         it {
           expect(subject).to contain_elasticsearch__plugin(
-            'mobz/elasticsearch-head/1.0.0'
+            'mobz/elasticsearch-head/1.0.0',
           )
         }
 
         it {
           expect(subject).to contain_elasticsearch_plugin(
-            'mobz/elasticsearch-head/1.0.0'
+            'mobz/elasticsearch-head/1.0.0',
           )
         }
 
         it {
           expect(subject).to contain_file(
-            '/usr/share/elasticsearch/plugins/head'
+            '/usr/share/elasticsearch/plugins/head',
           ).that_requires(
-            'Elasticsearch_plugin[mobz/elasticsearch-head/1.0.0]'
+            'Elasticsearch_plugin[mobz/elasticsearch-head/1.0.0]',
           )
         }
       end
@@ -102,29 +102,29 @@ describe 'elasticsearch::plugin', type: 'define' do
         let(:params) do
           {
             ensure: 'absent',
-            module_dir: 'head'
+            module_dir: 'head',
           }
         end
 
         it {
           expect(subject).to contain_elasticsearch__plugin(
-            'mobz/elasticsearch-head/1.0.0'
+            'mobz/elasticsearch-head/1.0.0',
           )
         }
 
         it {
           expect(subject).to contain_elasticsearch_plugin(
-            'mobz/elasticsearch-head/1.0.0'
+            'mobz/elasticsearch-head/1.0.0',
           ).with(
-            ensure: 'absent'
+            ensure: 'absent',
           )
         }
 
         it {
           expect(subject).to contain_file(
-            '/usr/share/elasticsearch/plugins/head'
+            '/usr/share/elasticsearch/plugins/head',
           ).that_requires(
-            'Elasticsearch_plugin[mobz/elasticsearch-head/1.0.0]'
+            'Elasticsearch_plugin[mobz/elasticsearch-head/1.0.0]',
           )
         }
       end
@@ -135,7 +135,7 @@ describe 'elasticsearch::plugin', type: 'define' do
         let(:params) do
           {
             ensure: 'present',
-            url: 'https://github.com/mobz/elasticsearch-head/archive/master.zip'
+            url: 'https://github.com/mobz/elasticsearch-head/archive/master.zip',
           }
         end
 
@@ -149,7 +149,7 @@ describe 'elasticsearch::plugin', type: 'define' do
       let(:params) do
         {
           ensure: 'present',
-          source: 'puppet:///path/to/my/plugin.zip'
+          source: 'puppet:///path/to/my/plugin.zip',
         }
       end
 
@@ -163,7 +163,7 @@ describe 'elasticsearch::plugin', type: 'define' do
       let(:params) do
         {
           ensure: 'present',
-          module_dir: 'head'
+          module_dir: 'head',
         }
       end
 
@@ -176,9 +176,9 @@ describe 'elasticsearch::plugin', type: 'define' do
 
         it {
           expect(subject).not_to contain_elasticsearch_plugin(
-            'head'
+            'head',
           ).that_notifies(
-            'Service[elasticsearch]'
+            'Service[elasticsearch]',
           )
         }
 
@@ -196,9 +196,9 @@ describe 'elasticsearch::plugin', type: 'define' do
 
         it {
           expect(subject).to contain_elasticsearch_plugin(
-            'head'
+            'head',
           ).that_notifies(
-            'Service[elasticsearch]'
+            'Service[elasticsearch]',
           )
         }
 
@@ -216,9 +216,9 @@ describe 'elasticsearch::plugin', type: 'define' do
 
         it {
           expect(subject).not_to contain_elasticsearch_plugin(
-            'head'
+            'head',
           ).that_notifies(
-            'Service[elasticsearch]'
+            'Service[elasticsearch]',
           )
         }
 
@@ -236,9 +236,9 @@ describe 'elasticsearch::plugin', type: 'define' do
 
         it {
           expect(subject).to contain_elasticsearch_plugin(
-            'head'
+            'head',
           ).that_notifies(
-            'Service[elasticsearch]'
+            'Service[elasticsearch]',
           )
         }
 
@@ -255,15 +255,15 @@ describe 'elasticsearch::plugin', type: 'define' do
             {
               ensure: 'present',
               proxy_host: 'es.local',
-              proxy_port: 8080
+              proxy_port: 8080,
             }
           end
 
           it {
             expect(subject).to contain_elasticsearch_plugin(
-              'head'
+              'head',
             ).with_proxy(
-              'http://es.local:8080'
+              'http://es.local:8080',
             )
           }
         end
@@ -271,7 +271,7 @@ describe 'elasticsearch::plugin', type: 'define' do
         context 'on main class' do
           let(:params) do
             {
-              ensure: 'present'
+              ensure: 'present',
             }
           end
 
@@ -285,9 +285,9 @@ describe 'elasticsearch::plugin', type: 'define' do
 
           it {
             expect(subject).to contain_elasticsearch_plugin(
-              'head'
+              'head',
             ).with_proxy(
-              'https://es.local:8080'
+              'https://es.local:8080',
             )
           }
         end
@@ -301,15 +301,15 @@ describe 'elasticsearch::plugin', type: 'define' do
               proxy_host: 'es.local',
               proxy_port: 8080,
               proxy_username: 'elastic',
-              proxy_password: 'password'
+              proxy_password: 'password',
             }
           end
 
           it {
             expect(subject).to contain_elasticsearch_plugin(
-              'head'
+              'head',
             ).with_proxy(
-              'http://elastic:password@es.local:8080'
+              'http://elastic:password@es.local:8080',
             )
           }
         end
@@ -317,7 +317,7 @@ describe 'elasticsearch::plugin', type: 'define' do
         context 'on main class' do
           let(:params) do
             {
-              ensure: 'present'
+              ensure: 'present',
             }
           end
 
@@ -331,9 +331,9 @@ describe 'elasticsearch::plugin', type: 'define' do
 
           it {
             expect(subject).to contain_elasticsearch_plugin(
-              'head'
+              'head',
             ).with_proxy(
-              'http://elastic:password@es.local:8080'
+              'http://elastic:password@es.local:8080',
             )
           }
         end
@@ -351,17 +351,17 @@ describe 'elasticsearch::plugin', type: 'define' do
 
         it {
           expect(subject).to contain_elasticsearch__plugin(
-            'head'
+            'head',
           ).that_requires(
-            'Class[elasticsearch::config]'
+            'Class[elasticsearch::config]',
           )
         }
 
         it {
           expect(subject).to contain_elasticsearch_plugin(
-            'head'
+            'head',
           ).that_comes_before(
-            'Service[elasticsearch]'
+            'Service[elasticsearch]',
           )
         }
 

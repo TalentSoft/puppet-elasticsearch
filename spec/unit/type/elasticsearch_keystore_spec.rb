@@ -31,7 +31,7 @@ describe Puppet::Type.type(:elasticsearch_keystore) do
         expect do
           described_class.new(
             name: resource_name,
-            ensure: :present
+            ensure: :present,
           )
         end.not_to raise_error
       end
@@ -40,7 +40,7 @@ describe Puppet::Type.type(:elasticsearch_keystore) do
         expect do
           described_class.new(
             name: resource_name,
-            ensure: :absent
+            ensure: :absent,
           )
         end.not_to raise_error
       end
@@ -49,7 +49,7 @@ describe Puppet::Type.type(:elasticsearch_keystore) do
         expect do
           described_class.new(
             name: resource_name,
-            ensure: :foo
+            ensure: :foo,
           )
         end.to raise_error(Puppet::Error, %r{Invalid value})
       end
@@ -61,7 +61,7 @@ describe Puppet::Type.type(:elasticsearch_keystore) do
           expect do
             described_class.new(
               name: resource_name,
-              settings: setting
+              settings: setting,
             )
           end.not_to raise_error
         end
@@ -71,9 +71,9 @@ describe Puppet::Type.type(:elasticsearch_keystore) do
         it 'only checks lists or hash key membership' do
           expect(described_class.new(
             name: resource_name,
-            settings: { 'node.name' => 'foo', 'node.data' => true }
+            settings: { 'node.name' => 'foo', 'node.data' => true },
           ).property(:settings).insync?(
-            %w[node.name node.data]
+            %w[node.name node.data],
           )).to be true
         end
 
@@ -81,9 +81,9 @@ describe Puppet::Type.type(:elasticsearch_keystore) do
           it 'defaults to not purge values' do
             expect(described_class.new(
               name: resource_name,
-              settings: { 'node.name' => 'foo', 'node.data' => true }
+              settings: { 'node.name' => 'foo', 'node.data' => true },
             ).property(:settings).insync?(
-              %w[node.name node.data node.attr.rack]
+              %w[node.name node.data node.attr.rack],
             )).to be true
           end
 
@@ -91,9 +91,9 @@ describe Puppet::Type.type(:elasticsearch_keystore) do
             expect(described_class.new(
               name: resource_name,
               settings: { 'node.name' => 'foo', 'node.data' => true },
-              purge: true
+              purge: true,
             ).property(:settings).insync?(
-              %w[node.name node.data node.attr.rack]
+              %w[node.name node.data node.attr.rack],
             )).to be false
           end
         end

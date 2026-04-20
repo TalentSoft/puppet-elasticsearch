@@ -21,7 +21,7 @@ describe Puppet::Type.type(:elasticsearch_user_file).provider(:ruby) do
         ).gsub(%r{^\s+}, ''))[0]).to eq(
           name: 'elastic',
           hashed_password: '$2a$10$DddrTs0PS3qNknUTq0vpa.g.0JpU.jHDdlKp1xox1W5ZHX.w8Cc8C',
-          record_type: :ruby
+          record_type: :ruby,
         )
       end
     end

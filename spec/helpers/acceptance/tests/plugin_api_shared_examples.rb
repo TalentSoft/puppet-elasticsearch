@@ -14,7 +14,7 @@ shared_examples 'plugin API response' do |es_config, desc, val|
 
     it desc, :with_retries do
       expect(
-        JSON.parse(subject.stdout)['nodes']['plugins']
+        JSON.parse(subject.stdout)['nodes']['plugins'],
       ).to include(include(val))
     end
   end

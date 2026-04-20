@@ -34,8 +34,8 @@ def gen_certs(num_certs, path)
   ret[:ca] = {
     cert: {
       pem: ca_cert.to_pem,
-      path: "#{path}/ca_cert.pem"
-    }
+      path: "#{path}/ca_cert.pem",
+    },
   }
 
   num_certs.times do |i|
@@ -44,12 +44,12 @@ def gen_certs(num_certs, path)
     ret[:clients] << {
       key: {
         pem: key.to_pem,
-        path: "#{path}/#{i}_key.pem"
+        path: "#{path}/#{i}_key.pem",
       },
       cert: {
         pem: cert.to_pem,
-        path: "#{path}/#{i}_cert.pem"
-      }
+        path: "#{path}/#{i}_cert.pem",
+      },
     }
   end
 
@@ -83,19 +83,19 @@ def gen_cert_pair(serial, ca_cert)
 
   cert.add_extension csr_extension_factory.create_extension(
     'subjectAltName',
-    sans_list.join(',')
+    sans_list.join(','),
   )
   cert.add_extension csr_extension_factory.create_extension(
     'basicConstraints',
-    'CA:FALSE'
+    'CA:FALSE',
   )
   cert.add_extension csr_extension_factory.create_extension(
     'keyUsage',
-    'keyEncipherment,dataEncipherment,digitalSignature'
+    'keyEncipherment,dataEncipherment,digitalSignature',
   )
   cert.add_extension csr_extension_factory.create_extension(
     'extendedKeyUsage',
-    'serverAuth,clientAuth'
+    'serverAuth,clientAuth',
   )
   cert.add_extension csr_extension_factory.create_extension(
     'subjectKeyIdentifier', 'hash'

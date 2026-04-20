@@ -15,7 +15,7 @@ module Puppet_X # rubocop:disable Style/ClassAndModuleCamelCase
         'logs' => 'LOG_DIR',
         'data' => 'DATA_DIR',
         'work' => 'WORK_DIR',
-        'conf' => 'CONF_DIR'
+        'conf' => 'CONF_DIR',
       }.freeze
 
       # Create an array of command-line flags to append to an `elasticsearch`
@@ -59,7 +59,7 @@ module Puppet_X # rubocop:disable Style/ClassAndModuleCamelCase
 
         [
           es_pkg.provider.properties[:version],
-          es_pkg.provider.properties[:ensure]
+          es_pkg.provider.properties[:ensure],
         ].each do |property|
           return property if property.is_a? String
         end

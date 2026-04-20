@@ -76,24 +76,11 @@
 #   Dictates how deeply the file copy recursion logic should descend when
 #   copying files from the `configdir` to instance `configdir`s.
 #
-# @param daily_rolling_date_pattern
-#   File pattern for the file appender log when file_rolling_type is 'dailyRollingFile'.
-#
 # @param datadir
 #   Allows you to set the data directory of Elasticsearch.
 #
-# @param default_logging_level
-#   Default logging level for Elasticsearch.
-#
 # @param defaults_location
 #   Absolute path to directory containing init defaults file.
-#
-# @param deprecation_logging
-#   Whether to enable deprecation logging. If enabled, deprecation logs will be
-#   saved to ${cluster.name}_deprecation.log in the Elasticsearch log folder.
-#
-# @param deprecation_logging_level
-#   Default deprecation logging level for Elasticsearch.
 #
 # @param download_tool
 #   Command-line invocation with which to retrieve an optional package_url.
@@ -112,11 +99,6 @@
 #
 # @param elasticsearch_user
 #   The user Elasticsearch should run as. This also sets file ownership.
-#
-# @param file_rolling_type
-#   Configuration for the file appender rotation. It can be 'dailyRollingFile',
-#   'rollingFile' or 'file'. The first rotates by name, the second one by size
-#   or third don't rotate automatically.
 #
 # @param homedir
 #   Directory where the elasticsearch installation's files are kept (plugins, etc.)
@@ -148,19 +130,17 @@
 # @param logdir
 #   Directory that will be used for Elasticsearch logging.
 #
-# @param logging_config
-#   Representation of information to be included in the log4j.properties file.
+# @param logdir_mode
+#   Mode directory that will be used for Elasticsearch logging (default 2750).
 #
-# @param logging_file
-#   Instead of a hash, you may supply a `puppet://` file source for the
-#   log4j.properties file.
+# @param logging_content
+#   Content to use for the logging configuration file (log4j2.properties).
 #
-# @param logging_level
-#   Default logging level for Elasticsearch.
+# @param manage_datadir
+#   Enable datadir management (default true).
 #
-# @param logging_template
-#   Use a custom logging template - just supply the relative path, i.e.
-#   `$module/elasticsearch/logging.yml.erb`
+# @param manage_logdir
+#   Enable logdir management (default true).
 #
 # @param manage_repo
 #   Enable repo management by enabling official Elastic repositories.
@@ -174,6 +154,9 @@
 # @param package_dl_timeout
 #   For http, https, and ftp downloads, you may set how long the exec resource
 #   may take.
+#
+# @param package_hold
+#   Set to hold to tell Debian apt/Solaris pkg to hold the package version.
 #
 # @param package_name
 #   Name Of the package to install.
@@ -201,6 +184,9 @@
 #
 # @param private_key
 #   Path to the key associated with this node's certificate.
+#
+# @param private_key_type
+#   The type of the private key. Usually the private key is of type RSA key but it can also be an Elliptic Curve key (EC) or DSA.
 #
 # @param proxy_url
 #   For http and https downloads, you may set a proxy server to use. By default,
@@ -255,12 +241,6 @@
 # @param roles
 #   Define roles via a hash. This is mainly used with Hiera's auto binding.
 #
-# @param rolling_file_max_backup_index
-#   Max number of logs to store whern file_rolling_type is 'rollingFile'
-#
-# @param rolling_file_max_file_size
-#   Max log file size when file_rolling_type is 'rollingFile'
-#
 # @param scripts
 #   Define scripts via a hash. This is mainly used with Hiera's auto binding.
 #
@@ -268,19 +248,14 @@
 #   Optional default configuration hash of key/value pairs to store in the
 #   Elasticsearch keystore file. If unset, the keystore is left unmanaged.
 #
-# @param security_logging_content
-#   File content for x-pack logging configuration file (will be placed
-#   into log4j2.properties file).
-#
-# @param security_logging_source
-#   File source for x-pack logging configuration file (will be placed
-#   into log4j2.properties).
-#
 # @param service_name
 #   Elasticsearch service name
 #
 # @param service_provider
 #   The service resource type provider to use when managing elasticsearch instances.
+#
+# @param slm_policies
+#   Define slm_policies via a hash. This is mainly used with Hiera's auto binding.
 #
 # @param snapshot_repositories
 #   Define snapshot repositories via a hash. This is mainly used with Hiera's auto binding.
@@ -310,6 +285,15 @@
 # @param templates
 #   Define templates via a hash. This is mainly used with Hiera's auto binding.
 #
+# @param index_templates
+#   Define index_templates via a hash. This is mainly used with Hiera's auto binding.
+#
+# @param component_templates
+#   Define component_templates via a hash. This is mainly used with Hiera's auto binding.
+#
+# @param ilm_policies
+#   Define ilm_policies via a hash. This is mainly used with Hiera's auto binding.
+#
 # @param users
 #   Define templates via a hash. This is mainly used with Hiera's auto binding.
 #
@@ -337,17 +321,13 @@ class elasticsearch (
   Hash                                            $config,
   Stdlib::Absolutepath                            $configdir,
   Integer                                         $configdir_recurselimit,
-  String                                          $daily_rolling_date_pattern,
   Elasticsearch::Multipath                        $datadir,
   Optional[Stdlib::Absolutepath]                  $defaults_location,
-  Boolean                                         $deprecation_logging,
-  String                                          $deprecation_logging_level,
   Optional[String]                                $download_tool,
   Optional[String]                                $download_tool_insecure,
   Boolean                                         $download_tool_verify_certificates,
   String                                          $elasticsearch_group,
   String                                          $elasticsearch_user,
-  Enum['dailyRollingFile', 'rollingFile', 'file'] $file_rolling_type,
   Stdlib::Absolutepath                            $homedir,
   Hash                                            $indices,
   Hash                                            $init_defaults,
@@ -356,10 +336,8 @@ class elasticsearch (
   Array[String]                                   $jvm_options,
   Optional[Variant[String, Hash]]                 $license,
   Stdlib::Absolutepath                            $logdir,
-  Hash                                            $logging_config,
-  Optional[String]                                $logging_file,
-  String                                          $logging_level,
-  Optional[String]                                $logging_template,
+  Boolean                                         $manage_datadir,
+  Boolean                                         $manage_logdir,
   Boolean                                         $manage_repo,
   Boolean                                         $oss,
   Stdlib::Absolutepath                            $package_dir,
@@ -378,12 +356,8 @@ class elasticsearch (
   Variant[Boolean, String]                        $repo_stage,
   Boolean                                         $restart_on_change,
   Hash                                            $roles,
-  Integer                                         $rolling_file_max_backup_index,
-  String                                          $rolling_file_max_file_size,
   Hash                                            $scripts,
   Optional[Hash]                                  $secrets,
-  Optional[String]                                $security_logging_content,
-  Optional[String]                                $security_logging_source,
   String                                          $service_name,
   Enum['init', 'openbsd', 'openrc', 'systemd']    $service_provider,
   Hash                                            $snapshot_repositories,
@@ -395,12 +369,19 @@ class elasticsearch (
   Hash                                            $users,
   Boolean                                         $validate_tls,
   Variant[String, Boolean]                        $version,
+  Hash                                            $index_templates           = {},
+  Hash                                            $component_templates       = {},
+  Hash                                            $ilm_policies              = {},
+  Hash                                            $slm_policies              = {},
   Optional[Stdlib::Absolutepath]                  $ca_certificate            = undef,
   Optional[Stdlib::Absolutepath]                  $certificate               = undef,
-  String                                          $default_logging_level     = $logging_level,
   Optional[String]                                $keystore_password         = undef,
   Optional[Stdlib::Absolutepath]                  $keystore_path             = undef,
+  Stdlib::Filemode                                $logdir_mode               = '2750',
+  Optional[Variant[String, Array]]                $logging_content           = undef,
+  Boolean                                         $package_hold              = false,
   Optional[Stdlib::Absolutepath]                  $private_key               = undef,
+  Enum['rsa','dsa','ec']                          $private_key_type          = 'rsa',
   Boolean                                         $restart_config_change     = $restart_on_change,
   Boolean                                         $restart_package_change    = $restart_on_change,
   Boolean                                         $restart_plugin_change     = $restart_on_change,
@@ -467,6 +448,26 @@ class elasticsearch (
   create_resources('elasticsearch::script', $elasticsearch::scripts)
   create_resources('elasticsearch::snapshot_repository', $elasticsearch::snapshot_repositories)
   create_resources('elasticsearch::template', $elasticsearch::templates)
+  $elasticsearch::component_templates.each |String $key, Hash $values| {
+    elasticsearch::component_template { $key:
+      * => $values,
+    }
+  }
+  $elasticsearch::index_templates.each |String $key, Hash $values| {
+    elasticsearch::index_template { $key:
+      * => $values,
+    }
+  }
+  $elasticsearch::ilm_policies.each |String $key, Hash $values| {
+    elasticsearch::ilm_policy { $key:
+      * => $values,
+    }
+  }
+  $elasticsearch::slm_policies.each |String $key, Hash $values| {
+    elasticsearch::slm_policy { $key:
+      * => $values,
+    }
+  }
   create_resources('elasticsearch::user', $elasticsearch::users)
 
   if ($manage_repo == true) {
@@ -597,4 +598,18 @@ class elasticsearch (
   # file is modified
   Elasticsearch_user <| |>
   -> Elasticsearch_user_file <| |>
+
+  # Ensure component templates are loaded before index templates
+  Elasticsearch_component_template <| |>
+  -> Elasticsearch_index_template <| |>
+
+  # Ensure ILM policies are loaded before index or component templates
+  Elasticsearch_ilm_policy <| |>
+  -> Elasticsearch_component_template <| |>
+  Elasticsearch_ilm_policy <| |>
+  -> Elasticsearch_index_template <| |>
+
+  # Ensure snapshot repositories are loaded before SLM policies
+  Elasticsearch::Snapshot_repository <| |>
+  -> Elasticsearch_slm_policy <| |>
 }

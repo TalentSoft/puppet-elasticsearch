@@ -31,7 +31,7 @@ describe Puppet::Type.type(:elasticsearch_user_roles) do
         expect do
           described_class.new(
             name: resource_name,
-            ensure: :present
+            ensure: :present,
           )
         end.not_to raise_error
       end
@@ -40,7 +40,7 @@ describe Puppet::Type.type(:elasticsearch_user_roles) do
         expect do
           described_class.new(
             name: resource_name,
-            ensure: :absent
+            ensure: :absent,
           )
         end.not_to raise_error
       end
@@ -49,7 +49,7 @@ describe Puppet::Type.type(:elasticsearch_user_roles) do
         expect do
           described_class.new(
             name: resource_name,
-            ensure: :foo
+            ensure: :foo,
           )
         end.to raise_error(Puppet::Error, %r{Invalid value})
       end

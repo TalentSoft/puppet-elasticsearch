@@ -4,7 +4,7 @@ require 'json'
 require 'helpers/acceptance/tests/basic_shared_examples'
 
 shared_examples 'user/group acceptance tests' do
-  describe 'user/group parameters', first_purge: true, then_purge: true do
+  describe 'user/group parameters', :first_purge, :then_purge do
     describe 'with non-default values', :with_cleanup do
       let(:extra_manifest) do
         <<-MANIFEST
@@ -32,9 +32,9 @@ shared_examples 'user/group acceptance tests' do
         'es-01' => {
           'config' => {
             'http.port' => 9200,
-            'node.name' => 'elasticsearch001'
-          }
-        }
+            'node.name' => 'elasticsearch001',
+          },
+        },
       )
 
       %w[

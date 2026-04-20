@@ -50,22 +50,22 @@ Puppet::Type.newtype(:elasticsearch_template) do
                 val['settings']['index'] = {} unless val['settings'].key? 'index'
                 (val['settings'].keys - ['index']).each do |setting|
                   new_key = if setting.start_with? 'index.'
-                              setting[6..-1]
+                              setting[6..]
                             else
                               setting
                             end
-                  val['settings']['index'][new_key] = \
+                  val['settings']['index'][new_key] =
                     val['settings'].delete setting
                 end
               end
-            end
-          )
-        )
+            end,
+          ),
+        ),
       )
     end
 
     def insync?(value)
-      Puppet_X::Elastic.deep_implode(value) == \
+      Puppet_X::Elastic.deep_implode(value) ==
         Puppet_X::Elastic.deep_implode(should)
     end
   end
@@ -88,7 +88,7 @@ Puppet::Type.newtype(:elasticsearch_template) do
       if !self[:content].nil? && !self[:source].nil?
         fail(
           Puppet::ParseError,
-          "'content' and 'source' cannot be simultaneously defined"
+          "'content' and 'source' cannot be simultaneously defined",
         )
       end
     end
@@ -102,7 +102,7 @@ Puppet::Type.newtype(:elasticsearch_template) do
                 && catalog.respond_to?(:environment_instance)
               Puppet::FileServing::Content.indirection.find(
                 self[:source],
-                environment: catalog.environment_instance
+                environment: catalog.environment_instance,
               )
             else
               Puppet::FileServing::Content.indirection.find(self[:source])
@@ -110,7 +110,7 @@ Puppet::Type.newtype(:elasticsearch_template) do
 
       fail(format('Could not find any content at %s', self[:source])) unless tmp
 
-      self[:content] = PSON.load(tmp.content)
+      self[:content] = JSON.parse(tmp.content)
     end
   end
   # rubocop:enable Style/SignalException

@@ -5,8 +5,8 @@ require_relative '../../helpers/unit/type/elasticsearch_rest_shared_examples'
 describe Puppet::Type.type(:es_instance_conn_validator) do
   let(:resource_name) { 'conn-validator' }
   let(:conn_validator) do
-    Puppet::Type.type(:es_instance_conn_validator).
-      new(name: resource_name)
+    Puppet::Type.type(:es_instance_conn_validator)
+                .new(name: resource_name)
   end
 
   describe 'when validating attributes' do
@@ -35,7 +35,7 @@ describe Puppet::Type.type(:es_instance_conn_validator) do
         expect do
           described_class.new(
             name: resource_name,
-            ensure: :present
+            ensure: :present,
           )
         end.not_to raise_error
       end
@@ -44,7 +44,7 @@ describe Puppet::Type.type(:es_instance_conn_validator) do
         expect do
           described_class.new(
             name: resource_name,
-            ensure: :absent
+            ensure: :absent,
           )
         end.not_to raise_error
       end
@@ -53,7 +53,7 @@ describe Puppet::Type.type(:es_instance_conn_validator) do
         expect do
           described_class.new(
             name: resource_name,
-            ensure: :foo
+            ensure: :foo,
           )
         end.to raise_error(Puppet::Error, %r{Invalid value})
       end

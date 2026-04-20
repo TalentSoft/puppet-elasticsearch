@@ -9,7 +9,7 @@ class Puppet::Provider::ElasticUserCommand < Puppet::Provider
   #
   # @return String
   def self.homedir
-    @homedir ||= case Facter.value('osfamily')
+    @homedir ||= case Facter.value('os.family')
                  when 'OpenBSD'
                    '/usr/local/elasticsearch'
                  else
@@ -22,14 +22,14 @@ class Puppet::Provider::ElasticUserCommand < Puppet::Provider
     options = {
       combine: true,
       custom_environment: {
-        'ES_PATH_CONF' => configdir || '/etc/elasticsearch'
+        'ES_PATH_CONF' => configdir || '/etc/elasticsearch',
       },
-      failonfail: true
+      failonfail: true,
     }
 
     execute(
       [command(:users_cli)] + (args.is_a?(Array) ? args : [args]),
-      options
+      options,
     )
   end
 
@@ -57,7 +57,7 @@ class Puppet::Provider::ElasticUserCommand < Puppet::Provider
       {
         name: user,
         ensure: :present,
-        provider: name
+        provider: name,
       }
     end
   end
@@ -79,7 +79,7 @@ class Puppet::Provider::ElasticUserCommand < Puppet::Provider
   end
 
   def initialize(value = {})
-    super(value)
+    super
     @property_flush = {}
   end
 
@@ -123,9 +123,9 @@ class Puppet::Provider::ElasticUserCommand < Puppet::Provider
       [
         'passwd',
         resource[:name],
-        '-p', resource[:password]
+        '-p', resource[:password],
       ],
-      resource[:configdir]
+      resource[:configdir],
     )
   end
 end

@@ -28,7 +28,7 @@ module Puppet_X # rubocop:disable Style/ClassAndModuleCamelCase
       unless soft_fail
         raise(
           ElasticPluginParseFailure,
-          "could not find element '#{position}' in #{original_string}"
+          "could not find element '#{position}' in #{original_string}",
         )
       end
 

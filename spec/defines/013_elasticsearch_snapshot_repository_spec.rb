@@ -8,15 +8,15 @@ describe 'elasticsearch::snapshot_repository', type: 'define' do
     supported_os: [
       {
         'operatingsystem' => 'CentOS',
-        'operatingsystemrelease' => ['6']
-      }
-    ]
+        'operatingsystemrelease' => ['6'],
+      },
+    ],
   ).each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts.merge(
           scenario: '',
-          common: ''
+          common: '',
         )
       end
 
@@ -31,7 +31,7 @@ describe 'elasticsearch::snapshot_repository', type: 'define' do
             {
               :ensure => 'present',
               :content => '{}',
-              param => 'foo/cert'
+              param => 'foo/cert',
             }
           end
 
@@ -56,15 +56,15 @@ describe 'elasticsearch::snapshot_repository', type: 'define' do
             api_timeout: 11,
             api_basic_auth_username: 'elastic',
             api_basic_auth_password: 'password',
-            validate_tls: false
+            validate_tls: false,
           }
         end
 
         it { is_expected.to contain_elasticsearch__snapshot_repository('backup') }
 
         it do
-          expect(subject).to contain_es_instance_conn_validator('backup-snapshot').
-            that_comes_before('Elasticsearch_snapshot_repository[backup]')
+          expect(subject).to contain_es_instance_conn_validator('backup-snapshot')
+            .that_comes_before('Elasticsearch_snapshot_repository[backup]')
         end
 
         it 'passes through parameters' do
@@ -77,7 +77,7 @@ describe 'elasticsearch::snapshot_repository', type: 'define' do
             timeout: 11,
             username: 'elastic',
             password: 'password',
-            validate_tls: false
+            validate_tls: false,
           )
         end
       end
@@ -86,7 +86,7 @@ describe 'elasticsearch::snapshot_repository', type: 'define' do
         let :params do
           {
             ensure: 'present',
-            location: '/var/lib/elasticsearch/backup'
+            location: '/var/lib/elasticsearch/backup',
           }
         end
         let(:pre_condition) do
@@ -117,7 +117,7 @@ describe 'elasticsearch::snapshot_repository', type: 'define' do
             password: 'password',
             ca_file: '/foo/bar.pem',
             ca_path: '/foo/',
-            validate_tls: false
+            validate_tls: false,
           )
         end
       end
@@ -126,7 +126,7 @@ describe 'elasticsearch::snapshot_repository', type: 'define' do
         let :params do
           {
             ensure: 'absent',
-            location: '/var/lib/elasticsearch/backup'
+            location: '/var/lib/elasticsearch/backup',
           }
         end
 

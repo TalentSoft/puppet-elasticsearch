@@ -4,6 +4,137 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v11.0.0](https://github.com/voxpupuli/puppet-elasticsearch/tree/v11.0.0) (2026-01-16)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-elasticsearch/compare/v10.0.0...v11.0.0)
+
+**Breaking changes:**
+
+- Drop puppet, update openvox minimum version to 8.19 [\#1262](https://github.com/voxpupuli/puppet-elasticsearch/pull/1262) ([TheMeier](https://github.com/TheMeier))
+
+**Implemented enhancements:**
+
+- puppet/elastic\_stack: Allow 11.x [\#1275](https://github.com/voxpupuli/puppet-elasticsearch/pull/1275) ([bastelfreak](https://github.com/bastelfreak))
+- Add EL10 support [\#1273](https://github.com/voxpupuli/puppet-elasticsearch/pull/1273) ([bastelfreak](https://github.com/bastelfreak))
+- Switch from legacy to structured facts [\#1270](https://github.com/voxpupuli/puppet-elasticsearch/pull/1270) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- Allow setting user ensure absent without password [\#1269](https://github.com/voxpupuli/puppet-elasticsearch/pull/1269) ([bwitt](https://github.com/bwitt))
+
+## [v10.0.0](https://github.com/voxpupuli/puppet-elasticsearch/tree/v10.0.0) (2025-06-27)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-elasticsearch/compare/v9.0.0...v10.0.0)
+
+**Breaking changes:**
+
+- Remove unused parameters \(logging\) [\#1259](https://github.com/voxpupuli/puppet-elasticsearch/pull/1259) ([h-haaks](https://github.com/h-haaks))
+- Drop Ubuntu 20.04 [\#1258](https://github.com/voxpupuli/puppet-elasticsearch/pull/1258) ([h-haaks](https://github.com/h-haaks))
+- Drop RedHat/OracleLinux 7 [\#1257](https://github.com/voxpupuli/puppet-elasticsearch/pull/1257) ([h-haaks](https://github.com/h-haaks))
+- Drop CentOS 7 and 8 [\#1256](https://github.com/voxpupuli/puppet-elasticsearch/pull/1256) ([h-haaks](https://github.com/h-haaks))
+- Drop SLES 12 [\#1255](https://github.com/voxpupuli/puppet-elasticsearch/pull/1255) ([thomas-merz](https://github.com/thomas-merz))
+- Drop Scientific Linux [\#1246](https://github.com/voxpupuli/puppet-elasticsearch/pull/1246) ([h-haaks](https://github.com/h-haaks))
+
+**Implemented enhancements:**
+
+- Add parameter to manage the content of log4j2.properties [\#1260](https://github.com/voxpupuli/puppet-elasticsearch/pull/1260) ([h-haaks](https://github.com/h-haaks))
+- Add SLES 15 [\#1254](https://github.com/voxpupuli/puppet-elasticsearch/pull/1254) ([thomas-merz](https://github.com/thomas-merz))
+- Allow puppetlabs/java 11.x [\#1253](https://github.com/voxpupuli/puppet-elasticsearch/pull/1253) ([h-haaks](https://github.com/h-haaks))
+- Allow puppet/elastic\_stack 10.x [\#1252](https://github.com/voxpupuli/puppet-elasticsearch/pull/1252) ([h-haaks](https://github.com/h-haaks))
+- Add Ubuntu 24.04 [\#1251](https://github.com/voxpupuli/puppet-elasticsearch/pull/1251) ([h-haaks](https://github.com/h-haaks))
+- Add Debian 12 [\#1250](https://github.com/voxpupuli/puppet-elasticsearch/pull/1250) ([h-haaks](https://github.com/h-haaks))
+- Add Rocky 8 and 9 [\#1249](https://github.com/voxpupuli/puppet-elasticsearch/pull/1249) ([h-haaks](https://github.com/h-haaks))
+- Add AlmaLinux 8 and 9 [\#1248](https://github.com/voxpupuli/puppet-elasticsearch/pull/1248) ([h-haaks](https://github.com/h-haaks))
+- Add RedHat/CentOS/OracleLinux 9 [\#1247](https://github.com/voxpupuli/puppet-elasticsearch/pull/1247) ([h-haaks](https://github.com/h-haaks))
+- metadata.json: Add OpenVox [\#1241](https://github.com/voxpupuli/puppet-elasticsearch/pull/1241) ([jstraw](https://github.com/jstraw))
+- Add a parameter to package mark hold [\#1232](https://github.com/voxpupuli/puppet-elasticsearch/pull/1232) ([phaedriel](https://github.com/phaedriel))
+- Change license endpoint [\#1231](https://github.com/voxpupuli/puppet-elasticsearch/pull/1231) ([phaedriel](https://github.com/phaedriel))
+
+**Fixed bugs:**
+
+- Correction option validate\_tls in elastic\_rest [\#1239](https://github.com/voxpupuli/puppet-elasticsearch/pull/1239) ([phaedriel](https://github.com/phaedriel))
+
+**Closed issues:**
+
+- why was log4j2.properties.erb configuration commented ? [\#1200](https://github.com/voxpupuli/puppet-elasticsearch/issues/1200)
+-  Elasticsearch API responded with: no handler found for uri \[/\_xpack/license?acknowledge=true\] and method \[PUT\] [\#1189](https://github.com/voxpupuli/puppet-elasticsearch/issues/1189)
+
+## [v9.0.0](https://github.com/voxpupuli/puppet-elasticsearch/tree/v9.0.0) (2024-02-21)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-elasticsearch/compare/v8.1.0...v9.0.0)
+
+**Breaking changes:**
+
+- Drop Debian 10 support [\#1214](https://github.com/voxpupuli/puppet-elasticsearch/pull/1214) ([h-haaks](https://github.com/h-haaks))
+- Drop Ubuntu 18.04 support [\#1213](https://github.com/voxpupuli/puppet-elasticsearch/pull/1213) ([zilchms](https://github.com/zilchms))
+- Drop Puppet 6 support [\#1191](https://github.com/voxpupuli/puppet-elasticsearch/pull/1191) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Add Ubuntu 22.04 support [\#1212](https://github.com/voxpupuli/puppet-elasticsearch/pull/1212) ([zilchms](https://github.com/zilchms))
+- bump elastic\_stack \<10.0.0 [\#1207](https://github.com/voxpupuli/puppet-elasticsearch/pull/1207) ([sandwitch](https://github.com/sandwitch))
+- Add Puppet 8 support [\#1196](https://github.com/voxpupuli/puppet-elasticsearch/pull/1196) ([bastelfreak](https://github.com/bastelfreak))
+- modulesync 7.3.0; allow stdlib 9.x [\#1192](https://github.com/voxpupuli/puppet-elasticsearch/pull/1192) ([bastelfreak](https://github.com/bastelfreak))
+- Add support for SLM policies [\#1164](https://github.com/voxpupuli/puppet-elasticsearch/pull/1164) ([NITEMAN](https://github.com/NITEMAN))
+- Add support for ILM policies [\#1163](https://github.com/voxpupuli/puppet-elasticsearch/pull/1163) ([NITEMAN](https://github.com/NITEMAN))
+- Add support for composable index templates [\#1146](https://github.com/voxpupuli/puppet-elasticsearch/pull/1146) ([NITEMAN](https://github.com/NITEMAN))
+
+**Closed issues:**
+
+- Use Elasticsearch 7+ as default for configuration [\#1210](https://github.com/voxpupuli/puppet-elasticsearch/issues/1210)
+- fix lib directory permissions without changing the mode of files in the directory [\#1203](https://github.com/voxpupuli/puppet-elasticsearch/issues/1203)
+- warnings when used with stlib 9. [\#1201](https://github.com/voxpupuli/puppet-elasticsearch/issues/1201)
+- File jvm.options in root is unmanaged/may be missing [\#1197](https://github.com/voxpupuli/puppet-elasticsearch/issues/1197)
+- Setting an Elastic Version should be optional [\#1174](https://github.com/voxpupuli/puppet-elasticsearch/issues/1174)
+- 'jvm.options' \(prerequisite, required file\) is unmanaged by module [\#1093](https://github.com/voxpupuli/puppet-elasticsearch/issues/1093)
+- Support for index lifecycle management \(ILM\) [\#1038](https://github.com/voxpupuli/puppet-elasticsearch/issues/1038)
+- Puppet for elastic stack 7.1 [\#1037](https://github.com/voxpupuli/puppet-elasticsearch/issues/1037)
+
+**Merged pull requests:**
+
+- Use Elasticsearch 7+ as default for configuration [\#1211](https://github.com/voxpupuli/puppet-elasticsearch/pull/1211) ([asusk7m550](https://github.com/asusk7m550))
+- Remove legacy top-scope syntax [\#1205](https://github.com/voxpupuli/puppet-elasticsearch/pull/1205) ([smortex](https://github.com/smortex))
+- \(\#1203\) Fix lib directory and file permissions [\#1204](https://github.com/voxpupuli/puppet-elasticsearch/pull/1204) ([ttousai](https://github.com/ttousai))
+- Add owner/group to jvm.options file and Use jvm.options.d/jvm.options file by default [\#1202](https://github.com/voxpupuli/puppet-elasticsearch/pull/1202) ([phaedriel](https://github.com/phaedriel))
+- Allow newer java and java\_ks versions [\#1193](https://github.com/voxpupuli/puppet-elasticsearch/pull/1193) ([saz](https://github.com/saz))
+
+## [v8.1.0](https://github.com/voxpupuli/puppet-elasticsearch/tree/v8.1.0) (2023-01-05)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-elasticsearch/compare/v8.0.2...v8.1.0)
+
+**Implemented enhancements:**
+
+- Make datadir and logdir management optional [\#1184](https://github.com/voxpupuli/puppet-elasticsearch/pull/1184) ([phaedriel](https://github.com/phaedriel))
+- Support different paths for elasticsearch-plugin [\#1181](https://github.com/voxpupuli/puppet-elasticsearch/pull/1181) ([phaedriel](https://github.com/phaedriel))
+- Remove deprecated validate\_slength [\#1176](https://github.com/voxpupuli/puppet-elasticsearch/pull/1176) ([phaedriel](https://github.com/phaedriel))
+- Use jvm.options.d folder on ES 7.7.0+ [\#1159](https://github.com/voxpupuli/puppet-elasticsearch/pull/1159) ([phaedriel](https://github.com/phaedriel))
+- Update tests to use Hiera 5 [\#1158](https://github.com/voxpupuli/puppet-elasticsearch/pull/1158) ([cocker-cc](https://github.com/cocker-cc))
+
+**Fixed bugs:**
+
+- Some exception when installing analysis-ik plugin  [\#1011](https://github.com/voxpupuli/puppet-elasticsearch/issues/1011)
+- Fix usage of static `'elasticsearch'` instead of `$elasticsearch::service_name` [\#1178](https://github.com/voxpupuli/puppet-elasticsearch/pull/1178) ([phaedriel](https://github.com/phaedriel))
+- Fix user role mapping config file [\#1165](https://github.com/voxpupuli/puppet-elasticsearch/pull/1165) ([otterz](https://github.com/otterz))
+
+**Merged pull requests:**
+
+- Add option to set private key type [\#1186](https://github.com/voxpupuli/puppet-elasticsearch/pull/1186) ([phaedriel](https://github.com/phaedriel))
+- Add test condition 'version != false' \(tls\_config block\) [\#1175](https://github.com/voxpupuli/puppet-elasticsearch/pull/1175) ([phaedriel](https://github.com/phaedriel))
+- Fix elasticsearch facts and http check [\#1170](https://github.com/voxpupuli/puppet-elasticsearch/pull/1170) ([fe80](https://github.com/fe80))
+- Add match to file\_line jvm.options [\#1168](https://github.com/voxpupuli/puppet-elasticsearch/pull/1168) ([phaedriel](https://github.com/phaedriel))
+- Allow change logdir mode value [\#1167](https://github.com/voxpupuli/puppet-elasticsearch/pull/1167) ([phaedriel](https://github.com/phaedriel))
+- fix lib directory permissions; do not depend on umask [\#1166](https://github.com/voxpupuli/puppet-elasticsearch/pull/1166) ([fionera](https://github.com/fionera))
+- Delete old CI job definitions [\#1161](https://github.com/voxpupuli/puppet-elasticsearch/pull/1161) ([bastelfreak](https://github.com/bastelfreak))
+- Remove datacat module from Richard Clamp [\#1160](https://github.com/voxpupuli/puppet-elasticsearch/pull/1160) ([phaedriel](https://github.com/phaedriel))
+
+## [v8.0.2](https://github.com/voxpupuli/puppet-elasticsearch/tree/v8.0.2) (2022-04-08)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-elasticsearch/compare/v8.0.1...v8.0.2)
+
+**Merged pull requests:**
+
+- puppetlabs/java: Allow 8.x [\#1156](https://github.com/voxpupuli/puppet-elasticsearch/pull/1156) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v8.0.1](https://github.com/voxpupuli/puppet-elasticsearch/tree/v8.0.1) (2022-03-18)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-elasticsearch/compare/v8.0.0...v8.0.1)
@@ -51,7 +182,7 @@ These should not affect the functionality of the module.
 - update metadata.json for Vox Pupuli namespace [\#1136](https://github.com/voxpupuli/puppet-elasticsearch/pull/1136) ([bastelfreak](https://github.com/bastelfreak))
 - Stop using Travis CI [\#1124](https://github.com/voxpupuli/puppet-elasticsearch/pull/1124) ([jmlrt](https://github.com/jmlrt))
 - Increase of the role-name length to 40 [\#1115](https://github.com/voxpupuli/puppet-elasticsearch/pull/1115) ([Kuermel](https://github.com/Kuermel))
-- Do not restart Elasticsearch on config change when restart\_config\_change is set to false [\#1114](https://github.com/voxpupuli/puppet-elasticsearch/pull/1114) ([sanderc85](https://github.com/sanderc85))
+- Do not restart Elasticsearch on config change when restart\_config\_change is set to false [\#1114](https://github.com/voxpupuli/puppet-elasticsearch/pull/1114) ([SndR85](https://github.com/SndR85))
 - make sure plugins installed before service is started [\#1106](https://github.com/voxpupuli/puppet-elasticsearch/pull/1106) ([shamil](https://github.com/shamil))
 - Bump module version to `7.0.0` and update docs [\#1105](https://github.com/voxpupuli/puppet-elasticsearch/pull/1105) ([fatmcgav](https://github.com/fatmcgav))
 - Bump Elasticsearch version and some cleanup [\#1104](https://github.com/voxpupuli/puppet-elasticsearch/pull/1104) ([fatmcgav](https://github.com/fatmcgav))
@@ -462,7 +593,7 @@ This release also adds the ability to define logging rolling file settings and a
 * Recursively create the logdir for elasticsearch when creating multiple instances
 * Files and directories with root ownership now specify UID/GID 0 instead to improve compatability with *BSDs.
 * Elasticsearch Debian init file changed to avoid throwing errors when DATA_DIR, WORK_DIR and/or LOG_DIR were an empty variable.
-* Fixed a broken File dependency when a plugin was set to absent and ::elasticsearch set to present.
+* Fixed a broken File dependency when a plugin was set to absent and elasticsearch set to present.
 * Fixed issue when using the `proxy` parameter on plugins in Elasticsearch 2.x.
 
 #### Changes

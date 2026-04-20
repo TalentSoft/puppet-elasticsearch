@@ -7,31 +7,39 @@
 ### Classes
 
 * [`elasticsearch`](#elasticsearch): Manages the installation of Elasticsearch and related options.
-* [`elasticsearch::config`](#elasticsearchconfig): This class exists to coordinate all configuration related actions, functionality and logical units in a central place.  It is not intended to
-* [`elasticsearch::license`](#elasticsearchlicense): A defined type to control Elasticsearch licenses.
-* [`elasticsearch::package`](#elasticsearchpackage): This class exists to coordinate all software package management related actions, functionality and logical units in a central place.  It is n
-* [`elasticsearch::service`](#elasticsearchservice): This class exists to coordinate all service management related actions, functionality and logical units in a central place.  *Note*: "service
+* [`elasticsearch::config`](#elasticsearch--config): This class exists to coordinate all configuration related actions, functionality and logical units in a central place.  It is not intended to
+* [`elasticsearch::license`](#elasticsearch--license): A defined type to control Elasticsearch licenses.
+* [`elasticsearch::package`](#elasticsearch--package): This class exists to coordinate all software package management related actions, functionality and logical units in a central place.  It is n
+* [`elasticsearch::service`](#elasticsearch--service): This class exists to coordinate all service management related actions, functionality and logical units in a central place.  *Note*: "service
 
 ### Defined types
 
-* [`elasticsearch::index`](#elasticsearchindex): A defined type to control Elasticsearch index-level settings.
-* [`elasticsearch::pipeline`](#elasticsearchpipeline): This define allows you to insert, update or delete Elasticsearch index  ingestion pipelines.   Pipeline content should be defined through the
-* [`elasticsearch::plugin`](#elasticsearchplugin): This define allows you to install arbitrary Elasticsearch plugins either by using the default repositories or by specifying an URL
-* [`elasticsearch::role`](#elasticsearchrole): Manage x-pack roles.
-* [`elasticsearch::script`](#elasticsearchscript): This define allows you to insert, update or delete scripts that are used  within Elasticsearch.
-* [`elasticsearch::snapshot_repository`](#elasticsearchsnapshot_repository): This define allows you to insert, update or delete Elasticsearch snapshot  repositories.
-* [`elasticsearch::template`](#elasticsearchtemplate): This define allows you to insert, update or delete Elasticsearch index  templates.   Template content should be defined through either the `c
-* [`elasticsearch::user`](#elasticsearchuser): Manages x-pack users.
+* [`elasticsearch::component_template`](#elasticsearch--component_template): This define allows you to insert, update or delete Elasticsearch component  templates.   Template content should be defined through either th
+* [`elasticsearch::ilm_policy`](#elasticsearch--ilm_policy): This define allows you to insert, update or delete Elasticsearch ILM  policies.   Policy content should be defined through either the `conten
+* [`elasticsearch::index`](#elasticsearch--index): A defined type to control Elasticsearch index-level settings.
+* [`elasticsearch::index_template`](#elasticsearch--index_template): This define allows you to insert, update or delete Elasticsearch index  templates (using new composable api).   Template content should be de
+* [`elasticsearch::pipeline`](#elasticsearch--pipeline): This define allows you to insert, update or delete Elasticsearch index  ingestion pipelines.   Pipeline content should be defined through the
+* [`elasticsearch::plugin`](#elasticsearch--plugin): This define allows you to install arbitrary Elasticsearch plugins either by using the default repositories or by specifying an URL
+* [`elasticsearch::role`](#elasticsearch--role): Manage x-pack roles.
+* [`elasticsearch::script`](#elasticsearch--script): This define allows you to insert, update or delete scripts that are used  within Elasticsearch.
+* [`elasticsearch::slm_policy`](#elasticsearch--slm_policy): This define allows you to insert, update or delete Elasticsearch SLM  policies.   Policy content should be defined through either the `conten
+* [`elasticsearch::snapshot_repository`](#elasticsearch--snapshot_repository): This define allows you to insert, update or delete Elasticsearch snapshot  repositories.
+* [`elasticsearch::template`](#elasticsearch--template): This define allows you to insert, update or delete Elasticsearch index  templates.   Template content should be defined through either the `c
+* [`elasticsearch::user`](#elasticsearch--user): Manages x-pack users.
 
 ### Resource types
 
+* [`elasticsearch_component_template`](#elasticsearch_component_template): Manages Elasticsearch component templates.
+* [`elasticsearch_ilm_policy`](#elasticsearch_ilm_policy): Manages Elasticsearch ILM policies.
 * [`elasticsearch_index`](#elasticsearch_index): Manages Elasticsearch index settings.
+* [`elasticsearch_index_template`](#elasticsearch_index_template): Manages Elasticsearch index templates.
 * [`elasticsearch_keystore`](#elasticsearch_keystore): Manages an Elasticsearch keystore settings file.
 * [`elasticsearch_license`](#elasticsearch_license): Manages Elasticsearch licenses.
 * [`elasticsearch_pipeline`](#elasticsearch_pipeline): Manages Elasticsearch ingest pipelines.
 * [`elasticsearch_plugin`](#elasticsearch_plugin): Plugin installation type
 * [`elasticsearch_role`](#elasticsearch_role): Type to model Elasticsearch roles.
 * [`elasticsearch_role_mapping`](#elasticsearch_role_mapping): Type to model Elasticsearch role mappings.
+* [`elasticsearch_slm_policy`](#elasticsearch_slm_policy): Manages Elasticsearch SLM policies.
 * [`elasticsearch_snapshot_repository`](#elasticsearch_snapshot_repository): Manages Elasticsearch snapshot repositories.
 * [`elasticsearch_template`](#elasticsearch_template): Manages Elasticsearch index templates.
 * [`elasticsearch_user`](#elasticsearch_user): Type to model Elasticsearch users.
@@ -41,16 +49,16 @@
 
 ### Functions
 
-* [`array_suffix`](#array_suffix): This function applies a suffix to all elements in an array.  *Examples:*      array_suffix(['a','b','c'], 'p')  Will return: ['ap','bp','cp']
+* [`array_suffix`](#array_suffix)
 * [`concat_merge`](#concat_merge): Merges two or more hashes together concatenating duplicate keys with array values and returns the resulting hash.  For example:      $hash1 =
 * [`deep_implode`](#deep_implode): Recursively flattens all keys of a hash into a dot-notated hash, deeply merging duplicate key values by natively combining them and returns t
 * [`es_plugin_name`](#es_plugin_name): Given a string, return the best guess at what the directory name will be for the given plugin. Any arguments past the first will be fallbacks
-* [`plugin_dir`](#plugin_dir): Extracts the end plugin directory of the name
+* [`plugin_dir`](#plugin_dir)
 
 ### Data types
 
-* [`Elasticsearch::Multipath`](#elasticsearchmultipath)
-* [`Elasticsearch::Status`](#elasticsearchstatus)
+* [`Elasticsearch::Multipath`](#Elasticsearch--Multipath): Elasticsearch datadir multipath type
+* [`Elasticsearch::Status`](#Elasticsearch--Status): Elasticsearch service status type
 
 ## Classes
 
@@ -88,88 +96,85 @@ class { 'elasticsearch':
 
 The following parameters are available in the `elasticsearch` class:
 
-* [`ensure`](#ensure)
-* [`api_basic_auth_password`](#api_basic_auth_password)
-* [`api_basic_auth_username`](#api_basic_auth_username)
-* [`api_ca_file`](#api_ca_file)
-* [`api_ca_path`](#api_ca_path)
-* [`api_host`](#api_host)
-* [`api_port`](#api_port)
-* [`api_protocol`](#api_protocol)
-* [`api_timeout`](#api_timeout)
-* [`autoupgrade`](#autoupgrade)
-* [`ca_certificate`](#ca_certificate)
-* [`certificate`](#certificate)
-* [`config`](#config)
-* [`configdir`](#configdir)
-* [`configdir_recurselimit`](#configdir_recurselimit)
-* [`daily_rolling_date_pattern`](#daily_rolling_date_pattern)
-* [`datadir`](#datadir)
-* [`default_logging_level`](#default_logging_level)
-* [`defaults_location`](#defaults_location)
-* [`deprecation_logging`](#deprecation_logging)
-* [`deprecation_logging_level`](#deprecation_logging_level)
-* [`download_tool`](#download_tool)
-* [`download_tool_insecure`](#download_tool_insecure)
-* [`download_tool_verify_certificates`](#download_tool_verify_certificates)
-* [`elasticsearch_group`](#elasticsearch_group)
-* [`elasticsearch_user`](#elasticsearch_user)
-* [`file_rolling_type`](#file_rolling_type)
-* [`homedir`](#homedir)
-* [`indices`](#indices)
-* [`init_defaults`](#init_defaults)
-* [`init_defaults_file`](#init_defaults_file)
-* [`init_template`](#init_template)
-* [`jvm_options`](#jvm_options)
-* [`keystore_password`](#keystore_password)
-* [`keystore_path`](#keystore_path)
-* [`license`](#license)
-* [`logdir`](#logdir)
-* [`logging_config`](#logging_config)
-* [`logging_file`](#logging_file)
-* [`logging_level`](#logging_level)
-* [`logging_template`](#logging_template)
-* [`manage_repo`](#manage_repo)
-* [`oss`](#oss)
-* [`package_dir`](#package_dir)
-* [`package_dl_timeout`](#package_dl_timeout)
-* [`package_name`](#package_name)
-* [`package_provider`](#package_provider)
-* [`package_url`](#package_url)
-* [`pid_dir`](#pid_dir)
-* [`pipelines`](#pipelines)
-* [`plugindir`](#plugindir)
-* [`plugins`](#plugins)
-* [`private_key`](#private_key)
-* [`proxy_url`](#proxy_url)
-* [`purge_configdir`](#purge_configdir)
-* [`purge_package_dir`](#purge_package_dir)
-* [`purge_secrets`](#purge_secrets)
-* [`repo_stage`](#repo_stage)
-* [`restart_on_change`](#restart_on_change)
-* [`restart_config_change`](#restart_config_change)
-* [`restart_package_change`](#restart_package_change)
-* [`restart_plugin_change`](#restart_plugin_change)
-* [`roles`](#roles)
-* [`rolling_file_max_backup_index`](#rolling_file_max_backup_index)
-* [`rolling_file_max_file_size`](#rolling_file_max_file_size)
-* [`scripts`](#scripts)
-* [`secrets`](#secrets)
-* [`security_logging_content`](#security_logging_content)
-* [`security_logging_source`](#security_logging_source)
-* [`service_name`](#service_name)
-* [`service_provider`](#service_provider)
-* [`snapshot_repositories`](#snapshot_repositories)
-* [`ssl`](#ssl)
-* [`status`](#status)
-* [`system_key`](#system_key)
-* [`systemd_service_path`](#systemd_service_path)
-* [`templates`](#templates)
-* [`users`](#users)
-* [`validate_tls`](#validate_tls)
-* [`version`](#version)
+* [`ensure`](#-elasticsearch--ensure)
+* [`api_basic_auth_password`](#-elasticsearch--api_basic_auth_password)
+* [`api_basic_auth_username`](#-elasticsearch--api_basic_auth_username)
+* [`api_ca_file`](#-elasticsearch--api_ca_file)
+* [`api_ca_path`](#-elasticsearch--api_ca_path)
+* [`api_host`](#-elasticsearch--api_host)
+* [`api_port`](#-elasticsearch--api_port)
+* [`api_protocol`](#-elasticsearch--api_protocol)
+* [`api_timeout`](#-elasticsearch--api_timeout)
+* [`autoupgrade`](#-elasticsearch--autoupgrade)
+* [`ca_certificate`](#-elasticsearch--ca_certificate)
+* [`certificate`](#-elasticsearch--certificate)
+* [`config`](#-elasticsearch--config)
+* [`configdir`](#-elasticsearch--configdir)
+* [`configdir_recurselimit`](#-elasticsearch--configdir_recurselimit)
+* [`datadir`](#-elasticsearch--datadir)
+* [`defaults_location`](#-elasticsearch--defaults_location)
+* [`download_tool`](#-elasticsearch--download_tool)
+* [`download_tool_insecure`](#-elasticsearch--download_tool_insecure)
+* [`download_tool_verify_certificates`](#-elasticsearch--download_tool_verify_certificates)
+* [`elasticsearch_group`](#-elasticsearch--elasticsearch_group)
+* [`elasticsearch_user`](#-elasticsearch--elasticsearch_user)
+* [`homedir`](#-elasticsearch--homedir)
+* [`indices`](#-elasticsearch--indices)
+* [`init_defaults`](#-elasticsearch--init_defaults)
+* [`init_defaults_file`](#-elasticsearch--init_defaults_file)
+* [`init_template`](#-elasticsearch--init_template)
+* [`jvm_options`](#-elasticsearch--jvm_options)
+* [`keystore_password`](#-elasticsearch--keystore_password)
+* [`keystore_path`](#-elasticsearch--keystore_path)
+* [`license`](#-elasticsearch--license)
+* [`logdir`](#-elasticsearch--logdir)
+* [`logdir_mode`](#-elasticsearch--logdir_mode)
+* [`logging_content`](#-elasticsearch--logging_content)
+* [`manage_datadir`](#-elasticsearch--manage_datadir)
+* [`manage_logdir`](#-elasticsearch--manage_logdir)
+* [`manage_repo`](#-elasticsearch--manage_repo)
+* [`oss`](#-elasticsearch--oss)
+* [`package_dir`](#-elasticsearch--package_dir)
+* [`package_dl_timeout`](#-elasticsearch--package_dl_timeout)
+* [`package_hold`](#-elasticsearch--package_hold)
+* [`package_name`](#-elasticsearch--package_name)
+* [`package_provider`](#-elasticsearch--package_provider)
+* [`package_url`](#-elasticsearch--package_url)
+* [`pid_dir`](#-elasticsearch--pid_dir)
+* [`pipelines`](#-elasticsearch--pipelines)
+* [`plugindir`](#-elasticsearch--plugindir)
+* [`plugins`](#-elasticsearch--plugins)
+* [`private_key`](#-elasticsearch--private_key)
+* [`private_key_type`](#-elasticsearch--private_key_type)
+* [`proxy_url`](#-elasticsearch--proxy_url)
+* [`purge_configdir`](#-elasticsearch--purge_configdir)
+* [`purge_package_dir`](#-elasticsearch--purge_package_dir)
+* [`purge_secrets`](#-elasticsearch--purge_secrets)
+* [`repo_stage`](#-elasticsearch--repo_stage)
+* [`restart_on_change`](#-elasticsearch--restart_on_change)
+* [`restart_config_change`](#-elasticsearch--restart_config_change)
+* [`restart_package_change`](#-elasticsearch--restart_package_change)
+* [`restart_plugin_change`](#-elasticsearch--restart_plugin_change)
+* [`roles`](#-elasticsearch--roles)
+* [`scripts`](#-elasticsearch--scripts)
+* [`secrets`](#-elasticsearch--secrets)
+* [`service_name`](#-elasticsearch--service_name)
+* [`service_provider`](#-elasticsearch--service_provider)
+* [`slm_policies`](#-elasticsearch--slm_policies)
+* [`snapshot_repositories`](#-elasticsearch--snapshot_repositories)
+* [`ssl`](#-elasticsearch--ssl)
+* [`status`](#-elasticsearch--status)
+* [`system_key`](#-elasticsearch--system_key)
+* [`systemd_service_path`](#-elasticsearch--systemd_service_path)
+* [`templates`](#-elasticsearch--templates)
+* [`index_templates`](#-elasticsearch--index_templates)
+* [`component_templates`](#-elasticsearch--component_templates)
+* [`ilm_policies`](#-elasticsearch--ilm_policies)
+* [`users`](#-elasticsearch--users)
+* [`validate_tls`](#-elasticsearch--validate_tls)
+* [`version`](#-elasticsearch--version)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-elasticsearch--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -181,57 +186,75 @@ System modifications (if any) will be reverted as well as possible (e.g.
 removal of created users, services, changed log settings, and so on).
 This is a destructive parameter and should be used with care.
 
-##### <a name="api_basic_auth_password"></a>`api_basic_auth_password`
+Default value: `'present'`
+
+##### <a name="-elasticsearch--api_basic_auth_password"></a>`api_basic_auth_password`
 
 Data type: `Optional[String]`
 
 Defines the default REST basic auth password for API authentication.
 
-##### <a name="api_basic_auth_username"></a>`api_basic_auth_username`
+Default value: `undef`
+
+##### <a name="-elasticsearch--api_basic_auth_username"></a>`api_basic_auth_username`
 
 Data type: `Optional[String]`
 
 Defines the default REST basic auth username for API authentication.
 
-##### <a name="api_ca_file"></a>`api_ca_file`
+Default value: `undef`
+
+##### <a name="-elasticsearch--api_ca_file"></a>`api_ca_file`
 
 Data type: `Optional[String]`
 
 Path to a CA file which will be used to validate server certs when
 communicating with the Elasticsearch API over HTTPS.
 
-##### <a name="api_ca_path"></a>`api_ca_path`
+Default value: `undef`
+
+##### <a name="-elasticsearch--api_ca_path"></a>`api_ca_path`
 
 Data type: `Optional[String]`
 
 Path to a directory with CA files which will be used to validate server
 certs when communicating with the Elasticsearch API over HTTPS.
 
-##### <a name="api_host"></a>`api_host`
+Default value: `undef`
+
+##### <a name="-elasticsearch--api_host"></a>`api_host`
 
 Data type: `String`
 
 Default host to use when accessing Elasticsearch APIs.
 
-##### <a name="api_port"></a>`api_port`
+Default value: `'localhost'`
+
+##### <a name="-elasticsearch--api_port"></a>`api_port`
 
 Data type: `Integer[0, 65535]`
 
 Default port to use when accessing Elasticsearch APIs.
 
-##### <a name="api_protocol"></a>`api_protocol`
+Default value: `9200`
+
+##### <a name="-elasticsearch--api_protocol"></a>`api_protocol`
 
 Data type: `Enum['http', 'https']`
 
 Default protocol to use when accessing Elasticsearch APIs.
 
-##### <a name="api_timeout"></a>`api_timeout`
+Default value: `'http'`
+
+##### <a name="-elasticsearch--api_timeout"></a>`api_timeout`
 
 Data type: `Integer`
 
 Default timeout (in seconds) to use when accessing Elasticsearch APIs.
 
-##### <a name="autoupgrade"></a>`autoupgrade`
+Default value: `10`
+
+##### <a name="-elasticsearch--autoupgrade"></a>`autoupgrade`
 
 Data type: `Boolean`
 
@@ -240,251 +263,270 @@ when the package provider is able to find a newer version than the present
 one. The exact behavior is provider dependent (see
 {package, "upgradeable"}[http://j.mp/xbxmNP] in the Puppet documentation).
 
-##### <a name="ca_certificate"></a>`ca_certificate`
+Default value: `false`
+
+##### <a name="-elasticsearch--ca_certificate"></a>`ca_certificate`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Path to the trusted CA certificate to add to this node's Java keystore.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="certificate"></a>`certificate`
+##### <a name="-elasticsearch--certificate"></a>`certificate`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Path to the certificate for this node signed by the CA listed in
 ca_certificate.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="config"></a>`config`
+##### <a name="-elasticsearch--config"></a>`config`
 
 Data type: `Hash`
 
 Elasticsearch configuration hash.
 
-##### <a name="configdir"></a>`configdir`
+Default value: `{}`
+
+##### <a name="-elasticsearch--configdir"></a>`configdir`
 
 Data type: `Stdlib::Absolutepath`
 
 Directory containing the elasticsearch configuration.
 Use this setting if your packages deviate from the norm (`/etc/elasticsearch`)
 
-##### <a name="configdir_recurselimit"></a>`configdir_recurselimit`
+Default value: `'/etc/elasticsearch'`
+
+##### <a name="-elasticsearch--configdir_recurselimit"></a>`configdir_recurselimit`
 
 Data type: `Integer`
 
 Dictates how deeply the file copy recursion logic should descend when
 copying files from the `configdir` to instance `configdir`s.
 
-##### <a name="daily_rolling_date_pattern"></a>`daily_rolling_date_pattern`
+Default value: `2`
 
-Data type: `String`
-
-File pattern for the file appender log when file_rolling_type is 'dailyRollingFile'.
-
-##### <a name="datadir"></a>`datadir`
+##### <a name="-elasticsearch--datadir"></a>`datadir`
 
 Data type: `Elasticsearch::Multipath`
 
 Allows you to set the data directory of Elasticsearch.
 
-##### <a name="default_logging_level"></a>`default_logging_level`
-
-Data type: `String`
-
-Default logging level for Elasticsearch.
-
-Default value: `$logging_level`
-
-##### <a name="defaults_location"></a>`defaults_location`
+##### <a name="-elasticsearch--defaults_location"></a>`defaults_location`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Absolute path to directory containing init defaults file.
 
-##### <a name="deprecation_logging"></a>`deprecation_logging`
+Default value: `undef`
 
-Data type: `Boolean`
-
-Whether to enable deprecation logging. If enabled, deprecation logs will be
-saved to ${cluster.name}_deprecation.log in the Elasticsearch log folder.
-
-##### <a name="deprecation_logging_level"></a>`deprecation_logging_level`
-
-Data type: `String`
-
-Default deprecation logging level for Elasticsearch.
-
-##### <a name="download_tool"></a>`download_tool`
+##### <a name="-elasticsearch--download_tool"></a>`download_tool`
 
 Data type: `Optional[String]`
 
 Command-line invocation with which to retrieve an optional package_url.
 
-##### <a name="download_tool_insecure"></a>`download_tool_insecure`
+Default value: `undef`
+
+##### <a name="-elasticsearch--download_tool_insecure"></a>`download_tool_insecure`
 
 Data type: `Optional[String]`
 
 Command-line invocation with which to retrieve an optional package_url when
 certificate verification should be ignored.
 
-##### <a name="download_tool_verify_certificates"></a>`download_tool_verify_certificates`
+Default value: `undef`
+
+##### <a name="-elasticsearch--download_tool_verify_certificates"></a>`download_tool_verify_certificates`
 
 Data type: `Boolean`
 
 Whether or not to verify SSL/TLS certificates when retrieving package files
 using a download tool instead of a package management provider.
 
-##### <a name="elasticsearch_group"></a>`elasticsearch_group`
+Default value: `true`
+
+##### <a name="-elasticsearch--elasticsearch_group"></a>`elasticsearch_group`
 
 Data type: `String`
 
 The group Elasticsearch should run as. This also sets file group
 permissions.
 
-##### <a name="elasticsearch_user"></a>`elasticsearch_user`
+##### <a name="-elasticsearch--elasticsearch_user"></a>`elasticsearch_user`
 
 Data type: `String`
 
 The user Elasticsearch should run as. This also sets file ownership.
 
-##### <a name="file_rolling_type"></a>`file_rolling_type`
-
-Data type: `Enum['dailyRollingFile', 'rollingFile', 'file']`
-
-Configuration for the file appender rotation. It can be 'dailyRollingFile',
-'rollingFile' or 'file'. The first rotates by name, the second one by size
-or third don't rotate automatically.
-
-##### <a name="homedir"></a>`homedir`
+##### <a name="-elasticsearch--homedir"></a>`homedir`
 
 Data type: `Stdlib::Absolutepath`
 
 Directory where the elasticsearch installation's files are kept (plugins, etc.)
 
-##### <a name="indices"></a>`indices`
+##### <a name="-elasticsearch--indices"></a>`indices`
 
 Data type: `Hash`
 
 Define indices via a hash. This is mainly used with Hiera's auto binding.
 
-##### <a name="init_defaults"></a>`init_defaults`
+Default value: `{}`
+
+##### <a name="-elasticsearch--init_defaults"></a>`init_defaults`
 
 Data type: `Hash`
 
 Defaults file content in hash representation.
 
-##### <a name="init_defaults_file"></a>`init_defaults_file`
+Default value: `{}`
+
+##### <a name="-elasticsearch--init_defaults_file"></a>`init_defaults_file`
 
 Data type: `Optional[String]`
 
 Defaults file as puppet resource.
 
-##### <a name="init_template"></a>`init_template`
+Default value: `undef`
+
+##### <a name="-elasticsearch--init_template"></a>`init_template`
 
 Data type: `String`
 
 Service file as a template.
 
-##### <a name="jvm_options"></a>`jvm_options`
+Default value: `'%{module_name}/etc/init.d/elasticsearch.systemd.erb'`
+
+##### <a name="-elasticsearch--jvm_options"></a>`jvm_options`
 
 Data type: `Array[String]`
 
 Array of options to set in jvm_options.
 
-##### <a name="keystore_password"></a>`keystore_password`
+Default value: `[]`
+
+##### <a name="-elasticsearch--keystore_password"></a>`keystore_password`
 
 Data type: `Optional[String]`
 
 Password to encrypt this node's Java keystore.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="keystore_path"></a>`keystore_path`
+##### <a name="-elasticsearch--keystore_path"></a>`keystore_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Custom path to the Java keystore file. This parameter is optional.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="license"></a>`license`
+##### <a name="-elasticsearch--license"></a>`license`
 
 Data type: `Optional[Variant[String, Hash]]`
 
 Optional Elasticsearch license in hash or string form.
 
-##### <a name="logdir"></a>`logdir`
+Default value: `undef`
+
+##### <a name="-elasticsearch--logdir"></a>`logdir`
 
 Data type: `Stdlib::Absolutepath`
 
 Directory that will be used for Elasticsearch logging.
 
-##### <a name="logging_config"></a>`logging_config`
+Default value: `'/var/log/elasticsearch'`
 
-Data type: `Hash`
+##### <a name="-elasticsearch--logdir_mode"></a>`logdir_mode`
 
-Representation of information to be included in the log4j.properties file.
+Data type: `Stdlib::Filemode`
 
-##### <a name="logging_file"></a>`logging_file`
+Mode directory that will be used for Elasticsearch logging (default 2750).
 
-Data type: `Optional[String]`
+Default value: `'2750'`
 
-Instead of a hash, you may supply a `puppet://` file source for the
-log4j.properties file.
+##### <a name="-elasticsearch--logging_content"></a>`logging_content`
 
-##### <a name="logging_level"></a>`logging_level`
+Data type: `Optional[Variant[String, Array]]`
 
-Data type: `String`
+Content to use for the logging configuration file (log4j2.properties).
 
-Default logging level for Elasticsearch.
+Default value: `undef`
 
-##### <a name="logging_template"></a>`logging_template`
+##### <a name="-elasticsearch--manage_datadir"></a>`manage_datadir`
 
-Data type: `Optional[String]`
+Data type: `Boolean`
 
-Use a custom logging template - just supply the relative path, i.e.
-`$module/elasticsearch/logging.yml.erb`
+Enable datadir management (default true).
 
-##### <a name="manage_repo"></a>`manage_repo`
+Default value: `true`
+
+##### <a name="-elasticsearch--manage_logdir"></a>`manage_logdir`
+
+Data type: `Boolean`
+
+Enable logdir management (default true).
+
+Default value: `true`
+
+##### <a name="-elasticsearch--manage_repo"></a>`manage_repo`
 
 Data type: `Boolean`
 
 Enable repo management by enabling official Elastic repositories.
 
-##### <a name="oss"></a>`oss`
+Default value: `true`
+
+##### <a name="-elasticsearch--oss"></a>`oss`
 
 Data type: `Boolean`
 
 Whether to use the purely open source Elasticsearch package distribution.
 
-##### <a name="package_dir"></a>`package_dir`
+Default value: `false`
+
+##### <a name="-elasticsearch--package_dir"></a>`package_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 Directory where packages are downloaded to.
 
-##### <a name="package_dl_timeout"></a>`package_dl_timeout`
+##### <a name="-elasticsearch--package_dl_timeout"></a>`package_dl_timeout`
 
 Data type: `Integer`
 
 For http, https, and ftp downloads, you may set how long the exec resource
 may take.
 
-##### <a name="package_name"></a>`package_name`
+Default value: `600`
+
+##### <a name="-elasticsearch--package_hold"></a>`package_hold`
+
+Data type: `Boolean`
+
+Set to hold to tell Debian apt/Solaris pkg to hold the package version.
+
+Default value: `false`
+
+##### <a name="-elasticsearch--package_name"></a>`package_name`
 
 Data type: `String`
 
 Name Of the package to install.
 
-##### <a name="package_provider"></a>`package_provider`
+Default value: `'elasticsearch'`
+
+##### <a name="-elasticsearch--package_provider"></a>`package_provider`
 
 Data type: `Enum['package']`
 
 Method to install the packages, currently only `package` is supported.
 
-##### <a name="package_url"></a>`package_url`
+Default value: `'package'`
+
+##### <a name="-elasticsearch--package_url"></a>`package_url`
 
 Data type: `Optional[String]`
 
@@ -492,40 +534,58 @@ URL of the package to download.
 This can be an http, https, or ftp resource for remote packages, or a
 `puppet://` resource or `file:/` for local packages
 
-##### <a name="pid_dir"></a>`pid_dir`
+Default value: `undef`
+
+##### <a name="-elasticsearch--pid_dir"></a>`pid_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Directory where the elasticsearch process should write out its PID.
 
-##### <a name="pipelines"></a>`pipelines`
+Default value: `'/var/run/elasticsearch'`
+
+##### <a name="-elasticsearch--pipelines"></a>`pipelines`
 
 Data type: `Hash`
 
 Define pipelines via a hash. This is mainly used with Hiera's auto binding.
 
-##### <a name="plugindir"></a>`plugindir`
+Default value: `{}`
+
+##### <a name="-elasticsearch--plugindir"></a>`plugindir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Directory containing elasticsearch plugins.
 Use this setting if your packages deviate from the norm (/usr/share/elasticsearch/plugins)
 
-##### <a name="plugins"></a>`plugins`
+Default value: `undef`
+
+##### <a name="-elasticsearch--plugins"></a>`plugins`
 
 Data type: `Hash`
 
 Define plugins via a hash. This is mainly used with Hiera's auto binding.
 
-##### <a name="private_key"></a>`private_key`
+Default value: `{}`
+
+##### <a name="-elasticsearch--private_key"></a>`private_key`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Path to the key associated with this node's certificate.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_url"></a>`proxy_url`
+##### <a name="-elasticsearch--private_key_type"></a>`private_key_type`
+
+Data type: `Enum['rsa','dsa','ec']`
+
+The type of the private key. Usually the private key is of type RSA key but it can also be an Elliptic Curve key (EC) or DSA.
+
+Default value: `'rsa'`
+
+##### <a name="-elasticsearch--proxy_url"></a>`proxy_url`
 
 Data type: `Optional[Stdlib::HTTPUrl]`
 
@@ -533,33 +593,43 @@ For http and https downloads, you may set a proxy server to use. By default,
 no proxy is used.
 Format: `proto://[user:pass@]server[:port]/`
 
-##### <a name="purge_configdir"></a>`purge_configdir`
+Default value: `undef`
+
+##### <a name="-elasticsearch--purge_configdir"></a>`purge_configdir`
 
 Data type: `Boolean`
 
 Purge the config directory of any unmanaged files.
 
-##### <a name="purge_package_dir"></a>`purge_package_dir`
+Default value: `false`
+
+##### <a name="-elasticsearch--purge_package_dir"></a>`purge_package_dir`
 
 Data type: `Boolean`
 
 Purge package directory on removal
 
-##### <a name="purge_secrets"></a>`purge_secrets`
+Default value: `false`
+
+##### <a name="-elasticsearch--purge_secrets"></a>`purge_secrets`
 
 Data type: `Boolean`
 
 Whether or not keys present in the keystore will be removed if they are not
 present in the specified secrets hash.
 
-##### <a name="repo_stage"></a>`repo_stage`
+Default value: `false`
+
+##### <a name="-elasticsearch--repo_stage"></a>`repo_stage`
 
 Data type: `Variant[Boolean, String]`
 
 Use stdlib stage setup for managing the repo instead of relationship
 ordering.
 
-##### <a name="restart_on_change"></a>`restart_on_change`
+Default value: `false`
+
+##### <a name="-elasticsearch--restart_on_change"></a>`restart_on_change`
 
 Data type: `Boolean`
 
@@ -571,7 +641,9 @@ updated/changed executable. This may be undesireable in highly available
 environments. If all other restart_* parameters are left unset, the value of
 `restart_on_change` is used for all other restart_*_change defaults.
 
-##### <a name="restart_config_change"></a>`restart_config_change`
+Default value: `false`
+
+##### <a name="-elasticsearch--restart_config_change"></a>`restart_config_change`
 
 Data type: `Boolean`
 
@@ -584,7 +656,7 @@ manner rather than during a Puppet run.
 
 Default value: `$restart_on_change`
 
-##### <a name="restart_package_change"></a>`restart_package_change`
+##### <a name="-elasticsearch--restart_package_change"></a>`restart_package_change`
 
 Data type: `Boolean`
 
@@ -596,7 +668,7 @@ manner rather than during a Puppet run.
 
 Default value: `$restart_on_change`
 
-##### <a name="restart_plugin_change"></a>`restart_plugin_change`
+##### <a name="-elasticsearch--restart_plugin_change"></a>`restart_plugin_change`
 
 Data type: `Boolean`
 
@@ -608,77 +680,73 @@ manner rather than during a Puppet run.
 
 Default value: `$restart_on_change`
 
-##### <a name="roles"></a>`roles`
+##### <a name="-elasticsearch--roles"></a>`roles`
 
 Data type: `Hash`
 
 Define roles via a hash. This is mainly used with Hiera's auto binding.
 
-##### <a name="rolling_file_max_backup_index"></a>`rolling_file_max_backup_index`
+Default value: `{}`
 
-Data type: `Integer`
-
-Max number of logs to store whern file_rolling_type is 'rollingFile'
-
-##### <a name="rolling_file_max_file_size"></a>`rolling_file_max_file_size`
-
-Data type: `String`
-
-Max log file size when file_rolling_type is 'rollingFile'
-
-##### <a name="scripts"></a>`scripts`
+##### <a name="-elasticsearch--scripts"></a>`scripts`
 
 Data type: `Hash`
 
 Define scripts via a hash. This is mainly used with Hiera's auto binding.
 
-##### <a name="secrets"></a>`secrets`
+Default value: `{}`
+
+##### <a name="-elasticsearch--secrets"></a>`secrets`
 
 Data type: `Optional[Hash]`
 
 Optional default configuration hash of key/value pairs to store in the
 Elasticsearch keystore file. If unset, the keystore is left unmanaged.
 
-##### <a name="security_logging_content"></a>`security_logging_content`
+Default value: `undef`
 
-Data type: `Optional[String]`
-
-File content for x-pack logging configuration file (will be placed
-into log4j2.properties file).
-
-##### <a name="security_logging_source"></a>`security_logging_source`
-
-Data type: `Optional[String]`
-
-File source for x-pack logging configuration file (will be placed
-into log4j2.properties).
-
-##### <a name="service_name"></a>`service_name`
+##### <a name="-elasticsearch--service_name"></a>`service_name`
 
 Data type: `String`
 
 Elasticsearch service name
 
-##### <a name="service_provider"></a>`service_provider`
+Default value: `'elasticsearch'`
+
+##### <a name="-elasticsearch--service_provider"></a>`service_provider`
 
 Data type: `Enum['init', 'openbsd', 'openrc', 'systemd']`
 
 The service resource type provider to use when managing elasticsearch instances.
 
-##### <a name="snapshot_repositories"></a>`snapshot_repositories`
+Default value: `'systemd'`
+
+##### <a name="-elasticsearch--slm_policies"></a>`slm_policies`
+
+Data type: `Hash`
+
+Define slm_policies via a hash. This is mainly used with Hiera's auto binding.
+
+Default value: `{}`
+
+##### <a name="-elasticsearch--snapshot_repositories"></a>`snapshot_repositories`
 
 Data type: `Hash`
 
 Define snapshot repositories via a hash. This is mainly used with Hiera's auto binding.
 
-##### <a name="ssl"></a>`ssl`
+Default value: `{}`
+
+##### <a name="-elasticsearch--ssl"></a>`ssl`
 
 Data type: `Boolean`
 
 Whether to manage TLS certificates. Requires the ca_certificate,
 certificate, private_key and keystore_password parameters to be set.
 
-##### <a name="status"></a>`status`
+Default value: `false`
+
+##### <a name="-elasticsearch--status"></a>`status`
 
 Data type: `Elasticsearch::Status`
 
@@ -692,44 +760,82 @@ does not care whether the service is running or not. For example, this may
 be useful if a cluster management software is used to decide when to start
 the service plus assuring it is running on the desired node.
 
-##### <a name="system_key"></a>`system_key`
+Default value: `'enabled'`
+
+##### <a name="-elasticsearch--system_key"></a>`system_key`
 
 Data type: `Optional[String]`
 
 Source for the x-pack system key. Valid values are any that are
 supported for the file resource `source` parameter.
 
-##### <a name="systemd_service_path"></a>`systemd_service_path`
+Default value: `undef`
+
+##### <a name="-elasticsearch--systemd_service_path"></a>`systemd_service_path`
 
 Data type: `Stdlib::Absolutepath`
 
 Path to the directory in which to install systemd service units.
 
-##### <a name="templates"></a>`templates`
+Default value: `'/lib/systemd/system'`
+
+##### <a name="-elasticsearch--templates"></a>`templates`
 
 Data type: `Hash`
 
 Define templates via a hash. This is mainly used with Hiera's auto binding.
 
-##### <a name="users"></a>`users`
+Default value: `{}`
+
+##### <a name="-elasticsearch--index_templates"></a>`index_templates`
+
+Data type: `Hash`
+
+Define index_templates via a hash. This is mainly used with Hiera's auto binding.
+
+Default value: `{}`
+
+##### <a name="-elasticsearch--component_templates"></a>`component_templates`
+
+Data type: `Hash`
+
+Define component_templates via a hash. This is mainly used with Hiera's auto binding.
+
+Default value: `{}`
+
+##### <a name="-elasticsearch--ilm_policies"></a>`ilm_policies`
+
+Data type: `Hash`
+
+Define ilm_policies via a hash. This is mainly used with Hiera's auto binding.
+
+Default value: `{}`
+
+##### <a name="-elasticsearch--users"></a>`users`
 
 Data type: `Hash`
 
 Define templates via a hash. This is mainly used with Hiera's auto binding.
 
-##### <a name="validate_tls"></a>`validate_tls`
+Default value: `{}`
+
+##### <a name="-elasticsearch--validate_tls"></a>`validate_tls`
 
 Data type: `Boolean`
 
 Enable TLS/SSL validation on API calls.
 
-##### <a name="version"></a>`version`
+Default value: `true`
+
+##### <a name="-elasticsearch--version"></a>`version`
 
 Data type: `Variant[String, Boolean]`
 
 To set the specific version you want to install.
 
-### <a name="elasticsearchconfig"></a>`elasticsearch::config`
+Default value: `false`
+
+### <a name="elasticsearch--config"></a>`elasticsearch::config`
 
 This class exists to coordinate all configuration related actions,
 functionality and logical units in a central place.
@@ -747,7 +853,7 @@ definitions or other modules.
 class { 'elasticsearch::config': }
 ```
 
-### <a name="elasticsearchlicense"></a>`elasticsearch::license`
+### <a name="elasticsearch--license"></a>`elasticsearch::license`
 
 A defined type to control Elasticsearch licenses.
 
@@ -755,19 +861,19 @@ A defined type to control Elasticsearch licenses.
 
 The following parameters are available in the `elasticsearch::license` class:
 
-* [`ensure`](#ensure)
-* [`api_basic_auth_password`](#api_basic_auth_password)
-* [`api_basic_auth_username`](#api_basic_auth_username)
-* [`api_ca_file`](#api_ca_file)
-* [`api_ca_path`](#api_ca_path)
-* [`api_host`](#api_host)
-* [`api_port`](#api_port)
-* [`api_protocol`](#api_protocol)
-* [`api_timeout`](#api_timeout)
-* [`content`](#content)
-* [`validate_tls`](#validate_tls)
+* [`ensure`](#-elasticsearch--license--ensure)
+* [`api_basic_auth_password`](#-elasticsearch--license--api_basic_auth_password)
+* [`api_basic_auth_username`](#-elasticsearch--license--api_basic_auth_username)
+* [`api_ca_file`](#-elasticsearch--license--api_ca_file)
+* [`api_ca_path`](#-elasticsearch--license--api_ca_path)
+* [`api_host`](#-elasticsearch--license--api_host)
+* [`api_port`](#-elasticsearch--license--api_port)
+* [`api_protocol`](#-elasticsearch--license--api_protocol)
+* [`api_timeout`](#-elasticsearch--license--api_timeout)
+* [`content`](#-elasticsearch--license--content)
+* [`validate_tls`](#-elasticsearch--license--validate_tls)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-elasticsearch--license--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -776,7 +882,7 @@ the cluster.
 
 Default value: `'present'`
 
-##### <a name="api_basic_auth_password"></a>`api_basic_auth_password`
+##### <a name="-elasticsearch--license--api_basic_auth_password"></a>`api_basic_auth_password`
 
 Data type: `Optional[String]`
 
@@ -785,7 +891,7 @@ API.
 
 Default value: `$elasticsearch::api_basic_auth_password`
 
-##### <a name="api_basic_auth_username"></a>`api_basic_auth_username`
+##### <a name="-elasticsearch--license--api_basic_auth_username"></a>`api_basic_auth_username`
 
 Data type: `Optional[String]`
 
@@ -794,7 +900,7 @@ API.
 
 Default value: `$elasticsearch::api_basic_auth_username`
 
-##### <a name="api_ca_file"></a>`api_ca_file`
+##### <a name="-elasticsearch--license--api_ca_file"></a>`api_ca_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -803,7 +909,7 @@ communicating with the Elasticsearch API over HTTPS.
 
 Default value: `$elasticsearch::api_ca_file`
 
-##### <a name="api_ca_path"></a>`api_ca_path`
+##### <a name="-elasticsearch--license--api_ca_path"></a>`api_ca_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -812,7 +918,7 @@ certs when communicating with the Elasticsearch API over HTTPS.
 
 Default value: `$elasticsearch::api_ca_path`
 
-##### <a name="api_host"></a>`api_host`
+##### <a name="-elasticsearch--license--api_host"></a>`api_host`
 
 Data type: `String`
 
@@ -820,7 +926,7 @@ Host name or IP address of the ES instance to connect to.
 
 Default value: `$elasticsearch::api_host`
 
-##### <a name="api_port"></a>`api_port`
+##### <a name="-elasticsearch--license--api_port"></a>`api_port`
 
 Data type: `Integer[0, 65535]`
 
@@ -828,7 +934,7 @@ Port number of the ES instance to connect to
 
 Default value: `$elasticsearch::api_port`
 
-##### <a name="api_protocol"></a>`api_protocol`
+##### <a name="-elasticsearch--license--api_protocol"></a>`api_protocol`
 
 Data type: `Enum['http', 'https']`
 
@@ -836,7 +942,7 @@ Protocol that should be used to connect to the Elasticsearch API.
 
 Default value: `$elasticsearch::api_protocol`
 
-##### <a name="api_timeout"></a>`api_timeout`
+##### <a name="-elasticsearch--license--api_timeout"></a>`api_timeout`
 
 Data type: `Integer`
 
@@ -844,7 +950,7 @@ Timeout period (in seconds) for the Elasticsearch API.
 
 Default value: `$elasticsearch::api_timeout`
 
-##### <a name="content"></a>`content`
+##### <a name="-elasticsearch--license--content"></a>`content`
 
 Data type: `Variant[String, Hash]`
 
@@ -852,7 +958,7 @@ License content in hash or string form.
 
 Default value: `$elasticsearch::license`
 
-##### <a name="validate_tls"></a>`validate_tls`
+##### <a name="-elasticsearch--license--validate_tls"></a>`validate_tls`
 
 Data type: `Boolean`
 
@@ -861,7 +967,7 @@ Elasticsearch API should be verified or ignored.
 
 Default value: `$elasticsearch::validate_tls`
 
-### <a name="elasticsearchpackage"></a>`elasticsearch::package`
+### <a name="elasticsearch--package"></a>`elasticsearch::package`
 
 This class exists to coordinate all software package management related
 actions, functionality and logical units in a central place.
@@ -877,7 +983,7 @@ definitions or other modules.
 class { 'elasticsearch::package': }
 ```
 
-### <a name="elasticsearchservice"></a>`elasticsearch::service`
+### <a name="elasticsearch--service"></a>`elasticsearch::service`
 
 This class exists to coordinate all service management related actions,
 functionality and logical units in a central place.
@@ -888,36 +994,42 @@ in general and is used in a platform-independent way. E.g. "service" means
 
 ## Defined types
 
-### <a name="elasticsearchindex"></a>`elasticsearch::index`
+### <a name="elasticsearch--component_template"></a>`elasticsearch::component_template`
 
-A defined type to control Elasticsearch index-level settings.
+This define allows you to insert, update or delete Elasticsearch component
+ templates.
+
+ Template content should be defined through either the `content` parameter
+ (when passing a hash or json string) or the `source` parameter (when passing
+ the puppet file URI to a template json file).
 
 #### Parameters
 
-The following parameters are available in the `elasticsearch::index` defined type:
+The following parameters are available in the `elasticsearch::component_template` defined type:
 
-* [`ensure`](#ensure)
-* [`api_basic_auth_password`](#api_basic_auth_password)
-* [`api_basic_auth_username`](#api_basic_auth_username)
-* [`api_ca_file`](#api_ca_file)
-* [`api_ca_path`](#api_ca_path)
-* [`api_host`](#api_host)
-* [`api_port`](#api_port)
-* [`api_protocol`](#api_protocol)
-* [`api_timeout`](#api_timeout)
-* [`settings`](#settings)
-* [`validate_tls`](#validate_tls)
+* [`ensure`](#-elasticsearch--component_template--ensure)
+* [`api_basic_auth_password`](#-elasticsearch--component_template--api_basic_auth_password)
+* [`api_basic_auth_username`](#-elasticsearch--component_template--api_basic_auth_username)
+* [`api_ca_file`](#-elasticsearch--component_template--api_ca_file)
+* [`api_ca_path`](#-elasticsearch--component_template--api_ca_path)
+* [`api_host`](#-elasticsearch--component_template--api_host)
+* [`api_port`](#-elasticsearch--component_template--api_port)
+* [`api_protocol`](#-elasticsearch--component_template--api_protocol)
+* [`api_timeout`](#-elasticsearch--component_template--api_timeout)
+* [`content`](#-elasticsearch--component_template--content)
+* [`source`](#-elasticsearch--component_template--source)
+* [`validate_tls`](#-elasticsearch--component_template--validate_tls)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-elasticsearch--component_template--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
-Controls whether the named pipeline should be present or absent in
+Controls whether the named component template should be present or absent in
 the cluster.
 
 Default value: `'present'`
 
-##### <a name="api_basic_auth_password"></a>`api_basic_auth_password`
+##### <a name="-elasticsearch--component_template--api_basic_auth_password"></a>`api_basic_auth_password`
 
 Data type: `Optional[String]`
 
@@ -926,7 +1038,7 @@ API.
 
 Default value: `$elasticsearch::api_basic_auth_password`
 
-##### <a name="api_basic_auth_username"></a>`api_basic_auth_username`
+##### <a name="-elasticsearch--component_template--api_basic_auth_username"></a>`api_basic_auth_username`
 
 Data type: `Optional[String]`
 
@@ -935,7 +1047,7 @@ API.
 
 Default value: `$elasticsearch::api_basic_auth_username`
 
-##### <a name="api_ca_file"></a>`api_ca_file`
+##### <a name="-elasticsearch--component_template--api_ca_file"></a>`api_ca_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -944,7 +1056,7 @@ communicating with the Elasticsearch API over HTTPS.
 
 Default value: `$elasticsearch::api_ca_file`
 
-##### <a name="api_ca_path"></a>`api_ca_path`
+##### <a name="-elasticsearch--component_template--api_ca_path"></a>`api_ca_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -953,7 +1065,7 @@ certs when communicating with the Elasticsearch API over HTTPS.
 
 Default value: `$elasticsearch::api_ca_path`
 
-##### <a name="api_host"></a>`api_host`
+##### <a name="-elasticsearch--component_template--api_host"></a>`api_host`
 
 Data type: `String`
 
@@ -961,7 +1073,7 @@ Host name or IP address of the ES instance to connect to.
 
 Default value: `$elasticsearch::api_host`
 
-##### <a name="api_port"></a>`api_port`
+##### <a name="-elasticsearch--component_template--api_port"></a>`api_port`
 
 Data type: `Integer[0, 65535]`
 
@@ -969,7 +1081,7 @@ Port number of the ES instance to connect to
 
 Default value: `$elasticsearch::api_port`
 
-##### <a name="api_protocol"></a>`api_protocol`
+##### <a name="-elasticsearch--component_template--api_protocol"></a>`api_protocol`
 
 Data type: `Enum['http', 'https']`
 
@@ -977,7 +1089,7 @@ Protocol that should be used to connect to the Elasticsearch API.
 
 Default value: `$elasticsearch::api_protocol`
 
-##### <a name="api_timeout"></a>`api_timeout`
+##### <a name="-elasticsearch--component_template--api_timeout"></a>`api_timeout`
 
 Data type: `Integer`
 
@@ -985,15 +1097,25 @@ Timeout period (in seconds) for the Elasticsearch API.
 
 Default value: `$elasticsearch::api_timeout`
 
-##### <a name="settings"></a>`settings`
+##### <a name="-elasticsearch--component_template--content"></a>`content`
 
-Data type: `Hash`
+Data type: `Optional[Variant[String, Hash]]`
 
-Index settings in hash form (typically nested).
+Contents of the template. Can be either a puppet hash or a string
+containing JSON.
 
-Default value: `{}`
+Default value: `undef`
 
-##### <a name="validate_tls"></a>`validate_tls`
+##### <a name="-elasticsearch--component_template--source"></a>`source`
+
+Data type: `Optional[String]`
+
+Source path for the template file. Can be any value similar to `source`
+values for `file` resources.
+
+Default value: `undef`
+
+##### <a name="-elasticsearch--component_template--validate_tls"></a>`validate_tls`
 
 Data type: `Boolean`
 
@@ -1002,7 +1124,381 @@ Elasticsearch API should be verified or ignored.
 
 Default value: `$elasticsearch::validate_tls`
 
-### <a name="elasticsearchpipeline"></a>`elasticsearch::pipeline`
+### <a name="elasticsearch--ilm_policy"></a>`elasticsearch::ilm_policy`
+
+This define allows you to insert, update or delete Elasticsearch ILM
+ policies.
+
+ Policy content should be defined through either the `content` parameter
+ (when passing a hash or json string) or the `source` parameter (when passing
+ the puppet file URI to a policy json file).
+
+#### Parameters
+
+The following parameters are available in the `elasticsearch::ilm_policy` defined type:
+
+* [`ensure`](#-elasticsearch--ilm_policy--ensure)
+* [`api_basic_auth_password`](#-elasticsearch--ilm_policy--api_basic_auth_password)
+* [`api_basic_auth_username`](#-elasticsearch--ilm_policy--api_basic_auth_username)
+* [`api_ca_file`](#-elasticsearch--ilm_policy--api_ca_file)
+* [`api_ca_path`](#-elasticsearch--ilm_policy--api_ca_path)
+* [`api_host`](#-elasticsearch--ilm_policy--api_host)
+* [`api_port`](#-elasticsearch--ilm_policy--api_port)
+* [`api_protocol`](#-elasticsearch--ilm_policy--api_protocol)
+* [`api_timeout`](#-elasticsearch--ilm_policy--api_timeout)
+* [`content`](#-elasticsearch--ilm_policy--content)
+* [`source`](#-elasticsearch--ilm_policy--source)
+* [`validate_tls`](#-elasticsearch--ilm_policy--validate_tls)
+
+##### <a name="-elasticsearch--ilm_policy--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Controls whether the named ILM policy should be present or absent in the
+cluster.
+
+Default value: `'present'`
+
+##### <a name="-elasticsearch--ilm_policy--api_basic_auth_password"></a>`api_basic_auth_password`
+
+Data type: `Optional[String]`
+
+HTTP basic auth password to use when communicating over the Elasticsearch
+API.
+
+Default value: `$elasticsearch::api_basic_auth_password`
+
+##### <a name="-elasticsearch--ilm_policy--api_basic_auth_username"></a>`api_basic_auth_username`
+
+Data type: `Optional[String]`
+
+HTTP basic auth username to use when communicating over the Elasticsearch
+API.
+
+Default value: `$elasticsearch::api_basic_auth_username`
+
+##### <a name="-elasticsearch--ilm_policy--api_ca_file"></a>`api_ca_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Path to a CA file which will be used to validate server certs when
+communicating with the Elasticsearch API over HTTPS.
+
+Default value: `$elasticsearch::api_ca_file`
+
+##### <a name="-elasticsearch--ilm_policy--api_ca_path"></a>`api_ca_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Path to a directory with CA files which will be used to validate server
+certs when communicating with the Elasticsearch API over HTTPS.
+
+Default value: `$elasticsearch::api_ca_path`
+
+##### <a name="-elasticsearch--ilm_policy--api_host"></a>`api_host`
+
+Data type: `String`
+
+Host name or IP address of the ES instance to connect to.
+
+Default value: `$elasticsearch::api_host`
+
+##### <a name="-elasticsearch--ilm_policy--api_port"></a>`api_port`
+
+Data type: `Integer[0, 65535]`
+
+Port number of the ES instance to connect to
+
+Default value: `$elasticsearch::api_port`
+
+##### <a name="-elasticsearch--ilm_policy--api_protocol"></a>`api_protocol`
+
+Data type: `Enum['http', 'https']`
+
+Protocol that should be used to connect to the Elasticsearch API.
+
+Default value: `$elasticsearch::api_protocol`
+
+##### <a name="-elasticsearch--ilm_policy--api_timeout"></a>`api_timeout`
+
+Data type: `Integer`
+
+Timeout period (in seconds) for the Elasticsearch API.
+
+Default value: `$elasticsearch::api_timeout`
+
+##### <a name="-elasticsearch--ilm_policy--content"></a>`content`
+
+Data type: `Optional[Variant[String, Hash]]`
+
+Contents of the policy. Can be either a puppet hash or a string containing
+JSON.
+
+Default value: `undef`
+
+##### <a name="-elasticsearch--ilm_policy--source"></a>`source`
+
+Data type: `Optional[String]`
+
+Source path for the policy file. Can be any value similar to `source`
+values for `file` resources.
+
+Default value: `undef`
+
+##### <a name="-elasticsearch--ilm_policy--validate_tls"></a>`validate_tls`
+
+Data type: `Boolean`
+
+Determines whether the validity of SSL/TLS certificates received from the
+Elasticsearch API should be verified or ignored.
+
+Default value: `$elasticsearch::validate_tls`
+
+### <a name="elasticsearch--index"></a>`elasticsearch::index`
+
+A defined type to control Elasticsearch index-level settings.
+
+#### Parameters
+
+The following parameters are available in the `elasticsearch::index` defined type:
+
+* [`ensure`](#-elasticsearch--index--ensure)
+* [`api_basic_auth_password`](#-elasticsearch--index--api_basic_auth_password)
+* [`api_basic_auth_username`](#-elasticsearch--index--api_basic_auth_username)
+* [`api_ca_file`](#-elasticsearch--index--api_ca_file)
+* [`api_ca_path`](#-elasticsearch--index--api_ca_path)
+* [`api_host`](#-elasticsearch--index--api_host)
+* [`api_port`](#-elasticsearch--index--api_port)
+* [`api_protocol`](#-elasticsearch--index--api_protocol)
+* [`api_timeout`](#-elasticsearch--index--api_timeout)
+* [`settings`](#-elasticsearch--index--settings)
+* [`validate_tls`](#-elasticsearch--index--validate_tls)
+
+##### <a name="-elasticsearch--index--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Controls whether the named pipeline should be present or absent in
+the cluster.
+
+Default value: `'present'`
+
+##### <a name="-elasticsearch--index--api_basic_auth_password"></a>`api_basic_auth_password`
+
+Data type: `Optional[String]`
+
+HTTP basic auth password to use when communicating over the Elasticsearch
+API.
+
+Default value: `$elasticsearch::api_basic_auth_password`
+
+##### <a name="-elasticsearch--index--api_basic_auth_username"></a>`api_basic_auth_username`
+
+Data type: `Optional[String]`
+
+HTTP basic auth username to use when communicating over the Elasticsearch
+API.
+
+Default value: `$elasticsearch::api_basic_auth_username`
+
+##### <a name="-elasticsearch--index--api_ca_file"></a>`api_ca_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Path to a CA file which will be used to validate server certs when
+communicating with the Elasticsearch API over HTTPS.
+
+Default value: `$elasticsearch::api_ca_file`
+
+##### <a name="-elasticsearch--index--api_ca_path"></a>`api_ca_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Path to a directory with CA files which will be used to validate server
+certs when communicating with the Elasticsearch API over HTTPS.
+
+Default value: `$elasticsearch::api_ca_path`
+
+##### <a name="-elasticsearch--index--api_host"></a>`api_host`
+
+Data type: `String`
+
+Host name or IP address of the ES instance to connect to.
+
+Default value: `$elasticsearch::api_host`
+
+##### <a name="-elasticsearch--index--api_port"></a>`api_port`
+
+Data type: `Integer[0, 65535]`
+
+Port number of the ES instance to connect to
+
+Default value: `$elasticsearch::api_port`
+
+##### <a name="-elasticsearch--index--api_protocol"></a>`api_protocol`
+
+Data type: `Enum['http', 'https']`
+
+Protocol that should be used to connect to the Elasticsearch API.
+
+Default value: `$elasticsearch::api_protocol`
+
+##### <a name="-elasticsearch--index--api_timeout"></a>`api_timeout`
+
+Data type: `Integer`
+
+Timeout period (in seconds) for the Elasticsearch API.
+
+Default value: `$elasticsearch::api_timeout`
+
+##### <a name="-elasticsearch--index--settings"></a>`settings`
+
+Data type: `Hash`
+
+Index settings in hash form (typically nested).
+
+Default value: `{}`
+
+##### <a name="-elasticsearch--index--validate_tls"></a>`validate_tls`
+
+Data type: `Boolean`
+
+Determines whether the validity of SSL/TLS certificates received from the
+Elasticsearch API should be verified or ignored.
+
+Default value: `$elasticsearch::validate_tls`
+
+### <a name="elasticsearch--index_template"></a>`elasticsearch::index_template`
+
+This define allows you to insert, update or delete Elasticsearch index
+ templates (using new composable api).
+
+ Template content should be defined through either the `content` parameter
+ (when passing a hash or json string) or the `source` parameter (when passing
+ the puppet file URI to a template json file).
+
+#### Parameters
+
+The following parameters are available in the `elasticsearch::index_template` defined type:
+
+* [`ensure`](#-elasticsearch--index_template--ensure)
+* [`api_basic_auth_password`](#-elasticsearch--index_template--api_basic_auth_password)
+* [`api_basic_auth_username`](#-elasticsearch--index_template--api_basic_auth_username)
+* [`api_ca_file`](#-elasticsearch--index_template--api_ca_file)
+* [`api_ca_path`](#-elasticsearch--index_template--api_ca_path)
+* [`api_host`](#-elasticsearch--index_template--api_host)
+* [`api_port`](#-elasticsearch--index_template--api_port)
+* [`api_protocol`](#-elasticsearch--index_template--api_protocol)
+* [`api_timeout`](#-elasticsearch--index_template--api_timeout)
+* [`content`](#-elasticsearch--index_template--content)
+* [`source`](#-elasticsearch--index_template--source)
+* [`validate_tls`](#-elasticsearch--index_template--validate_tls)
+
+##### <a name="-elasticsearch--index_template--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Controls whether the named index template should be present or absent in
+the cluster.
+
+Default value: `'present'`
+
+##### <a name="-elasticsearch--index_template--api_basic_auth_password"></a>`api_basic_auth_password`
+
+Data type: `Optional[String]`
+
+HTTP basic auth password to use when communicating over the Elasticsearch
+API.
+
+Default value: `$elasticsearch::api_basic_auth_password`
+
+##### <a name="-elasticsearch--index_template--api_basic_auth_username"></a>`api_basic_auth_username`
+
+Data type: `Optional[String]`
+
+HTTP basic auth username to use when communicating over the Elasticsearch
+API.
+
+Default value: `$elasticsearch::api_basic_auth_username`
+
+##### <a name="-elasticsearch--index_template--api_ca_file"></a>`api_ca_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Path to a CA file which will be used to validate server certs when
+communicating with the Elasticsearch API over HTTPS.
+
+Default value: `$elasticsearch::api_ca_file`
+
+##### <a name="-elasticsearch--index_template--api_ca_path"></a>`api_ca_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Path to a directory with CA files which will be used to validate server
+certs when communicating with the Elasticsearch API over HTTPS.
+
+Default value: `$elasticsearch::api_ca_path`
+
+##### <a name="-elasticsearch--index_template--api_host"></a>`api_host`
+
+Data type: `String`
+
+Host name or IP address of the ES instance to connect to.
+
+Default value: `$elasticsearch::api_host`
+
+##### <a name="-elasticsearch--index_template--api_port"></a>`api_port`
+
+Data type: `Integer[0, 65535]`
+
+Port number of the ES instance to connect to
+
+Default value: `$elasticsearch::api_port`
+
+##### <a name="-elasticsearch--index_template--api_protocol"></a>`api_protocol`
+
+Data type: `Enum['http', 'https']`
+
+Protocol that should be used to connect to the Elasticsearch API.
+
+Default value: `$elasticsearch::api_protocol`
+
+##### <a name="-elasticsearch--index_template--api_timeout"></a>`api_timeout`
+
+Data type: `Integer`
+
+Timeout period (in seconds) for the Elasticsearch API.
+
+Default value: `$elasticsearch::api_timeout`
+
+##### <a name="-elasticsearch--index_template--content"></a>`content`
+
+Data type: `Optional[Variant[String, Hash]]`
+
+Contents of the template. Can be either a puppet hash or a string
+containing JSON.
+
+Default value: `undef`
+
+##### <a name="-elasticsearch--index_template--source"></a>`source`
+
+Data type: `Optional[String]`
+
+Source path for the template file. Can be any value similar to `source`
+values for `file` resources.
+
+Default value: `undef`
+
+##### <a name="-elasticsearch--index_template--validate_tls"></a>`validate_tls`
+
+Data type: `Boolean`
+
+Determines whether the validity of SSL/TLS certificates received from the
+Elasticsearch API should be verified or ignored.
+
+Default value: `$elasticsearch::validate_tls`
+
+### <a name="elasticsearch--pipeline"></a>`elasticsearch::pipeline`
 
 This define allows you to insert, update or delete Elasticsearch index
  ingestion pipelines.
@@ -1013,19 +1509,19 @@ This define allows you to insert, update or delete Elasticsearch index
 
 The following parameters are available in the `elasticsearch::pipeline` defined type:
 
-* [`ensure`](#ensure)
-* [`content`](#content)
-* [`api_basic_auth_password`](#api_basic_auth_password)
-* [`api_basic_auth_username`](#api_basic_auth_username)
-* [`api_ca_file`](#api_ca_file)
-* [`api_ca_path`](#api_ca_path)
-* [`api_host`](#api_host)
-* [`api_port`](#api_port)
-* [`api_protocol`](#api_protocol)
-* [`api_timeout`](#api_timeout)
-* [`validate_tls`](#validate_tls)
+* [`ensure`](#-elasticsearch--pipeline--ensure)
+* [`content`](#-elasticsearch--pipeline--content)
+* [`api_basic_auth_password`](#-elasticsearch--pipeline--api_basic_auth_password)
+* [`api_basic_auth_username`](#-elasticsearch--pipeline--api_basic_auth_username)
+* [`api_ca_file`](#-elasticsearch--pipeline--api_ca_file)
+* [`api_ca_path`](#-elasticsearch--pipeline--api_ca_path)
+* [`api_host`](#-elasticsearch--pipeline--api_host)
+* [`api_port`](#-elasticsearch--pipeline--api_port)
+* [`api_protocol`](#-elasticsearch--pipeline--api_protocol)
+* [`api_timeout`](#-elasticsearch--pipeline--api_timeout)
+* [`validate_tls`](#-elasticsearch--pipeline--validate_tls)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-elasticsearch--pipeline--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1034,7 +1530,7 @@ the cluster.
 
 Default value: `'present'`
 
-##### <a name="content"></a>`content`
+##### <a name="-elasticsearch--pipeline--content"></a>`content`
 
 Data type: `Hash`
 
@@ -1042,7 +1538,7 @@ Contents of the pipeline in hash form.
 
 Default value: `{}`
 
-##### <a name="api_basic_auth_password"></a>`api_basic_auth_password`
+##### <a name="-elasticsearch--pipeline--api_basic_auth_password"></a>`api_basic_auth_password`
 
 Data type: `Optional[String]`
 
@@ -1051,7 +1547,7 @@ API.
 
 Default value: `$elasticsearch::api_basic_auth_password`
 
-##### <a name="api_basic_auth_username"></a>`api_basic_auth_username`
+##### <a name="-elasticsearch--pipeline--api_basic_auth_username"></a>`api_basic_auth_username`
 
 Data type: `Optional[String]`
 
@@ -1060,7 +1556,7 @@ API.
 
 Default value: `$elasticsearch::api_basic_auth_username`
 
-##### <a name="api_ca_file"></a>`api_ca_file`
+##### <a name="-elasticsearch--pipeline--api_ca_file"></a>`api_ca_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1069,7 +1565,7 @@ communicating with the Elasticsearch API over HTTPS.
 
 Default value: `$elasticsearch::api_ca_file`
 
-##### <a name="api_ca_path"></a>`api_ca_path`
+##### <a name="-elasticsearch--pipeline--api_ca_path"></a>`api_ca_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1078,7 +1574,7 @@ certs when communicating with the Elasticsearch API over HTTPS.
 
 Default value: `$elasticsearch::api_ca_path`
 
-##### <a name="api_host"></a>`api_host`
+##### <a name="-elasticsearch--pipeline--api_host"></a>`api_host`
 
 Data type: `String`
 
@@ -1086,7 +1582,7 @@ Host name or IP address of the ES instance to connect to.
 
 Default value: `$elasticsearch::api_host`
 
-##### <a name="api_port"></a>`api_port`
+##### <a name="-elasticsearch--pipeline--api_port"></a>`api_port`
 
 Data type: `Integer[0, 65535]`
 
@@ -1094,7 +1590,7 @@ Port number of the ES instance to connect to
 
 Default value: `$elasticsearch::api_port`
 
-##### <a name="api_protocol"></a>`api_protocol`
+##### <a name="-elasticsearch--pipeline--api_protocol"></a>`api_protocol`
 
 Data type: `Enum['http', 'https']`
 
@@ -1102,7 +1598,7 @@ Protocol that should be used to connect to the Elasticsearch API.
 
 Default value: `$elasticsearch::api_protocol`
 
-##### <a name="api_timeout"></a>`api_timeout`
+##### <a name="-elasticsearch--pipeline--api_timeout"></a>`api_timeout`
 
 Data type: `Integer`
 
@@ -1110,7 +1606,7 @@ Timeout period (in seconds) for the Elasticsearch API.
 
 Default value: `$elasticsearch::api_timeout`
 
-##### <a name="validate_tls"></a>`validate_tls`
+##### <a name="-elasticsearch--pipeline--validate_tls"></a>`validate_tls`
 
 Data type: `Boolean`
 
@@ -1119,7 +1615,7 @@ Elasticsearch API should be verified or ignored.
 
 Default value: `$elasticsearch::validate_tls`
 
-### <a name="elasticsearchplugin"></a>`elasticsearch::plugin`
+### <a name="elasticsearch--plugin"></a>`elasticsearch::plugin`
 
 This define allows you to install arbitrary Elasticsearch plugins
 either by using the default repositories or by specifying an URL
@@ -1145,19 +1641,19 @@ elasticsearch::plugin { 'elasticsearch-jetty':
 
 The following parameters are available in the `elasticsearch::plugin` defined type:
 
-* [`ensure`](#ensure)
-* [`configdir`](#configdir)
-* [`java_opts`](#java_opts)
-* [`java_home`](#java_home)
-* [`module_dir`](#module_dir)
-* [`proxy_host`](#proxy_host)
-* [`proxy_password`](#proxy_password)
-* [`proxy_port`](#proxy_port)
-* [`proxy_username`](#proxy_username)
-* [`source`](#source)
-* [`url`](#url)
+* [`ensure`](#-elasticsearch--plugin--ensure)
+* [`configdir`](#-elasticsearch--plugin--configdir)
+* [`java_opts`](#-elasticsearch--plugin--java_opts)
+* [`java_home`](#-elasticsearch--plugin--java_home)
+* [`module_dir`](#-elasticsearch--plugin--module_dir)
+* [`proxy_host`](#-elasticsearch--plugin--proxy_host)
+* [`proxy_password`](#-elasticsearch--plugin--proxy_password)
+* [`proxy_port`](#-elasticsearch--plugin--proxy_port)
+* [`proxy_username`](#-elasticsearch--plugin--proxy_username)
+* [`source`](#-elasticsearch--plugin--source)
+* [`url`](#-elasticsearch--plugin--url)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-elasticsearch--plugin--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1166,7 +1662,7 @@ Set to 'absent' to ensure a plugin is not installed
 
 Default value: `'present'`
 
-##### <a name="configdir"></a>`configdir`
+##### <a name="-elasticsearch--plugin--configdir"></a>`configdir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1175,7 +1671,7 @@ to which the plugin should be installed.
 
 Default value: `$elasticsearch::configdir`
 
-##### <a name="java_opts"></a>`java_opts`
+##### <a name="-elasticsearch--plugin--java_opts"></a>`java_opts`
 
 Data type: `Array[String]`
 
@@ -1183,15 +1679,15 @@ Array of Java options to be passed to `ES_JAVA_OPTS`
 
 Default value: `[]`
 
-##### <a name="java_home"></a>`java_home`
+##### <a name="-elasticsearch--plugin--java_home"></a>`java_home`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Path to JAVA_HOME, if Java is installed in a non-standard location.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="module_dir"></a>`module_dir`
+##### <a name="-elasticsearch--plugin--module_dir"></a>`module_dir`
 
 Data type: `Optional[String]`
 
@@ -1199,41 +1695,41 @@ Directory name where the module has been installed
 This is automatically generated based on the module name
 Specify a value here to override the auto generated value
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_host"></a>`proxy_host`
+##### <a name="-elasticsearch--plugin--proxy_host"></a>`proxy_host`
 
 Data type: `Optional[String]`
 
 Proxy host to use when installing the plugin
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_password"></a>`proxy_password`
+##### <a name="-elasticsearch--plugin--proxy_password"></a>`proxy_password`
 
 Data type: `Optional[String]`
 
 Proxy auth password to use when installing the plugin
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_port"></a>`proxy_port`
+##### <a name="-elasticsearch--plugin--proxy_port"></a>`proxy_port`
 
 Data type: `Optional[Integer[0, 65535]]`
 
 Proxy port to use when installing the plugin
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_username"></a>`proxy_username`
+##### <a name="-elasticsearch--plugin--proxy_username"></a>`proxy_username`
 
 Data type: `Optional[String]`
 
 Proxy auth username to use when installing the plugin
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="source"></a>`source`
+##### <a name="-elasticsearch--plugin--source"></a>`source`
 
 Data type: `Optional[String]`
 
@@ -1241,17 +1737,17 @@ Specify the source of the plugin.
 This will copy over the plugin to the node and use it for installation.
 Useful for offline installation
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="url"></a>`url`
+##### <a name="-elasticsearch--plugin--url"></a>`url`
 
 Data type: `Optional[Stdlib::HTTPUrl]`
 
 Specify an URL where to download the plugin from.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="elasticsearchrole"></a>`elasticsearch::role`
+### <a name="elasticsearch--role"></a>`elasticsearch::role`
 
 Manage x-pack roles.
 
@@ -1277,11 +1773,11 @@ elasticsearch::role { 'power_user':
 
 The following parameters are available in the `elasticsearch::role` defined type:
 
-* [`ensure`](#ensure)
-* [`mappings`](#mappings)
-* [`privileges`](#privileges)
+* [`ensure`](#-elasticsearch--role--ensure)
+* [`mappings`](#-elasticsearch--role--mappings)
+* [`privileges`](#-elasticsearch--role--privileges)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-elasticsearch--role--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1290,7 +1786,7 @@ Set to 'absent' to ensure a role is not present.
 
 Default value: `'present'`
 
-##### <a name="mappings"></a>`mappings`
+##### <a name="-elasticsearch--role--mappings"></a>`mappings`
 
 Data type: `Array`
 
@@ -1298,7 +1794,7 @@ A list of optional mappings defined for this role.
 
 Default value: `[]`
 
-##### <a name="privileges"></a>`privileges`
+##### <a name="-elasticsearch--role--privileges"></a>`privileges`
 
 Data type: `Hash`
 
@@ -1307,7 +1803,7 @@ be found in the x-pack documentation.
 
 Default value: `{}`
 
-### <a name="elasticsearchscript"></a>`elasticsearch::script`
+### <a name="elasticsearch--script"></a>`elasticsearch::script`
 
 This define allows you to insert, update or delete scripts that are used
  within Elasticsearch.
@@ -1316,11 +1812,11 @@ This define allows you to insert, update or delete scripts that are used
 
 The following parameters are available in the `elasticsearch::script` defined type:
 
-* [`ensure`](#ensure)
-* [`recurse`](#recurse)
-* [`source`](#source)
+* [`ensure`](#-elasticsearch--script--ensure)
+* [`recurse`](#-elasticsearch--script--recurse)
+* [`source`](#-elasticsearch--script--source)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-elasticsearch--script--ensure"></a>`ensure`
 
 Data type: `String`
 
@@ -1329,56 +1825,56 @@ Values are simply passed through to the `file` resource.
 
 Default value: `'present'`
 
-##### <a name="recurse"></a>`recurse`
+##### <a name="-elasticsearch--script--recurse"></a>`recurse`
 
 Data type: `Optional[Variant[Boolean, Enum['remote']]]`
 
 Will be passed through to the script file resource.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="source"></a>`source`
+##### <a name="-elasticsearch--script--source"></a>`source`
 
 Data type: `String`
 
 Puppet source of the script
 
-### <a name="elasticsearchsnapshot_repository"></a>`elasticsearch::snapshot_repository`
+### <a name="elasticsearch--slm_policy"></a>`elasticsearch::slm_policy`
 
-This define allows you to insert, update or delete Elasticsearch snapshot
- repositories.
+This define allows you to insert, update or delete Elasticsearch SLM
+ policies.
+
+ Policy content should be defined through either the `content` parameter
+ (when passing a hash or json string) or the `source` parameter (when passing
+ the puppet file URI to a policy json file).
 
 #### Parameters
 
-The following parameters are available in the `elasticsearch::snapshot_repository` defined type:
+The following parameters are available in the `elasticsearch::slm_policy` defined type:
 
-* [`ensure`](#ensure)
-* [`api_basic_auth_password`](#api_basic_auth_password)
-* [`api_basic_auth_username`](#api_basic_auth_username)
-* [`api_ca_file`](#api_ca_file)
-* [`api_ca_path`](#api_ca_path)
-* [`api_host`](#api_host)
-* [`api_port`](#api_port)
-* [`api_protocol`](#api_protocol)
-* [`api_timeout`](#api_timeout)
-* [`repository_type`](#repository_type)
-* [`location`](#location)
-* [`compress`](#compress)
-* [`chunk_size`](#chunk_size)
-* [`max_restore_rate`](#max_restore_rate)
-* [`max_snapshot_rate`](#max_snapshot_rate)
-* [`validate_tls`](#validate_tls)
+* [`ensure`](#-elasticsearch--slm_policy--ensure)
+* [`api_basic_auth_password`](#-elasticsearch--slm_policy--api_basic_auth_password)
+* [`api_basic_auth_username`](#-elasticsearch--slm_policy--api_basic_auth_username)
+* [`api_ca_file`](#-elasticsearch--slm_policy--api_ca_file)
+* [`api_ca_path`](#-elasticsearch--slm_policy--api_ca_path)
+* [`api_host`](#-elasticsearch--slm_policy--api_host)
+* [`api_port`](#-elasticsearch--slm_policy--api_port)
+* [`api_protocol`](#-elasticsearch--slm_policy--api_protocol)
+* [`api_timeout`](#-elasticsearch--slm_policy--api_timeout)
+* [`content`](#-elasticsearch--slm_policy--content)
+* [`source`](#-elasticsearch--slm_policy--source)
+* [`validate_tls`](#-elasticsearch--slm_policy--validate_tls)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-elasticsearch--slm_policy--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
-Controls whether the named index template should be present or absent in
-the cluster.
+Controls whether the named SLM policy should be present or absent in the
+cluster.
 
 Default value: `'present'`
 
-##### <a name="api_basic_auth_password"></a>`api_basic_auth_password`
+##### <a name="-elasticsearch--slm_policy--api_basic_auth_password"></a>`api_basic_auth_password`
 
 Data type: `Optional[String]`
 
@@ -1387,7 +1883,7 @@ API.
 
 Default value: `$elasticsearch::api_basic_auth_password`
 
-##### <a name="api_basic_auth_username"></a>`api_basic_auth_username`
+##### <a name="-elasticsearch--slm_policy--api_basic_auth_username"></a>`api_basic_auth_username`
 
 Data type: `Optional[String]`
 
@@ -1396,7 +1892,7 @@ API.
 
 Default value: `$elasticsearch::api_basic_auth_username`
 
-##### <a name="api_ca_file"></a>`api_ca_file`
+##### <a name="-elasticsearch--slm_policy--api_ca_file"></a>`api_ca_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1405,7 +1901,7 @@ communicating with the Elasticsearch API over HTTPS.
 
 Default value: `$elasticsearch::api_ca_file`
 
-##### <a name="api_ca_path"></a>`api_ca_path`
+##### <a name="-elasticsearch--slm_policy--api_ca_path"></a>`api_ca_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1414,7 +1910,7 @@ certs when communicating with the Elasticsearch API over HTTPS.
 
 Default value: `$elasticsearch::api_ca_path`
 
-##### <a name="api_host"></a>`api_host`
+##### <a name="-elasticsearch--slm_policy--api_host"></a>`api_host`
 
 Data type: `String`
 
@@ -1422,7 +1918,7 @@ Host name or IP address of the ES instance to connect to.
 
 Default value: `$elasticsearch::api_host`
 
-##### <a name="api_port"></a>`api_port`
+##### <a name="-elasticsearch--slm_policy--api_port"></a>`api_port`
 
 Data type: `Integer[0, 65535]`
 
@@ -1430,7 +1926,7 @@ Port number of the ES instance to connect to
 
 Default value: `$elasticsearch::api_port`
 
-##### <a name="api_protocol"></a>`api_protocol`
+##### <a name="-elasticsearch--slm_policy--api_protocol"></a>`api_protocol`
 
 Data type: `Enum['http', 'https']`
 
@@ -1438,7 +1934,7 @@ Protocol that should be used to connect to the Elasticsearch API.
 
 Default value: `$elasticsearch::api_protocol`
 
-##### <a name="api_timeout"></a>`api_timeout`
+##### <a name="-elasticsearch--slm_policy--api_timeout"></a>`api_timeout`
 
 Data type: `Integer`
 
@@ -1446,53 +1942,25 @@ Timeout period (in seconds) for the Elasticsearch API.
 
 Default value: `$elasticsearch::api_timeout`
 
-##### <a name="repository_type"></a>`repository_type`
+##### <a name="-elasticsearch--slm_policy--content"></a>`content`
+
+Data type: `Optional[Variant[String, Hash]]`
+
+Contents of the policy. Can be either a puppet hash or a string containing
+JSON.
+
+Default value: `undef`
+
+##### <a name="-elasticsearch--slm_policy--source"></a>`source`
 
 Data type: `Optional[String]`
 
-Snapshot repository type.
+Source path for the policy file. Can be any value similar to `source`
+values for `file` resources.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="location"></a>`location`
-
-Data type: `String`
-
-Location of snapshots. Mandatory
-
-##### <a name="compress"></a>`compress`
-
-Data type: `Boolean`
-
-Compress the snapshot metadata files?
-
-Default value: ``true``
-
-##### <a name="chunk_size"></a>`chunk_size`
-
-Data type: `Optional[String]`
-
-Chunk size to break big files down into.
-
-Default value: ``undef``
-
-##### <a name="max_restore_rate"></a>`max_restore_rate`
-
-Data type: `Optional[String]`
-
-Throttle value for node restore rate.
-
-Default value: ``undef``
-
-##### <a name="max_snapshot_rate"></a>`max_snapshot_rate`
-
-Data type: `Optional[String]`
-
-Throttle value for node snapshot rate.
-
-Default value: ``undef``
-
-##### <a name="validate_tls"></a>`validate_tls`
+##### <a name="-elasticsearch--slm_policy--validate_tls"></a>`validate_tls`
 
 Data type: `Boolean`
 
@@ -1501,7 +1969,165 @@ Elasticsearch API should be verified or ignored.
 
 Default value: `$elasticsearch::validate_tls`
 
-### <a name="elasticsearchtemplate"></a>`elasticsearch::template`
+### <a name="elasticsearch--snapshot_repository"></a>`elasticsearch::snapshot_repository`
+
+This define allows you to insert, update or delete Elasticsearch snapshot
+ repositories.
+
+#### Parameters
+
+The following parameters are available in the `elasticsearch::snapshot_repository` defined type:
+
+* [`ensure`](#-elasticsearch--snapshot_repository--ensure)
+* [`api_basic_auth_password`](#-elasticsearch--snapshot_repository--api_basic_auth_password)
+* [`api_basic_auth_username`](#-elasticsearch--snapshot_repository--api_basic_auth_username)
+* [`api_ca_file`](#-elasticsearch--snapshot_repository--api_ca_file)
+* [`api_ca_path`](#-elasticsearch--snapshot_repository--api_ca_path)
+* [`api_host`](#-elasticsearch--snapshot_repository--api_host)
+* [`api_port`](#-elasticsearch--snapshot_repository--api_port)
+* [`api_protocol`](#-elasticsearch--snapshot_repository--api_protocol)
+* [`api_timeout`](#-elasticsearch--snapshot_repository--api_timeout)
+* [`repository_type`](#-elasticsearch--snapshot_repository--repository_type)
+* [`location`](#-elasticsearch--snapshot_repository--location)
+* [`compress`](#-elasticsearch--snapshot_repository--compress)
+* [`chunk_size`](#-elasticsearch--snapshot_repository--chunk_size)
+* [`max_restore_rate`](#-elasticsearch--snapshot_repository--max_restore_rate)
+* [`max_snapshot_rate`](#-elasticsearch--snapshot_repository--max_snapshot_rate)
+* [`validate_tls`](#-elasticsearch--snapshot_repository--validate_tls)
+
+##### <a name="-elasticsearch--snapshot_repository--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Controls whether the named index template should be present or absent in
+the cluster.
+
+Default value: `'present'`
+
+##### <a name="-elasticsearch--snapshot_repository--api_basic_auth_password"></a>`api_basic_auth_password`
+
+Data type: `Optional[String]`
+
+HTTP basic auth password to use when communicating over the Elasticsearch
+API.
+
+Default value: `$elasticsearch::api_basic_auth_password`
+
+##### <a name="-elasticsearch--snapshot_repository--api_basic_auth_username"></a>`api_basic_auth_username`
+
+Data type: `Optional[String]`
+
+HTTP basic auth username to use when communicating over the Elasticsearch
+API.
+
+Default value: `$elasticsearch::api_basic_auth_username`
+
+##### <a name="-elasticsearch--snapshot_repository--api_ca_file"></a>`api_ca_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Path to a CA file which will be used to validate server certs when
+communicating with the Elasticsearch API over HTTPS.
+
+Default value: `$elasticsearch::api_ca_file`
+
+##### <a name="-elasticsearch--snapshot_repository--api_ca_path"></a>`api_ca_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Path to a directory with CA files which will be used to validate server
+certs when communicating with the Elasticsearch API over HTTPS.
+
+Default value: `$elasticsearch::api_ca_path`
+
+##### <a name="-elasticsearch--snapshot_repository--api_host"></a>`api_host`
+
+Data type: `String`
+
+Host name or IP address of the ES instance to connect to.
+
+Default value: `$elasticsearch::api_host`
+
+##### <a name="-elasticsearch--snapshot_repository--api_port"></a>`api_port`
+
+Data type: `Integer[0, 65535]`
+
+Port number of the ES instance to connect to
+
+Default value: `$elasticsearch::api_port`
+
+##### <a name="-elasticsearch--snapshot_repository--api_protocol"></a>`api_protocol`
+
+Data type: `Enum['http', 'https']`
+
+Protocol that should be used to connect to the Elasticsearch API.
+
+Default value: `$elasticsearch::api_protocol`
+
+##### <a name="-elasticsearch--snapshot_repository--api_timeout"></a>`api_timeout`
+
+Data type: `Integer`
+
+Timeout period (in seconds) for the Elasticsearch API.
+
+Default value: `$elasticsearch::api_timeout`
+
+##### <a name="-elasticsearch--snapshot_repository--repository_type"></a>`repository_type`
+
+Data type: `Optional[String]`
+
+Snapshot repository type.
+
+Default value: `undef`
+
+##### <a name="-elasticsearch--snapshot_repository--location"></a>`location`
+
+Data type: `String`
+
+Location of snapshots. Mandatory
+
+##### <a name="-elasticsearch--snapshot_repository--compress"></a>`compress`
+
+Data type: `Boolean`
+
+Compress the snapshot metadata files?
+
+Default value: `true`
+
+##### <a name="-elasticsearch--snapshot_repository--chunk_size"></a>`chunk_size`
+
+Data type: `Optional[String]`
+
+Chunk size to break big files down into.
+
+Default value: `undef`
+
+##### <a name="-elasticsearch--snapshot_repository--max_restore_rate"></a>`max_restore_rate`
+
+Data type: `Optional[String]`
+
+Throttle value for node restore rate.
+
+Default value: `undef`
+
+##### <a name="-elasticsearch--snapshot_repository--max_snapshot_rate"></a>`max_snapshot_rate`
+
+Data type: `Optional[String]`
+
+Throttle value for node snapshot rate.
+
+Default value: `undef`
+
+##### <a name="-elasticsearch--snapshot_repository--validate_tls"></a>`validate_tls`
+
+Data type: `Boolean`
+
+Determines whether the validity of SSL/TLS certificates received from the
+Elasticsearch API should be verified or ignored.
+
+Default value: `$elasticsearch::validate_tls`
+
+### <a name="elasticsearch--template"></a>`elasticsearch::template`
 
 This define allows you to insert, update or delete Elasticsearch index
  templates.
@@ -1514,20 +2140,20 @@ This define allows you to insert, update or delete Elasticsearch index
 
 The following parameters are available in the `elasticsearch::template` defined type:
 
-* [`ensure`](#ensure)
-* [`api_basic_auth_password`](#api_basic_auth_password)
-* [`api_basic_auth_username`](#api_basic_auth_username)
-* [`api_ca_file`](#api_ca_file)
-* [`api_ca_path`](#api_ca_path)
-* [`api_host`](#api_host)
-* [`api_port`](#api_port)
-* [`api_protocol`](#api_protocol)
-* [`api_timeout`](#api_timeout)
-* [`content`](#content)
-* [`source`](#source)
-* [`validate_tls`](#validate_tls)
+* [`ensure`](#-elasticsearch--template--ensure)
+* [`api_basic_auth_password`](#-elasticsearch--template--api_basic_auth_password)
+* [`api_basic_auth_username`](#-elasticsearch--template--api_basic_auth_username)
+* [`api_ca_file`](#-elasticsearch--template--api_ca_file)
+* [`api_ca_path`](#-elasticsearch--template--api_ca_path)
+* [`api_host`](#-elasticsearch--template--api_host)
+* [`api_port`](#-elasticsearch--template--api_port)
+* [`api_protocol`](#-elasticsearch--template--api_protocol)
+* [`api_timeout`](#-elasticsearch--template--api_timeout)
+* [`content`](#-elasticsearch--template--content)
+* [`source`](#-elasticsearch--template--source)
+* [`validate_tls`](#-elasticsearch--template--validate_tls)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-elasticsearch--template--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1536,7 +2162,7 @@ the cluster.
 
 Default value: `'present'`
 
-##### <a name="api_basic_auth_password"></a>`api_basic_auth_password`
+##### <a name="-elasticsearch--template--api_basic_auth_password"></a>`api_basic_auth_password`
 
 Data type: `Optional[String]`
 
@@ -1545,7 +2171,7 @@ API.
 
 Default value: `$elasticsearch::api_basic_auth_password`
 
-##### <a name="api_basic_auth_username"></a>`api_basic_auth_username`
+##### <a name="-elasticsearch--template--api_basic_auth_username"></a>`api_basic_auth_username`
 
 Data type: `Optional[String]`
 
@@ -1554,7 +2180,7 @@ API.
 
 Default value: `$elasticsearch::api_basic_auth_username`
 
-##### <a name="api_ca_file"></a>`api_ca_file`
+##### <a name="-elasticsearch--template--api_ca_file"></a>`api_ca_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1563,7 +2189,7 @@ communicating with the Elasticsearch API over HTTPS.
 
 Default value: `$elasticsearch::api_ca_file`
 
-##### <a name="api_ca_path"></a>`api_ca_path`
+##### <a name="-elasticsearch--template--api_ca_path"></a>`api_ca_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1572,7 +2198,7 @@ certs when communicating with the Elasticsearch API over HTTPS.
 
 Default value: `$elasticsearch::api_ca_path`
 
-##### <a name="api_host"></a>`api_host`
+##### <a name="-elasticsearch--template--api_host"></a>`api_host`
 
 Data type: `String`
 
@@ -1580,7 +2206,7 @@ Host name or IP address of the ES instance to connect to.
 
 Default value: `$elasticsearch::api_host`
 
-##### <a name="api_port"></a>`api_port`
+##### <a name="-elasticsearch--template--api_port"></a>`api_port`
 
 Data type: `Integer[0, 65535]`
 
@@ -1588,7 +2214,7 @@ Port number of the ES instance to connect to
 
 Default value: `$elasticsearch::api_port`
 
-##### <a name="api_protocol"></a>`api_protocol`
+##### <a name="-elasticsearch--template--api_protocol"></a>`api_protocol`
 
 Data type: `Enum['http', 'https']`
 
@@ -1596,7 +2222,7 @@ Protocol that should be used to connect to the Elasticsearch API.
 
 Default value: `$elasticsearch::api_protocol`
 
-##### <a name="api_timeout"></a>`api_timeout`
+##### <a name="-elasticsearch--template--api_timeout"></a>`api_timeout`
 
 Data type: `Integer`
 
@@ -1604,25 +2230,25 @@ Timeout period (in seconds) for the Elasticsearch API.
 
 Default value: `$elasticsearch::api_timeout`
 
-##### <a name="content"></a>`content`
+##### <a name="-elasticsearch--template--content"></a>`content`
 
 Data type: `Optional[Variant[String, Hash]]`
 
 Contents of the template. Can be either a puppet hash or a string
 containing JSON.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="source"></a>`source`
+##### <a name="-elasticsearch--template--source"></a>`source`
 
 Data type: `Optional[String]`
 
 Source path for the template file. Can be any value similar to `source`
 values for `file` resources.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="validate_tls"></a>`validate_tls`
+##### <a name="-elasticsearch--template--validate_tls"></a>`validate_tls`
 
 Data type: `Boolean`
 
@@ -1631,7 +2257,7 @@ Elasticsearch API should be verified or ignored.
 
 Default value: `$elasticsearch::validate_tls`
 
-### <a name="elasticsearchuser"></a>`elasticsearch::user`
+### <a name="elasticsearch--user"></a>`elasticsearch::user`
 
 Manages x-pack users.
 
@@ -1650,11 +2276,11 @@ elasticsearch::user { 'bob':
 
 The following parameters are available in the `elasticsearch::user` defined type:
 
-* [`ensure`](#ensure)
-* [`password`](#password)
-* [`roles`](#roles)
+* [`ensure`](#-elasticsearch--user--ensure)
+* [`password`](#-elasticsearch--user--password)
+* [`roles`](#-elasticsearch--user--roles)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-elasticsearch--user--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1663,16 +2289,18 @@ Set to `absent` to ensure a user is not installed
 
 Default value: `'present'`
 
-##### <a name="password"></a>`password`
+##### <a name="-elasticsearch--user--password"></a>`password`
 
-Data type: `String`
+Data type: `Optional[String]`
 
 Password for the given user. A plaintext password will be managed
 with the esusers utility and requires a refresh to update, while
 a hashed password from the esusers utility will be managed manually
 in the uses file.
 
-##### <a name="roles"></a>`roles`
+Default value: `undef`
+
+##### <a name="-elasticsearch--user--roles"></a>`roles`
 
 Data type: `Array`
 
@@ -1681,6 +2309,92 @@ A list of roles to which the user should belong.
 Default value: `[]`
 
 ## Resource types
+
+### <a name="elasticsearch_component_template"></a>`elasticsearch_component_template`
+
+Manages Elasticsearch component templates.
+
+#### Properties
+
+The following properties are available in the `elasticsearch_component_template` type.
+
+##### `content`
+
+Structured content of template.
+
+##### `ensure`
+
+Valid values: `present`, `absent`
+
+The basic property that the resource should be in.
+
+Default value: `present`
+
+#### Parameters
+
+The following parameters are available in the `elasticsearch_component_template` type.
+
+* [`name`](#-elasticsearch_component_template--name)
+* [`provider`](#-elasticsearch_component_template--provider)
+* [`source`](#-elasticsearch_component_template--source)
+
+##### <a name="-elasticsearch_component_template--name"></a>`name`
+
+namevar
+
+Template name.
+
+##### <a name="-elasticsearch_component_template--provider"></a>`provider`
+
+The specific backend to use for this `elasticsearch_component_template` resource. You will seldom need to specify this
+--- Puppet will usually discover the appropriate provider for your platform.
+
+##### <a name="-elasticsearch_component_template--source"></a>`source`
+
+Puppet source to file containing template contents.
+
+### <a name="elasticsearch_ilm_policy"></a>`elasticsearch_ilm_policy`
+
+Manages Elasticsearch ILM policies.
+
+#### Properties
+
+The following properties are available in the `elasticsearch_ilm_policy` type.
+
+##### `content`
+
+Structured content of policy.
+
+##### `ensure`
+
+Valid values: `present`, `absent`
+
+The basic property that the resource should be in.
+
+Default value: `present`
+
+#### Parameters
+
+The following parameters are available in the `elasticsearch_ilm_policy` type.
+
+* [`name`](#-elasticsearch_ilm_policy--name)
+* [`provider`](#-elasticsearch_ilm_policy--provider)
+* [`source`](#-elasticsearch_ilm_policy--source)
+
+##### <a name="-elasticsearch_ilm_policy--name"></a>`name`
+
+namevar
+
+Policy name.
+
+##### <a name="-elasticsearch_ilm_policy--provider"></a>`provider`
+
+The specific backend to use for this `elasticsearch_ilm_policy` resource. You will seldom need to specify this ---
+Puppet will usually discover the appropriate provider for your platform.
+
+##### <a name="-elasticsearch_ilm_policy--source"></a>`source`
+
+Puppet source to file containing ILM policy contents.
 
 ### <a name="elasticsearch_index"></a>`elasticsearch_index`
 
@@ -1706,19 +2420,62 @@ Structured settings for the index in hash form.
 
 The following parameters are available in the `elasticsearch_index` type.
 
-* [`name`](#name)
-* [`provider`](#provider)
+* [`name`](#-elasticsearch_index--name)
+* [`provider`](#-elasticsearch_index--provider)
 
-##### <a name="name"></a>`name`
+##### <a name="-elasticsearch_index--name"></a>`name`
 
 namevar
 
 Index name.
 
-##### <a name="provider"></a>`provider`
+##### <a name="-elasticsearch_index--provider"></a>`provider`
 
 The specific backend to use for this `elasticsearch_index` resource. You will seldom need to specify this --- Puppet
 will usually discover the appropriate provider for your platform.
+
+### <a name="elasticsearch_index_template"></a>`elasticsearch_index_template`
+
+Manages Elasticsearch index templates.
+
+#### Properties
+
+The following properties are available in the `elasticsearch_index_template` type.
+
+##### `content`
+
+Structured content of template.
+
+##### `ensure`
+
+Valid values: `present`, `absent`
+
+The basic property that the resource should be in.
+
+Default value: `present`
+
+#### Parameters
+
+The following parameters are available in the `elasticsearch_index_template` type.
+
+* [`name`](#-elasticsearch_index_template--name)
+* [`provider`](#-elasticsearch_index_template--provider)
+* [`source`](#-elasticsearch_index_template--source)
+
+##### <a name="-elasticsearch_index_template--name"></a>`name`
+
+namevar
+
+Template name.
+
+##### <a name="-elasticsearch_index_template--provider"></a>`provider`
+
+The specific backend to use for this `elasticsearch_index_template` resource. You will seldom need to specify this ---
+Puppet will usually discover the appropriate provider for your platform.
+
+##### <a name="-elasticsearch_index_template--source"></a>`source`
+
+Puppet source to file containing template contents.
 
 ### <a name="elasticsearch_keystore"></a>`elasticsearch_keystore`
 
@@ -1744,34 +2501,28 @@ A key/value hash of settings names and values.
 
 The following parameters are available in the `elasticsearch_keystore` type.
 
-* [`configdir`](#configdir)
-* [`instance`](#instance)
-* [`provider`](#provider)
-* [`purge`](#purge)
+* [`configdir`](#-elasticsearch_keystore--configdir)
+* [`instance`](#-elasticsearch_keystore--instance)
+* [`purge`](#-elasticsearch_keystore--purge)
 
-##### <a name="configdir"></a>`configdir`
+##### <a name="-elasticsearch_keystore--configdir"></a>`configdir`
 
 Path to the elasticsearch configuration directory (ES_PATH_CONF).
 
 Default value: `/etc/elasticsearch`
 
-##### <a name="instance"></a>`instance`
+##### <a name="-elasticsearch_keystore--instance"></a>`instance`
 
 Elasticsearch instance this keystore belongs to.
 
-##### <a name="provider"></a>`provider`
+##### <a name="-elasticsearch_keystore--purge"></a>`purge`
 
-The specific backend to use for this `elasticsearch_keystore` resource. You will seldom need to specify this --- Puppet
-will usually discover the appropriate provider for your platform.
-
-##### <a name="purge"></a>`purge`
-
-Valid values: ``true``, ``false``, `yes`, `no`
+Valid values: `true`, `false`, `yes`, `no`
 
 Whether to proactively remove settings that exist in the keystore but
 are not present in this resource's settings.
 
-Default value: ``false``
+Default value: `false`
 
 ### <a name="elasticsearch_license"></a>`elasticsearch_license`
 
@@ -1797,16 +2548,16 @@ Default value: `present`
 
 The following parameters are available in the `elasticsearch_license` type.
 
-* [`name`](#name)
-* [`provider`](#provider)
+* [`name`](#-elasticsearch_license--name)
+* [`provider`](#-elasticsearch_license--provider)
 
-##### <a name="name"></a>`name`
+##### <a name="-elasticsearch_license--name"></a>`name`
 
 namevar
 
 Pipeline name.
 
-##### <a name="provider"></a>`provider`
+##### <a name="-elasticsearch_license--provider"></a>`provider`
 
 The specific backend to use for this `elasticsearch_license` resource. You will seldom need to specify this --- Puppet
 will usually discover the appropriate provider for your platform.
@@ -1835,16 +2586,16 @@ Default value: `present`
 
 The following parameters are available in the `elasticsearch_pipeline` type.
 
-* [`name`](#name)
-* [`provider`](#provider)
+* [`name`](#-elasticsearch_pipeline--name)
+* [`provider`](#-elasticsearch_pipeline--provider)
 
-##### <a name="name"></a>`name`
+##### <a name="-elasticsearch_pipeline--name"></a>`name`
 
 namevar
 
 Pipeline name.
 
-##### <a name="provider"></a>`provider`
+##### <a name="-elasticsearch_pipeline--provider"></a>`provider`
 
 The specific backend to use for this `elasticsearch_pipeline` resource. You will seldom need to specify this --- Puppet
 will usually discover the appropriate provider for your platform.
@@ -1869,68 +2620,68 @@ Default value: `present`
 
 The following parameters are available in the `elasticsearch_plugin` type.
 
-* [`configdir`](#configdir)
-* [`elasticsearch_package_name`](#elasticsearch_package_name)
-* [`java_home`](#java_home)
-* [`java_opts`](#java_opts)
-* [`name`](#name)
-* [`plugin_dir`](#plugin_dir)
-* [`plugin_path`](#plugin_path)
-* [`provider`](#provider)
-* [`proxy`](#proxy)
-* [`source`](#source)
-* [`url`](#url)
+* [`configdir`](#-elasticsearch_plugin--configdir)
+* [`elasticsearch_package_name`](#-elasticsearch_plugin--elasticsearch_package_name)
+* [`java_home`](#-elasticsearch_plugin--java_home)
+* [`java_opts`](#-elasticsearch_plugin--java_opts)
+* [`name`](#-elasticsearch_plugin--name)
+* [`plugin_dir`](#-elasticsearch_plugin--plugin_dir)
+* [`plugin_path`](#-elasticsearch_plugin--plugin_path)
+* [`provider`](#-elasticsearch_plugin--provider)
+* [`proxy`](#-elasticsearch_plugin--proxy)
+* [`source`](#-elasticsearch_plugin--source)
+* [`url`](#-elasticsearch_plugin--url)
 
-##### <a name="configdir"></a>`configdir`
+##### <a name="-elasticsearch_plugin--configdir"></a>`configdir`
 
 Path to the elasticsearch configuration directory (ES_PATH_CONF).
 
 Default value: `/etc/elasticsearch`
 
-##### <a name="elasticsearch_package_name"></a>`elasticsearch_package_name`
+##### <a name="-elasticsearch_plugin--elasticsearch_package_name"></a>`elasticsearch_package_name`
 
 Name of the system Elasticsearch package.
 
-##### <a name="java_home"></a>`java_home`
+##### <a name="-elasticsearch_plugin--java_home"></a>`java_home`
 
 Optional string to set the environment variable JAVA_HOME.
 
-##### <a name="java_opts"></a>`java_opts`
+##### <a name="-elasticsearch_plugin--java_opts"></a>`java_opts`
 
 Optional array of Java options for ES_JAVA_OPTS.
 
 Default value: `[]`
 
-##### <a name="name"></a>`name`
+##### <a name="-elasticsearch_plugin--name"></a>`name`
 
 namevar
 
 An arbitrary name used as the identity of the resource.
 
-##### <a name="plugin_dir"></a>`plugin_dir`
+##### <a name="-elasticsearch_plugin--plugin_dir"></a>`plugin_dir`
 
 Path to the Plugins directory
 
 Default value: `/usr/share/elasticsearch/plugins`
 
-##### <a name="plugin_path"></a>`plugin_path`
+##### <a name="-elasticsearch_plugin--plugin_path"></a>`plugin_path`
 
 Override name of the directory created for the plugin
 
-##### <a name="provider"></a>`provider`
+##### <a name="-elasticsearch_plugin--provider"></a>`provider`
 
 The specific backend to use for this `elasticsearch_plugin` resource. You will seldom need to specify this --- Puppet
 will usually discover the appropriate provider for your platform.
 
-##### <a name="proxy"></a>`proxy`
+##### <a name="-elasticsearch_plugin--proxy"></a>`proxy`
 
 Proxy Host
 
-##### <a name="source"></a>`source`
+##### <a name="-elasticsearch_plugin--source"></a>`source`
 
 Source of the package. puppet:// or file:// resource
 
-##### <a name="url"></a>`url`
+##### <a name="-elasticsearch_plugin--url"></a>`url`
 
 Url of the package
 
@@ -1958,10 +2709,10 @@ Security privileges of the given role.
 
 The following parameters are available in the `elasticsearch_role` type.
 
-* [`name`](#name)
-* [`provider`](#provider)
+* [`name`](#-elasticsearch_role--name)
+* [`provider`](#-elasticsearch_role--provider)
 
-##### <a name="name"></a>`name`
+##### <a name="-elasticsearch_role--name"></a>`name`
 
 Valid values: `%r{^[a-zA-Z_]{1}[-\w@.$]{0,39}$}`
 
@@ -1969,7 +2720,7 @@ namevar
 
 Role name.
 
-##### <a name="provider"></a>`provider`
+##### <a name="-elasticsearch_role--provider"></a>`provider`
 
 The specific backend to use for this `elasticsearch_role` resource. You will seldom need to specify this --- Puppet will
 usually discover the appropriate provider for your platform.
@@ -1998,10 +2749,10 @@ List of role mappings.
 
 The following parameters are available in the `elasticsearch_role_mapping` type.
 
-* [`name`](#name)
-* [`provider`](#provider)
+* [`name`](#-elasticsearch_role_mapping--name)
+* [`provider`](#-elasticsearch_role_mapping--provider)
 
-##### <a name="name"></a>`name`
+##### <a name="-elasticsearch_role_mapping--name"></a>`name`
 
 Valid values: `%r{^[a-zA-Z_]{1}[-\w@.$]{0,39}$}`
 
@@ -2009,10 +2760,53 @@ namevar
 
 Role name.
 
-##### <a name="provider"></a>`provider`
+##### <a name="-elasticsearch_role_mapping--provider"></a>`provider`
 
 The specific backend to use for this `elasticsearch_role_mapping` resource. You will seldom need to specify this ---
 Puppet will usually discover the appropriate provider for your platform.
+
+### <a name="elasticsearch_slm_policy"></a>`elasticsearch_slm_policy`
+
+Manages Elasticsearch SLM policies.
+
+#### Properties
+
+The following properties are available in the `elasticsearch_slm_policy` type.
+
+##### `content`
+
+Structured content of policy.
+
+##### `ensure`
+
+Valid values: `present`, `absent`
+
+The basic property that the resource should be in.
+
+Default value: `present`
+
+#### Parameters
+
+The following parameters are available in the `elasticsearch_slm_policy` type.
+
+* [`name`](#-elasticsearch_slm_policy--name)
+* [`provider`](#-elasticsearch_slm_policy--provider)
+* [`source`](#-elasticsearch_slm_policy--source)
+
+##### <a name="-elasticsearch_slm_policy--name"></a>`name`
+
+namevar
+
+Policy name.
+
+##### <a name="-elasticsearch_slm_policy--provider"></a>`provider`
+
+The specific backend to use for this `elasticsearch_slm_policy` resource. You will seldom need to specify this ---
+Puppet will usually discover the appropriate provider for your platform.
+
+##### <a name="-elasticsearch_slm_policy--source"></a>`source`
+
+Puppet source to file containing SLM policy contents.
 
 ### <a name="elasticsearch_snapshot_repository"></a>`elasticsearch_snapshot_repository`
 
@@ -2056,22 +2850,22 @@ Maximum Snapshot rate
 
 The following parameters are available in the `elasticsearch_snapshot_repository` type.
 
-* [`name`](#name)
-* [`provider`](#provider)
-* [`type`](#type)
+* [`name`](#-elasticsearch_snapshot_repository--name)
+* [`provider`](#-elasticsearch_snapshot_repository--provider)
+* [`type`](#-elasticsearch_snapshot_repository--type)
 
-##### <a name="name"></a>`name`
+##### <a name="-elasticsearch_snapshot_repository--name"></a>`name`
 
 namevar
 
 Repository name.
 
-##### <a name="provider"></a>`provider`
+##### <a name="-elasticsearch_snapshot_repository--provider"></a>`provider`
 
 The specific backend to use for this `elasticsearch_snapshot_repository` resource. You will seldom need to specify this
 --- Puppet will usually discover the appropriate provider for your platform.
 
-##### <a name="type"></a>`type`
+##### <a name="-elasticsearch_snapshot_repository--type"></a>`type`
 
 Repository type
 
@@ -2101,22 +2895,22 @@ Default value: `present`
 
 The following parameters are available in the `elasticsearch_template` type.
 
-* [`name`](#name)
-* [`provider`](#provider)
-* [`source`](#source)
+* [`name`](#-elasticsearch_template--name)
+* [`provider`](#-elasticsearch_template--provider)
+* [`source`](#-elasticsearch_template--source)
 
-##### <a name="name"></a>`name`
+##### <a name="-elasticsearch_template--name"></a>`name`
 
 namevar
 
 Template name.
 
-##### <a name="provider"></a>`provider`
+##### <a name="-elasticsearch_template--provider"></a>`provider`
 
 The specific backend to use for this `elasticsearch_template` resource. You will seldom need to specify this --- Puppet
 will usually discover the appropriate provider for your platform.
 
-##### <a name="source"></a>`source`
+##### <a name="-elasticsearch_template--source"></a>`source`
 
 Puppet source to file containing template contents.
 
@@ -2140,28 +2934,26 @@ Default value: `present`
 
 The following parameters are available in the `elasticsearch_user` type.
 
-* [`configdir`](#configdir)
-* [`name`](#name)
-* [`password`](#password)
-* [`provider`](#provider)
+* [`configdir`](#-elasticsearch_user--configdir)
+* [`name`](#-elasticsearch_user--name)
+* [`password`](#-elasticsearch_user--password)
+* [`provider`](#-elasticsearch_user--provider)
 
-##### <a name="configdir"></a>`configdir`
+##### <a name="-elasticsearch_user--configdir"></a>`configdir`
 
 Path to the elasticsearch configuration directory (ES_PATH_CONF).
 
-##### <a name="name"></a>`name`
+##### <a name="-elasticsearch_user--name"></a>`name`
 
 namevar
 
 User name.
 
-##### <a name="password"></a>`password`
+##### <a name="-elasticsearch_user--password"></a>`password`
 
 Plaintext password for user.
 
-Required features: manages_plaintext_passwords.
-
-##### <a name="provider"></a>`provider`
+##### <a name="-elasticsearch_user--provider"></a>`provider`
 
 The specific backend to use for this `elasticsearch_user` resource. You will seldom need to specify this --- Puppet will
 usually discover the appropriate provider for your platform.
@@ -2192,21 +2984,21 @@ Hashed password for user.
 
 The following parameters are available in the `elasticsearch_user_file` type.
 
-* [`configdir`](#configdir)
-* [`name`](#name)
-* [`provider`](#provider)
+* [`configdir`](#-elasticsearch_user_file--configdir)
+* [`name`](#-elasticsearch_user_file--name)
+* [`provider`](#-elasticsearch_user_file--provider)
 
-##### <a name="configdir"></a>`configdir`
+##### <a name="-elasticsearch_user_file--configdir"></a>`configdir`
 
 Path to the elasticsearch configuration directory (ES_PATH_CONF).
 
-##### <a name="name"></a>`name`
+##### <a name="-elasticsearch_user_file--name"></a>`name`
 
 namevar
 
 User name.
 
-##### <a name="provider"></a>`provider`
+##### <a name="-elasticsearch_user_file--provider"></a>`provider`
 
 The specific backend to use for this `elasticsearch_user_file` resource. You will seldom need to specify this --- Puppet
 will usually discover the appropriate provider for your platform.
@@ -2235,16 +3027,16 @@ Array of roles that the user should belong to.
 
 The following parameters are available in the `elasticsearch_user_roles` type.
 
-* [`name`](#name)
-* [`provider`](#provider)
+* [`name`](#-elasticsearch_user_roles--name)
+* [`provider`](#-elasticsearch_user_roles--provider)
 
-##### <a name="name"></a>`name`
+##### <a name="-elasticsearch_user_roles--name"></a>`name`
 
 namevar
 
 User name.
 
-##### <a name="provider"></a>`provider`
+##### <a name="-elasticsearch_user_roles--provider"></a>`provider`
 
 The specific backend to use for this `elasticsearch_user_roles` resource. You will seldom need to specify this ---
 Puppet will usually discover the appropriate provider for your platform.
@@ -2271,44 +3063,44 @@ Default value: `present`
 
 The following parameters are available in the `es_instance_conn_validator` type.
 
-* [`name`](#name)
-* [`port`](#port)
-* [`provider`](#provider)
-* [`server`](#server)
-* [`sleep_interval`](#sleep_interval)
-* [`timeout`](#timeout)
+* [`name`](#-es_instance_conn_validator--name)
+* [`port`](#-es_instance_conn_validator--port)
+* [`provider`](#-es_instance_conn_validator--provider)
+* [`server`](#-es_instance_conn_validator--server)
+* [`sleep_interval`](#-es_instance_conn_validator--sleep_interval)
+* [`timeout`](#-es_instance_conn_validator--timeout)
 
-##### <a name="name"></a>`name`
+##### <a name="-es_instance_conn_validator--name"></a>`name`
 
 namevar
 
 An arbitrary name used as the identity of the resource.
 
-##### <a name="port"></a>`port`
+##### <a name="-es_instance_conn_validator--port"></a>`port`
 
 The port that the Elasticsearch instance should be listening on.
 
 Default value: `9200`
 
-##### <a name="provider"></a>`provider`
+##### <a name="-es_instance_conn_validator--provider"></a>`provider`
 
 The specific backend to use for this `es_instance_conn_validator` resource. You will seldom need to specify this ---
 Puppet will usually discover the appropriate provider for your platform.
 
-##### <a name="server"></a>`server`
+##### <a name="-es_instance_conn_validator--server"></a>`server`
 
 DNS name or IP address of the server where Elasticsearch should be running.
 
 Default value: `localhost`
 
-##### <a name="sleep_interval"></a>`sleep_interval`
+##### <a name="-es_instance_conn_validator--sleep_interval"></a>`sleep_interval`
 
 The number of seconds that the validator should wait before retrying the connection to Elasticsearch; defaults to 10
 seconds.
 
 Default value: `10`
 
-##### <a name="timeout"></a>`timeout`
+##### <a name="-es_instance_conn_validator--timeout"></a>`timeout`
 
 The max number of seconds that the validator should wait before giving up and deciding that Elasticsearch is not
 running; defaults to 60 seconds.
@@ -2321,25 +3113,13 @@ Default value: `60`
 
 Type: Ruby 3.x API
 
-This function applies a suffix to all elements in an array.
-
-*Examples:*
-
-    array_suffix(['a','b','c'], 'p')
-
-Will return: ['ap','bp','cp']
+The array_suffix function.
 
 #### `array_suffix()`
 
-This function applies a suffix to all elements in an array.
+The array_suffix function.
 
-*Examples:*
-
-    array_suffix(['a','b','c'], 'p')
-
-Will return: ['ap','bp','cp']
-
-Returns: `Any` Array
+Returns: `Any`
 
 ### <a name="concat_merge"></a>`concat_merge`
 
@@ -2457,33 +3237,25 @@ Returns: `Any` String
 
 Type: Ruby 3.x API
 
-Extracts the end plugin directory of the name
+The plugin_dir function.
 
 #### `plugin_dir()`
 
-Extracts the end plugin directory of the name
+The plugin_dir function.
 
-Returns: `Any` String
+Returns: `Any`
 
 ## Data types
 
-### <a name="elasticsearchmultipath"></a>`Elasticsearch::Multipath`
+### <a name="Elasticsearch--Multipath"></a>`Elasticsearch::Multipath`
 
-The Elasticsearch::Multipath data type.
+Elasticsearch datadir multipath type
 
-Alias of
+Alias of `Variant[Array[Stdlib::Absolutepath], Stdlib::Absolutepath]`
 
-```puppet
-Variant[Array[Stdlib::Absolutepath], Stdlib::Absolutepath]
-```
+### <a name="Elasticsearch--Status"></a>`Elasticsearch::Status`
 
-### <a name="elasticsearchstatus"></a>`Elasticsearch::Status`
+Elasticsearch service status type
 
-The Elasticsearch::Status data type.
-
-Alias of
-
-```puppet
-Enum['enabled', 'disabled', 'running', 'unmanaged']
-```
+Alias of `Enum['enabled', 'disabled', 'running', 'unmanaged']`
 

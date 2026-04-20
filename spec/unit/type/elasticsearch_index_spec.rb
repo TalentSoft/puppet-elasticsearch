@@ -14,9 +14,9 @@ describe Puppet::Type.type(:elasticsearch_index) do
         ensure: 'present',
         settings: {
           'index' => {
-            'number_of_replicas' => '0'
-          }
-        }
+            'number_of_replicas' => '0',
+          },
+        },
       )
     end
 
@@ -33,9 +33,9 @@ describe Puppet::Type.type(:elasticsearch_index) do
               'provided_name' => 'a',
               'uuid' => 'vtjrcgyerviqllrakslrsw',
               'version' => {
-                'created' => 5_020_199
-              }
-            }
+                'created' => 5_020_199,
+              },
+            },
           }
         end
 
@@ -54,9 +54,9 @@ describe Puppet::Type.type(:elasticsearch_index) do
               'provided_name' => 'a',
               'uuid' => 'vtjrcgyerviqllrakslrsw',
               'version' => {
-                'created' => 5_020_199
-              }
-            }
+                'created' => 5_020_199,
+              },
+            },
           }
         end
 

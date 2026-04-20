@@ -22,9 +22,9 @@ describe Puppet::Type.type(:elasticsearch_license) do
             'issued_to' => 'test',
             'issuer' => 'elasticsearch',
             'signature' => 'secretvalue',
-            'start_date_in_millis' => '1513814400000'
-          }
-        }
+            'start_date_in_millis' => '1513814400000',
+          },
+        },
       )
     end
 
@@ -44,8 +44,8 @@ describe Puppet::Type.type(:elasticsearch_license) do
             'max_nodes' => 1_000,
             'issued_to' => 'test',
             'issuer' => 'elasticsearch',
-            'start_date_in_millis' => 1_513_814_400_000
-          }
+            'start_date_in_millis' => 1_513_814_400_000,
+          },
         }
       end
 
@@ -60,7 +60,7 @@ describe Puppet::Type.type(:elasticsearch_license) do
           'uid' => 'cbff45e7-c553-41f7-ae4f-xxxxxxxxxxxx',
           'issue_date_in_millis' => '1513814400000',
           'expiry_date_in_millis' => '1533167999999',
-          'start_date_in_millis' => '-1'
+          'start_date_in_millis' => '-1',
         }.each_pair do |field, value|
           let(:changed_content) do
             is_content['license'][field] = value

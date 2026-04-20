@@ -27,9 +27,9 @@ describe Puppet::Type.type(:elasticsearch_role).provider(:ruby) do
           privileges: {
             'cluster' => 'all',
             'indices' => {
-              '*' => 'all'
-            }
-          }
+              '*' => 'all',
+            },
+          },
         )
       end
     end
