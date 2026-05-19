@@ -97,6 +97,3 @@ logger.index_indexing_slowlog.name = index.indexing.slowlog.index
 logger.index_indexing_slowlog.level = trace
 logger.index_indexing_slowlog.appenderRef.index_indexing_slowlog_rolling.ref = index_indexing_slowlog_rolling
 logger.index_indexing_slowlog.additivity = false
-# Suppress benign entitlement warning for x-pack-security
-logger.entitlements_xpack_security_watcher.name = org.elasticsearch.entitlement.runtime.policy.PolicyManager.x-pack-security.org.elasticsearch.security.org.elasticsearch.xpack.security
-logger.entitlements_xpack_security_watcher.level = ERROR
